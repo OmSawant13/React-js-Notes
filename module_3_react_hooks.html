@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@500;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #fbfbfd;
+            --card-bg: #ffffff;
+            --ink-main: #0f172a;
+            --ink-body: #1e293b;
+            --primary: #0284c7;
+            --border: #e2e8f0;
+            --font-hand: 'Patrick Hand', cursive, sans-serif;
+            --font-accent: 'Caveat', cursive, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-hand);
+            background-color: var(--bg-page);
+            color: var(--ink-main);
+            font-size: 24px;
+            line-height: 1.65;
+            min-height: 100vh;
+            padding: 24px 32px 80px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            width: 97%;
+            max-width: 1820px;
+            margin: 0 auto;
+            padding: 0 8px;
+        }
+
+        p { font-size: 25px; margin-bottom: 18px; line-height: 1.7; color: #1e293b; }
+        ol, ul { margin-bottom: 22px; padding-left: 32px; }
+        li { font-size: 25px; margin-bottom: 8px; line-height: 1.65; color: #1e293b; }
+        code { font-family: var(--font-code); font-size: 0.9em; background: #e0f2fe; padding: 2px 6px; border-radius: 6px; color: #0369a1; }
+
+        .genz-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 14px 28px;
+            margin-bottom: 32px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .genz-nav-title {
+            font-family: var(--font-accent);
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--ink-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-pill-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 18px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #0f172a;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            color: var(--ink-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px #0f172a;
+            background: #e0f2fe;
+        }
+
+        .nav-btn.active {
+            background: #0284c7;
+            color: #ffffff;
+        }
+
+        .genz-badge {
+            background: #bae6fd;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 2px 2px 0px #0f172a;
+        }
+
+        .brush-banner {
+            background: #0284c7;
+            color: #ffffff;
+            font-family: var(--font-hand);
+            font-size: 34px;
+            font-weight: 700;
+            text-align: center;
+            padding: 14px 44px;
+            margin: 28px auto 36px;
+            display: table;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 4px 4px 0px #0f172a;
+            transform: rotate(-1deg);
+        }
+
+        .chapter-page-box {
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 24px;
+            padding: 44px 52px;
+            box-shadow: 6px 6px 0px #0f172a;
+            margin-bottom: 48px;
+        }
+
+        .chapter-header-area {
+            border-bottom: 2.5px solid #0f172a;
+            padding-bottom: 24px;
+            margin-bottom: 36px;
+        }
+
+        .chapter-header-area h2 {
+            font-family: var(--font-accent);
+            font-size: 52px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 8px;
+        }
+
+        .concept-block {
+            background: transparent;
+            margin-bottom: 64px;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 48px;
+        }
+        .concept-block:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 24px;
+        }
+
+        .concept-heading {
+            font-family: var(--font-accent);
+            font-size: 42px;
+            font-weight: 700;
+            color: #0369a1;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2.5px solid #e2e8f0;
+            padding-bottom: 14px;
+        }
+
+        .concept-sub-title {
+            font-family: var(--font-hand);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 36px 0 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analogy-note {
+            background: #fef9c3;
+            border: 2.5px dashed #ca8a04;
+            border-radius: 20px;
+            padding: 26px 32px;
+            margin: 28px 0 34px;
+            box-shadow: 4px 4px 0px rgba(202, 138, 4, 0.25);
+        }
+
+        .analogy-note-title {
+            font-family: var(--font-accent);
+            font-size: 30px;
+            font-weight: 700;
+            color: #854d0e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .analogy-note p {
+            color: #713f12;
+            font-size: 24px;
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        .bio-anatomy-board {
+            background-color: #ffffff;
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 22px 22px;
+            border: 3px solid #0f172a;
+            border-radius: 22px;
+            padding: 34px 40px;
+            margin: 32px 0 38px;
+            box-shadow: 6px 6px 0px #0f172a;
+            position: relative;
+        }
+
+        .anatomy-board-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #94a3b8;
+            padding-bottom: 12px;
+        }
+
+        .anatomy-board-title {
+            font-family: var(--font-accent);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .anatomy-code-center {
+            background: #0f172a;
+            border: 2.5px solid #0f172a;
+            border-radius: 16px;
+            padding: 22px 26px;
+            color: #ffffff;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.85;
+            box-shadow: 4px 4px 0px #38bdf8;
+            overflow-x: auto;
+        }
+
+        .code-container {
+            background: #0b1120;
+            border: 2px solid #0f172a;
+            border-radius: 16px;
+            margin: 28px 0 34px;
+            overflow: hidden;
+            box-shadow: 5px 5px 0px #0f172a;
+        }
+
+        .code-top-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 10px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-code);
+            font-size: 15px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .code-container pre {
+            padding: 22px 26px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.8;
+            color: #f1f5f9;
+        }
+
+        .tok-kw { color: #f43f5e; font-weight: 700; }
+        .tok-fn { color: #38bdf8; font-weight: 600; }
+        .tok-str { color: #a5f3fc; }
+        .tok-num { color: #fde047; }
+        .tok-com { color: #64748b; font-style: italic; }
+
+        .mechanics-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0 28px;
+            border: 2px solid #0f172a;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 3px 3px 0px #0f172a;
+            font-family: var(--font-hand);
+            font-size: 22px;
+        }
+
+        .mechanics-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+            text-align: left;
+            padding: 12px 18px;
+            font-family: var(--font-accent);
+            font-size: 25px;
+            font-weight: 700;
+            border-bottom: 2px solid #0f172a;
+        }
+
+        .mechanics-table td {
+            padding: 12px 18px;
+            border-bottom: 1.5px solid #e2e8f0;
+            vertical-align: top;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .mechanics-table tr:last-child td { border-bottom: none; }
+        .mechanics-table tr:nth-child(even) td { background: #fafaf9; }
+
+        .q-card {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            padding: 24px 28px;
+            margin-bottom: 22px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .q-tag-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .q-pill {
+            background: #e0f2fe;
+            border: 1.5px solid #0f172a;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .q-card h3 {
+            font-family: var(--font-accent);
+            font-size: 30px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .q-ans {
+            background: #f0f9ff;
+            border-left: 5px solid #0284c7;
+            border-radius: 0 12px 12px 0;
+            padding: 16px 22px;
+            font-size: 22px;
+            color: #1e293b;
+            line-height: 1.65;
+        }
+
+        .practical-box {
+            background: #f0fdf4;
+            border: 2.5px solid #16a34a;
+            border-radius: 20px;
+            padding: 32px 38px;
+            margin: 36px 0;
+            box-shadow: 5px 5px 0px #16a34a;
+        }
+
+        .practical-title {
+            font-family: var(--font-accent);
+            font-size: 36px;
+            font-weight: 700;
+            color: #15803d;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+
+    <title>Module 3: React Hooks Mastery — React.js Master Handbook</title>
+</head>
+<body>
+    <div class="app-wrapper">
+        
+        <nav class="genz-nav-bar">
+            <a href="index.html" class="genz-nav-title">
+                <span>⚛️</span> React.js 8-Module Master Handbook
+            </a>
+            <div class="nav-pill-group">
+                <a href="index.html" class="nav-btn">🏠 Home</a><a href="module_1_react_fundamentals.html" class="nav-btn">M1 Fundamentals</a><a href="module_2_props_state_events.html" class="nav-btn">M2 Props & State</a><a href="module_3_react_hooks.html" class="nav-btn active">M3 Hooks</a><a href="module_4_forms_api_integration.html" class="nav-btn">M4 Forms & APIs</a><a href="module_5_routing.html" class="nav-btn">M5 Routing</a><a href="module_6_state_management.html" class="nav-btn">M6 State Mgmt</a><a href="module_7_advanced_react.html" class="nav-btn">M7 Advanced</a><a href="module_8_production_development.html" class="nav-btn">M8 Production</a><a href="book_interview_masterclass_hub.html" class="nav-btn" style="background:#fef08a;">💼 64 Q&A Hub</a>
+            </div>
+        </nav>
+    
+
+        <div class="chapter-page-box">
+            <div class="chapter-header-area">
+                <span class="genz-badge">MODULE 3 • HOOKS DEEP DIVE (VERY IMPORTANT)</span>
+                <h2>Module 3 — React Hooks Mastery</h2>
+                <p>Rules of Hooks, Fiber Linked Lists, useState, useEffect (Dependencies, Cleanup, AbortController, Infinite Loops), useRef, useContext, useMemo, useCallback &amp; Custom Hooks.</p>
+            </div>
+
+            <div class="brush-banner">Module 3: React Hooks — State, Lifecycles aur Fiber Linked List ka Asali Sach!</div>
+
+            <!-- TOPIC 1: RULES OF HOOKS -->
+            <div class="concept-block" id="topic-1">
+                <div class="concept-heading">1. Rules of Hooks (Under-the-Hood Fiber Reason)</div>
+                <div class="concept-sub-title">📌 1.1 The Two Non-Negotiable Rules</div>
+                <ol>
+                    <li><strong>Only Call Hooks at the Top Level:</strong> Kabhi bhi hooks ko <code>if</code> conditions, <code>for</code> loops, ya nested functions ke andar call mat karo.</li>
+                    <li><strong>Only Call Hooks from React Functions:</strong> Sirf React Functional Components ya Custom Hooks ke andar call karo. Plain JS utility functions me call mat karo.</li>
+                </ol>
+
+                <div class="bio-anatomy-board">
+                    <div class="anatomy-board-header">
+                        <span class="anatomy-board-title">🔬 Fiber Internals: Singly Linked List of Hooks</span>
+                        <span class="genz-badge">UNDER THE HOOD</span>
+                    </div>
+                    <div class="anatomy-code-center">
+<div>React Fiber Node: fiber.memoizedState ──▶ [Hook 1: useState(name)]</div>
+<div>                                           │ next pointer</div>
+<div>                                           ▼</div>
+<div>                                         [Hook 2: useEffect(fetchData)]</div>
+<div>                                           │ next pointer</div>
+<div>                                           ▼</div>
+<div>                                         [Hook 3: useRef(inputRef)] ──▶ null</div>
+<div>─────────────────────────────────────────────────────────────────────────────</div>
+<div>⚠️ AGAR CONDITION ME DAL DIYA TOH KYA HOGA?</div>
+<div>if (isLoggedIn) { useState("Token"); } // RENDER 1: true (Order: Hook 1, 2, 3)</div>
+<div>                                       // RENDER 2: false (Hook 1 SKIPPED!)</div>
+<div>Natija: Pointer hil jayega! React Hook 2 ko Hook 1 samajh lega, wrong state assign hogi aur app FAT JAYEGI!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOPIC 2: USESTATE -->
+            <div class="concept-block" id="topic-2">
+                <div class="concept-heading">2. useState: Functional Updates &amp; Lazy Initialization</div>
+                <div class="concept-sub-title">📌 2.1 Lazy Initial State (Performance Optimization)</div>
+                <p>Agar initial state nikalne ke liye koi bhari calculation karni hai (jaise <code>localStorage.getItem</code> ko parse karna), toh direct mat likho! Varna har re-render par wo slow calculation dobara chalegi.</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>useState_lazy.jsx</span><span>Lazy Initial State</span></div>
+                    <pre><code>// ❌ BAD: JSON.parse runs on EVERY SINGLE re-render!
+const [data, setData] = useState(JSON.parse(localStorage.getItem('saved_items')) || []);
+
+// ✅ GOOD (Lazy Initial State): Function passes as initial value, runs ONLY on initial mount!
+const [data, setData] = useState(() => {
+    const saved = localStorage.getItem('saved_items');
+    return saved ? JSON.parse(saved) : [];
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 3: USEEFFECT DEEP DIVE -->
+            <div class="concept-block" id="topic-3">
+                <div class="concept-heading">3. useEffect: Dependencies, Cleanup, API Calls &amp; Infinite Loops</div>
+                <div class="concept-sub-title">📌 3.1 The 3 Modes of Dependency Array</div>
+                <ul>
+                    <li><code>useEffect(() => { ... })</code> (No Dependency Array): Har ek render ke baad chalta hai (Dangerous!).</li>
+                    <li><code>useEffect(() => { ... }, [])</code> (Empty Array): Sirf pehli baar mount hone par chalta hai (like <code>componentDidMount</code>).</li>
+                    <li><code>useEffect(() => { ... }, [userId])</code> (With Dependencies): Pehli baar mount par chalta hai + jab bhi <code>userId</code> ki value badalti hai tab chalta hai.</li>
+                </ul>
+
+                <div class="concept-sub-title">📌 3.2 Cleanup Function: Hotel Check-out Analogy</div>
+                <p>Jab tu hotel room chhod ke jaata hai, toh AC aur lights band karke jaata hai. Varna bill aayega! Isi tarah agar tune `setInterval` ya event listener lagaya, toh component unmount hone par unhe destroy karna compulsory hai:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>TimerWithCleanup.jsx</span><span>Cleanup Example</span></div>
+                    <pre><code>import { useState, useEffect } from 'react';
+
+function LiveTimer() {
+    const [seconds, setSeconds] = useState(0);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setSeconds(prev => prev + 1);
+        }, 1000);
+
+        // 🧹 CLEANUP FUNCTION: Runs before component unmounts or before effect re-runs!
+        return () => {
+            clearInterval(intervalId); // Prevents memory leak!
+        };
+    }, []);
+
+    return <h3>Elapsed Time: {seconds}s</h3>;
+}</code></pre>
+                </div>
+
+                <div class="concept-sub-title">📌 3.3 API Calls &amp; Race Condition Prevention with AbortController</div>
+                <p>Agar user rapidly User 1 aur User 2 ke beech switch kare, toh purana slow network response naye fast response ko overwrite na kare isliye native <code>AbortController</code> use hota hai:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>FetchSafe.jsx</span><span>AbortController Pattern</span></div>
+                    <pre><code>function UserProfile({ userId }) {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const controller = new AbortController();
+        setLoading(true);
+
+        fetch(`https://jsonplaceholder.typicode.com/users/${userId}`, { signal: controller.signal })
+            .then(res => res.json())
+            .then(data => {
+                setUser(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                if (err.name !== 'AbortError') {
+                    console.error("Fetch Error:", err);
+                    setLoading(false);
+                }
+            });
+
+        return () => controller.abort(); // Cancel pending network request if userId changes!
+    }, [userId]);
+
+    if (loading) return <p>Loading profile...</p>;
+    return <h3>User: {user?.name}</h3>;
+}</code></pre>
+                </div>
+
+                <div class="concept-sub-title">📌 3.4 Infinite Rendering Loop Pitfall</div>
+                <div class="analogy-note">
+                    <div class="analogy-note-title">🚨 Infinite Loop Recipe</div>
+                    <p>Agar tu <code>useEffect</code> ke andar <code>setCount()</code> call kare, aur dependency array na lagaye: Effect chala ➡️ state badli ➡️ re-render hua ➡️ effect dobara chala ➡️ state dobara badli ➡️ <strong>Infinite Loop! Browser Crash!</strong><br>
+                    <strong>Fix:</strong> Hamesha dependency array do, ya updater function use karo.</p>
+                </div>
+            </div>
+
+            <!-- TOPIC 4: USEREF -->
+            <div class="concept-block" id="topic-4">
+                <div class="concept-heading">4. useRef: Secret Pocket (Mutable Data without Re-renders)</div>
+                <div class="concept-sub-title">📌 4.1 Do Main Kaam: DOM Reference aur Silent Values</div>
+                <ol>
+                    <li><strong>Direct DOM Node Access:</strong> Input box ko automatically focus karwana, video play/pause karna.</li>
+                    <li><strong>Silent State:</strong> Aisi value jo badal sake par screen ko re-render na kare (jaise timer ID, render counter).</li>
+                </ol>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>InputFocus.jsx</span><span>useRef Usage</span></div>
+                    <pre><code>import { useRef } from 'react';
+
+function AutoFocusInput() {
+    const inputRef = useRef(null);
+
+    const handleFocus = () => {
+        // Direct native DOM manipulation safely
+        inputRef.current.focus();
+        inputRef.current.style.borderColor = '#0284c7';
+    };
+
+    return (
+        <div>
+            <input ref={inputRef} placeholder="Type your query..." />
+            <button onClick={handleFocus}>Focus Input Box 🎯</button>
+        </div>
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 5: USECONTEXT -->
+            <div class="concept-block" id="topic-5">
+                <div class="concept-heading">5. useContext: Chhat ki Paani ki Tanki</div>
+                <div class="concept-sub-title">📌 5.1 Prop Drilling ka The End</div>
+                <p>Jab koi data (Theme, Auth, Language) poore app me 10 level deep components ko chahiye hota hai, toh har component se baalti pass karne ke bajay <strong>Context API</strong> banaya jata hai:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>ThemeContext.jsx</span><span>Context Pattern</span></div>
+                    <pre><code>import { createContext, useContext, useState } from 'react';
+
+// 1. Context create karo
+const ThemeContext = createContext();
+
+// 2. Provider component banao
+export function ThemeProvider({ children }) {
+    const [theme, setTheme] = useState("dark");
+    const toggleTheme = () => setTheme(prev => prev === "dark" ? "light" : "dark");
+
+    return (
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            {children}
+        </ThemeContext.Provider>
+    );
+}
+
+// 3. Koi bhi child component seedha data use karega
+export function ThemeToggleButton() {
+    const { theme, toggleTheme } = useContext(ThemeContext);
+    return (
+        <button onClick={toggleTheme}>
+            Current: {theme === "dark" ? "🌙 Dark" : "☀️ Light"} (Click to Toggle)
+        </button>
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 6: USEMEMO & USECALLBACK -->
+            <div class="concept-block" id="topic-6">
+                <div class="concept-heading">6. useMemo vs useCallback: Result vs Recipe</div>
+                <div class="concept-sub-title">📌 6.1 Kab useMemo lagayein aur kab useCallback?</div>
+
+                <table class="mechanics-table">
+                    <tr>
+                        <th>Criteria</th>
+                        <th>useMemo</th>
+                        <th>useCallback</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Kya Cache Karta Hai?</strong></td>
+                        <td>Calculation ka <strong>RETURN VALUE</strong> (Result)</td>
+                        <td><strong>FUNCTION DEFINITION</strong> (Reference)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Analogy</strong></td>
+                        <td>Cooked Biryani freeze karke rakhna</td>
+                        <td>Biryani ki Recipe parchi pe likh ke rakhna</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Use Case</strong></td>
+                        <td>10,000 items ko sort/filter karna</td>
+                        <td>Callback function ko <code>React.memo</code> child me pass karna</td>
+                    </tr>
+                </table>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>useMemo_useCallback.jsx</span><span>Practical Examples</span></div>
+                    <pre><code>import { useMemo, useCallback, useState } from 'react';
+
+function Dashboard({ items }) {
+    const [count, setCount] = useState(0);
+
+    // 1. useMemo: Only re-calculates when `items` array changes!
+    const expensiveTotal = useMemo(() => {
+        console.log("Computing heavy total...");
+        return items.reduce((acc, curr) => acc + curr.price, 0);
+    }, [items]);
+
+    // 2. useCallback: Preserves function reference so Child doesn't re-render!
+    const handleDelete = useCallback((id) => {
+        console.log("Deleting item:", id);
+    }, []);
+
+    return (
+        <div>
+            <h2>Total: ₹{expensiveTotal}</h2>
+            <button onClick={() => setCount(count + 1)}>Re-render ({count})</button>
+        </div>
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 7: CUSTOM HOOKS -->
+            <div class="concept-block" id="topic-7">
+                <div class="concept-heading">7. Custom Hooks: Business Logic Reusability</div>
+                <div class="concept-sub-title">📌 7.1 Rules &amp; Power</div>
+                <p>Custom Hook ek aisi JavaScript function hoti hai jiska naam <code>use</code> se shuru hota hai aur jiske andar dusre React hooks (jaise <code>useState</code>, <code>useEffect</code>) use hote hain. Isse tumhara UI component ekdum clean rehta hai aur sara data fetching/debounce logic alag reusable file me chala jata hai.</p>
+            </div>
+
+            <!-- PRACTICAL LAB -->
+            <div class="practical-box">
+                <div class="practical-title">🛠️ Module 3 Practical Lab: Reusable useDebounce &amp; Debounced Search Bar</div>
+                <p>Neeche industry-standard <code>useDebounce</code> custom hook aur uska live search implementation hai (prevents API bombardment on every keystroke):</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>src/useDebounce.js &amp; SearchApp.jsx</span><span>Custom Hook &amp; Search</span></div>
+                    <pre><code>// 1. Custom Hook: useDebounce.js
+import { useState, useEffect } from 'react';
+
+export function useDebounce(value, delay = 500) {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+        // Set timer to update debounced value after `delay` ms
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        // Cancel the timer if value changes before delay finishes!
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+
+    return debouncedValue;
+}
+
+// 2. Component: DebouncedSearch.jsx
+import React, { useState, useEffect } from 'react';
+
+export default function DebouncedSearch() {
+    const [searchTerm, setSearchTerm] = useState("");
+    const [results, setResults] = useState([]);
+    const [isSearching, setIsSearching] = useState(false);
+
+    // Debounce search term by 400ms
+    const debouncedTerm = useDebounce(searchTerm, 400);
+
+    useEffect(() => {
+        if (!debouncedTerm.trim()) {
+            setResults([]);
+            return;
+        }
+
+        setIsSearching(true);
+        // Simulate API search call
+        const mockApiCall = setTimeout(() => {
+            const mockData = ["React.js", "React Native", "Redux Toolkit", "Next.js", "Zustand"];
+            const filtered = mockData.filter(item => 
+                item.toLowerCase().includes(debouncedTerm.toLowerCase())
+            );
+            setResults(filtered);
+            setIsSearching(false);
+        }, 300);
+
+        return () => clearTimeout(mockApiCall);
+    }, [debouncedTerm]);
+
+    return (
+        <div style={{ maxWidth: '500px', margin: '30px auto', padding: '24px', border: '2px solid #0f172a', borderRadius: '14px', background: '#fff' }}>
+            <h3>🔍 Debounced Real-Time Search</h3>
+            <input 
+                type="text" 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Type 'React', 'Next', etc..."
+                style={{ width: '100%', padding: '10px 14px', fontSize: '18px', border: '2px solid #0f172a', borderRadius: '8px', boxSizing: 'border-box' }}
+            />
+            {isSearching && <p style={{ color: '#0284c7' }}>Searching API...</p>}
+            <ul>
+                {results.map((res, i) => <li key={i} style={{ fontSize: '20px', padding: '6px 0' }}>✅ {res}</li>)}
+            </ul>
+        </div>
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- SUDHEER J INTERVIEW CARDS -->
+            <div class="concept-sub-title">💼 Module 3 Interview Bank (Sudheer J Style)</div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">Rules of Hooks</span>
+                    <span class="genz-badge">Senior / 8-10 LPA</span>
+                </div>
+                <h3>Q: What are the two Rules of Hooks and what happens under the hood if you violate them?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> The two rules are: (1) Only call hooks at the top level (never in loops, conditions, or nested functions), and (2) Only call hooks from React function components or custom hooks. <strong>Under the hood:</strong> React Fiber stores hooks in a <em>singly-linked list</em> attached to `fiber.memoizedState`. It relies entirely on the fixed, stable call order across every render. If an `if` condition skips a hook, the linked-list pointer gets misaligned, assigning the wrong state to the wrong variables and causing a fatal crash.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">useMemo vs useCallback</span>
+                    <span class="genz-badge">High Frequency</span>
+                </div>
+                <h3>Q: What is the exact difference between useMemo and useCallback?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> <code>useMemo(() => fn(), deps)</code> executes the function and memoizes the <strong>computed result</strong> (value); it only re-computes when dependencies change (ideal for heavy computations). <code>useCallback(fn, deps)</code> returns and memoizes the <strong>function definition itself</strong>, ensuring referential equality when passing callbacks to child components wrapped in `React.memo`.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">useEffect Cleanup</span>
+                    <span class="genz-badge">Core Concept</span>
+                </div>
+                <h3>Q: When does the useEffect cleanup function execute? Does it only run on unmount?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> <strong>No, it does not only run on unmount!</strong> The cleanup function runs: (1) When the component unmounts from the DOM, AND (2) <em>Before the effect re-runs</em> on every subsequent render when dependencies have changed. It cleans up the previous render's side effect before running the new one.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

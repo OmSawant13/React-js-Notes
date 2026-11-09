@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React.js — Interview Masterclass Hub (64 High-Yield Q&As)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@500;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #fbfbfd;
+            --card-bg: #ffffff;
+            --ink-main: #0f172a;
+            --primary: #0284c7;
+            --border: #e2e8f0;
+            --font-hand: 'Patrick Hand', cursive, sans-serif;
+            --font-accent: 'Caveat', cursive, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-hand);
+            background-color: var(--bg-page);
+            color: var(--ink-main);
+            font-size: 24px;
+            line-height: 1.65;
+            min-height: 100vh;
+            padding: 24px 32px 80px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            width: 97%;
+            max-width: 1820px;
+            margin: 0 auto;
+            padding: 0 8px;
+        }
+
+        p { font-size: 25px; margin-bottom: 18px; line-height: 1.7; color: #1e293b; }
+        ol, ul { margin-bottom: 22px; padding-left: 32px; }
+        li { font-size: 25px; margin-bottom: 8px; line-height: 1.65; color: #1e293b; }
+        code { font-family: var(--font-code); font-size: 0.9em; background: #e0f2fe; padding: 2px 6px; border-radius: 6px; color: #0369a1; }
+        pre { background: #0f172a; color: #f8fafc; padding: 18px 24px; border-radius: 12px; overflow-x: auto; font-family: var(--font-code); font-size: 19px; line-height: 1.6; margin: 16px 0; border: 2px solid #334155; }
+        pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+
+        .genz-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 14px 28px;
+            margin-bottom: 32px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .genz-nav-title {
+            font-family: var(--font-accent);
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--ink-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .genz-pills-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .genz-nav-pill {
+            font-family: var(--font-sans);
+            font-size: 15px;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #0f172a;
+            background: #f1f5f9;
+            border: 2px solid #0f172a;
+            box-shadow: 2px 2px 0px #0f172a;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .genz-nav-pill:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px #0f172a;
+            background: #e2e8f0;
+        }
+
+        .genz-nav-pill.active {
+            background: #0284c7;
+            color: #ffffff;
+        }
+
+        .genz-badge {
+            display: inline-block;
+            font-family: var(--font-sans);
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 2px solid #0f172a;
+            box-shadow: 2px 2px 0px #0f172a;
+            margin-bottom: 14px;
+        }
+
+        .q-card {
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .q-card h3 {
+            font-family: var(--font-sans);
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 14px;
+            line-height: 1.4;
+        }
+
+        .q-tag-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .q-pill {
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 6px;
+            background: #f8fafc;
+            border: 1.5px solid #64748b;
+            color: #334155;
+        }
+
+        .q-ans {
+            font-size: 23px;
+            line-height: 1.65;
+            color: #1e293b;
+        }
+
+        .search-box-row {
+            margin-bottom: 24px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .search-input {
+            flex: 1;
+            font-family: var(--font-hand);
+            font-size: 24px;
+            padding: 12px 20px;
+            border: 2.5px solid #0f172a;
+            border-radius: 14px;
+            box-shadow: 3px 3px 0px #0f172a;
+            outline: none;
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            font-family: var(--font-sans);
+            font-size: 15px;
+            font-weight: 700;
+            padding: 8px 18px;
+            border-radius: 12px;
+            border: 2px solid #0f172a;
+            box-shadow: 2px 2px 0px #0f172a;
+            background: #ffffff;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #0284c7;
+            color: #ffffff;
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px #0f172a;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- TOP NAV -->
+        <nav class="genz-nav-bar">
+            <div class="genz-nav-title">
+                <span>💼</span>
+                <span>React.js Interview Masterclass Hub (64 Q&As)</span>
+            </div>
+            <div class="genz-pills-row">
+                <a href="index.html" class="genz-nav-pill">🏠 Home Dashboard</a>
+                <a href="book_volume_1_core_react.html" class="genz-nav-pill">Vol 1 Core</a>
+                <a href="book_volume_2_hooks_mastery.html" class="genz-nav-pill">Vol 2 Hooks</a>
+                <a href="book_volume_3_state_forms.html" class="genz-nav-pill">Vol 3 State</a>
+                <a href="book_volume_4_react_router.html" class="genz-nav-pill">Vol 4 Router</a>
+                <a href="book_volume_5_performance.html" class="genz-nav-pill">Vol 5 Perf</a>
+                <a href="book_volume_6_nextjs_rsc.html" class="genz-nav-pill">Vol 6 Next.js</a>
+                <a href="book_volume_7_capstone_project.html" class="genz-nav-pill green">Vol 7 Capstone</a>
+                <a href="book_machine_coding_polyfills.html" class="genz-nav-pill active">⚡ Polyfills</a>
+            </div>
+        </nav>
+
+        <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 3px solid #0f172a; border-radius: 24px; padding: 36px; margin-bottom: 30px; box-shadow: 6px 6px 0px #0f172a;">
+            <span class="genz-badge" style="background:#86efac;">Sudheer J + Real Industry Interview Vault</span>
+            <h1 style="font-family: var(--font-accent); font-size: 52px; color: #0f172a; margin-bottom: 12px;">
+                Complete 64+ React.js Technical Interview Masterclass
+            </h1>
+            <p>Every single question curated from top repositories (including Sudheer J) with zero shortcuts, intuitive Hinglish analogies, Fiber internals, and exact code templates.</p>
+            
+            <div class="search-box-row">
+                <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search any question or keyword..." oninput="searchQuestions()">
+            </div>
+
+            <div class="filter-row">
+                <button class="filter-btn active" onclick="filterCat('all', this)">All (64)</button>
+                <button class="filter-btn" onclick="filterCat('core', this)">Core React</button>
+                <button class="filter-btn" onclick="filterCat('hooks', this)">Hooks Mastery</button>
+                <button class="filter-btn" onclick="filterCat('patterns', this)">Patterns & Boundaries</button>
+                <button class="filter-btn" onclick="filterCat('router', this)">Router v6</button>
+                <button class="filter-btn" onclick="filterCat('redux', this)">Zustand & Redux</button>
+                <button class="filter-btn" onclick="filterCat('perf', this)">Performance & Profiling</button>
+                <button class="filter-btn" onclick="filterCat('rsc', this)">Next.js SSR & RSC</button>
+            </div>
+        </div>
+
+        <div id="interviewContainer">
+            
+    <div class="q-card" data-category="core" id="q1">
+        <div class="q-tag-row">
+            <span class="q-pill">Core React</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Fresher / 4-6 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#1</span>
+        </div>
+        <h3>Q1: What is React, and what are its major features?</h3>
+        <div class="q-ans">
+            <strong>Simple Desi Samjhaav:</strong> React ek frontend JavaScript library hai (framework nahi!) jise Facebook ne banaya tha interactive UI banane ke liye.<br>
+            <strong>Top 4 Major Features:</strong>
+            <ul>
+                <li><strong>Declarative UI:</strong> Tumhe browser ko ye nahi batana padta ki DOM me button dhoondo aur text change karo. Tum sirf State define karte ho (<code>UI = f(State)</code>), DOM apne aap update ho jata hai.</li>
+                <li><strong>Virtual DOM (VDOM):</strong> Real DOM slow hota hai, isliye React memory me ek lightweight JS copy (VDOM) rakhta hai aur sirf wahi part change karta hai jo badla hai (Reconciliation).</li>
+                <li><strong>Component-Based Architecture:</strong> Poori website chhote-chhote reusable Lego blocks (Components) me banti hai jaise <code>&lt;Navbar /&gt;</code>, <code>&lt;Button /&gt;</code>.</li>
+                <li><strong>Unidirectional Data Flow:</strong> Data hamesha Parent se Child ki taraf niche flow hota hai via Props. Isse debugging predictable rehti hai.</li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q2">
+        <div class="q-tag-row">
+            <span class="q-pill">Library vs Framework</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Basic Interview</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#2</span>
+        </div>
+        <h3>Q2: What is the difference between a Library (React) and a Framework (Angular / Vue)?</h3>
+        <div class="q-ans">
+            <strong>Key Difference (Inversion of Control):</strong>
+            <ul>
+                <li><strong>Library (React):</strong> You are in control! React sirf 'View' layer handle karta hai. Routing (React Router), State Management (Zustand/Redux), aur API fetching (Axios/React Query) ke liye tum apni marzi ka tool choose karte ho. <em>You call the library.</em></li>
+                <li><strong>Framework (Angular):</strong> The Framework is in control! Angular me routing, forms, HTTP client, dependency injection sab kuch pehle se fixed hota hai. Unke strict rules aur folder structure me hi code likhna padta hai. <em>The framework calls your code.</em></li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q3">
+        <div class="q-tag-row">
+            <span class="q-pill">JSX Internals</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Core Concept</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#3</span>
+        </div>
+        <h3>Q3: What is JSX, and why can't web browsers read it directly?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> JSX (JavaScript XML) ek syntax extension hai jo hume JS ke andar HTML-like code likhne deta hai.<br>
+            <strong>Why browser can't read it:</strong> Browsers sirf standard ECMAScript (JS) samajhte hain, JSX koi valid JS syntax nahi hai. Isliye Babel ya SWC compiler JSX ko compile karke standard JS function calls me badal deta hai:<br>
+            <code>// JSX: &lt;h1 className="title"&gt;Hello&lt;/h1&gt;</code><br>
+            <code>// Compiled: React.createElement('h1', { className: 'title' }, 'Hello');</code><br>
+            Ye function ek plain JavaScript object (React Element) return karta hai jise browser VDOM me process karta hai.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q4">
+        <div class="q-tag-row">
+            <span class="q-pill">Element vs Component</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Interview Trap</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#4</span>
+        </div>
+        <h3>Q4: What is the exact difference between a React Element and a React Component?</h3>
+        <div class="q-ans">
+            <strong>Key Answer:</strong>
+            <ul>
+                <li><strong>React Element:</strong> Ye ek <strong>immutable plain JavaScript object</strong> hai jo screen par render hone wale DOM node ko describe karta hai (e.g. <code>const elem = &lt;h1&gt;Hi&lt;/h1&gt;;</code>). Iska <code>$$typeof: Symbol.for('react.element')</code> hota hai. Isse directly call nahi kiya ja sakta.</li>
+                <li><strong>React Component:</strong> Ye ek <strong>JavaScript function ya class</strong> hai jo props accept karta hai aur ek React Element return karta hai (e.g. <code>function UserCard(props) { return &lt;div&gt;...&lt;/div&gt;; }</code>). Component reusable blueprint hota hai, jabki Element ek runtime snapshot hota hai.</li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q5">
+        <div class="q-tag-row">
+            <span class="q-pill">State vs Props</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Fresher Essential</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#5</span>
+        </div>
+        <h3>Q5: What is the difference between State and Props in React?</h3>
+        <div class="q-ans">
+            <table class="mechanics-table">
+                <thead><tr><th>Feature</th><th>Props (Properties)</th><th>State</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Source</strong></td><td>Parent component se pass hota hai</td><td>Component ke andar khud create aur manage hota hai</td></tr>
+                    <tr><td><strong>Mutability</strong></td><td><strong>Immutable (Read-Only)</strong>. Child modify nahi kar sakta</td><td><strong>Mutable</strong> via setState / useState hook</td></tr>
+                    <tr><td><strong>Purpose</strong></td><td>Component ko configure aur data pass karne ke liye</td><td>User interactions, timers, forms ka live data store karne ke liye</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q6">
+        <div class="q-tag-row">
+            <span class="q-pill">State Immutability</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 6 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#6</span>
+        </div>
+        <h3>Q6: Why should we NEVER mutate state directly (e.g., state.count = 5)?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> Agar tum <code>state.count = 5</code> likhoge:
+            <ol>
+                <li><strong>No Re-render Triggered:</strong> React tab tak re-render trigger nahi karta jab tak tum <code>setState()</code> ya <code>setCount()</code> na call karo. UI par purana data hi dikhta rahega.</li>
+                <li><strong>Shallow Comparison Broken:</strong> React Fiber reconciliation me state ka memory reference check karta hai (<code>Object.is(oldState, newState)</code>). Directly mutate karne par purana aur naya memory address same rehta hai, jisse React samajh hi nahi pata ki data change hua hai.</li>
+                <li><strong>Time Travel & Optimization Loss:</strong> Undo/Redo aur React DevTools debugging completely break ho jaati hai. Hamesha state ka naya copy return karo: <code>setUser(prev => ({ ...prev, count: 5 }))</code>.</li>
+            </ol>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q7">
+        <div class="q-tag-row">
+            <span class="q-pill">Synthetic Events</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Core Concept</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#7</span>
+        </div>
+        <h3>Q7: What are Synthetic Events in React, and how are they different from Native DOM Events?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> <strong>SyntheticEvent</strong> React ka ek cross-browser wrapper hai jo native browser DOM events (<code>MouseEvent</code>, <code>KeyboardEvent</code>) ko wrap karta hai.<br>
+            <strong>Why it exists:</strong> Har browser (Chrome, Safari, Firefox, Edge) ke native event handling me subtle differences hote hain. SyntheticEvents ensure karta hai ki aapka <code>onClick</code> har browser me exactly 100% same behave kare (W3C spec compliant).<br>
+            <strong>Event Delegation:</strong> React 17+ me React har ek individual button par listener lagane ke bajaye root container (<code>#root</code>) par ek single event listener lagata hai aur events ko bubble karke capture karta hai (huge memory optimization!).
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q8">
+        <div class="q-tag-row">
+            <span class="q-pill">Key Prop Importance</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Crucial Interview</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#8</span>
+        </div>
+        <h3>Q8: What is the 'key' prop in React, and why does using the array index as a key cause bugs?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> <code>key</code> ek special string attribute hai jo list items ko stable identity deta hai taaki React reconciliation diffing me pehchan sake ki kaun sa item add, remove ya reorder hua hai.<br>
+            <strong>⚠️ The Array Index Trap:</strong><br>
+            Agar tum <code>key={index}</code> use karoge aur user list ke top se ek item delete karega:<br>
+            Item #2 ka index ab 0 ho jayega! React sochega pehla item abhi bhi zinda hai aur sirf aakhri item gayab hua hai. Isse uncontrolled inputs (text boxes, checkboxes) wrong rows par chipak jaate hain aur state mismatch ho jati hai.<br>
+            <strong>Rule:</strong> Hamesha database ki unique id use karo: <code>key={todo.id}</code>.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q9">
+        <div class="q-tag-row">
+            <span class="q-pill">Fragments</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Basic Interview</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#9</span>
+        </div>
+        <h3>Q9: What are React Fragments (&lt;&gt;...&lt;/&gt;), and why should you use them over extra &lt;div&gt; tags?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> React me har component ko ek single root element return karna hota hai. Agar hum extra <code>&lt;div&gt;</code> lagayenge to:<br>
+            1. <strong>DOM Tree Bloat:</strong> Unnecessary nested HTML tags memory aur CSS styling ko pollute karte hain.<br>
+            2. <strong>CSS Grid / Flexbox Breakage:</strong> Flexbox me parent-child direct relationship chahiye hoti hai. Extra div lagane se layouts toot jaate hain.<br>
+            <strong>Solution:</strong> <code>&lt;React.Fragment&gt;...&lt;/React.Fragment&gt;</code> (ya shortcut <code>&lt;&gt;...&lt;/&gt;</code>) multiple children ko group karta hai <strong>bina real DOM me koi physical node add kiye</strong>!
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q10">
+        <div class="q-tag-row">
+            <span class="q-pill">Controlled vs Uncontrolled</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">High-Frequency</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#10</span>
+        </div>
+        <h3>Q10: What is the difference between Controlled and Uncontrolled Components in React forms?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong>
+            <ul>
+                <li><strong>Controlled:</strong> Input ki value React State se drive hoti hai (<code>value={name}</code> aur <code>onChange={e => setName(e.target.value)}</code>). Har keystroke par React render hota hai. Best for real-time validation, dynamic disabling.</li>
+                <li><strong>Uncontrolled:</strong> Input ki value browser DOM khud manage karta hai. React sirf form submit hone par <code>useRef()</code> ya <code>new FormData(e.target)</code> se value read karta hai. Best for massive forms (50+ inputs) jahan har keystroke par re-render nahi chahiye.</li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q11">
+        <div class="q-tag-row">
+            <span class="q-pill">Pure Components</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Core Concept</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#11</span>
+        </div>
+        <h3>Q11: What is a Pure Component in React, and what is its functional component equivalent?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> Class components me <code>React.PureComponent</code> automatically <code>shouldComponentUpdate()</code> implement karta hai jo props aur state ka <strong>shallow comparison</strong> karta hai. Agar props aur state same hain, to component re-render nahi hota.<br>
+            <strong>Functional Equivalent:</strong> Functional components me iska exact equivalent hai <strong><code>React.memo(Component)</code></strong>!
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q12">
+        <div class="q-tag-row">
+            <span class="q-pill">Portals</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 8 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#12</span>
+        </div>
+        <h3>Q12: What are React Portals (ReactDOM.createPortal), and what problem do they solve?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> <code>ReactDOM.createPortal(children, domNode)</code> aapko kisi component ke JSX ko uske parent DOM hierarchy se bahar kisi doosre DOM element (jaise <code>document.body</code>) me render karne deta hai.<br>
+            <strong>Real Problem Solved:</strong> Modals, Dialogs, Tooltips, aur Popups! Agar parent container par <code>overflow: hidden</code> ya <code>z-index: 1</code> laga hai, to modal screen par kat jata hai ya dhang se pop out nahi hota. Portal se modal <code>&lt;body&gt;</code> ke direct child me render hota hai lekin React context aur event bubbling parent ke sath intact rehti hai!
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q13">
+        <div class="q-tag-row">
+            <span class="q-pill">Children Prop</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Component Pattern</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#13</span>
+        </div>
+        <h3>Q13: What is the 'children' prop, and how does it enable the Component Composition pattern?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> <code>props.children</code> ek built-in prop hai jo kisi component ke opening aur closing tags ke beech likhe gaye content ko hold karta hai (e.g. <code>&lt;Modal&gt;&lt;p&gt;Hello&lt;/p&gt;&lt;/Modal&gt;</code>).<br>
+            <strong>Composition Benefit:</strong> Ye hume <strong>Slots Pattern</strong> implement karne deta hai. Inheritance ke bajaye hum ek generic container (Card, Dialog, Layout) banate hain aur child content dynamically inject karte hain, eliminating Prop Drilling!
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q14">
+        <div class="q-tag-row">
+            <span class="q-pill">Security / XSS</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Security Round</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#14</span>
+        </div>
+        <h3>Q14: How does React prevent Cross-Site Scripting (XSS) attacks by default?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong>
+            1. <strong>Automatic Escaping:</strong> Jab tum JSX me <code>&lt;h1&gt;{userInput}&lt;/h1&gt;</code> likhte ho, React har string ko render karne se pehle sanitize/escape karta hai. Agar input me <code>&lt;script&gt;alert('hacked')&lt;/script&gt;</code> hoga, to wo execute nahi hoga, balki safe plain text ban jayega.<br>
+            2. <strong>Symbol Security ($$typeof):</strong> React elements ke andar <code>$$typeof: Symbol.for('react.element')</code> hota hai. Hacker JSON injection se mock React component inject nahi kar sakta kyunki JSON me Symbol data type exist hi nahi karta.<br>
+            <em>Note:</em> React me XSS sirf tab possible hota hai agar tum galti se <code>dangerouslySetInnerHTML={{ __html: userInput }}</code> use kar lo bina sanitize kiye!
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q15">
+        <div class="q-tag-row">
+            <span class="q-pill">Reconciliation</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 10 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#15</span>
+        </div>
+        <h3>Q15: Explain the React Diffing Algorithm and its two main assumptions.</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> Theoretical tree diffing $O(n^3)$ hota hai. React ne isko linear $O(n)$ heuristic banaya do core assumptions par:
+            <ol>
+                <li><strong>Different Element Types:</strong> Agar do elements ka tag type alag hai (e.g. <code>&lt;div&gt;</code> replaced by <code>&lt;span&gt;</code>), React purane poore subtree ko destroy kar deta hai aur scratch se naya tree mount karta hai.</li>
+                <li><strong>Keys for List Identification:</strong> Dynamic lists me React <code>key</code> attribute dekh kar pehchanta hai ki kaun sa element sirf aage-peeche shift hua hai, taaki purane DOM nodes ko reuse kiya ja sake.</li>
+            </ol>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q16">
+        <div class="q-tag-row">
+            <span class="q-pill">Hooks Introduction</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Core Concept</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#16</span>
+        </div>
+        <h3>Q16: What are React Hooks, and why were they introduced in React 16.8?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> Hooks functions hain jo hume functional components ke andar state aur React lifecycle features use karne dete hain.<br>
+            <strong>Why Facebook introduced Hooks (Class Components ke 3 bado dard):</strong>
+            <ul>
+                <li><strong>Wrapper Hell:</strong> Logic reuse karne ke liye Higher Order Components (HOC) aur Render Props use karna padta tha, jisse JSX tree me 20 nested wrappers ban jaate the.</li>
+                <li><strong>Huge Confusing Lifecycles:</strong> Ek hi <code>componentDidMount</code> ke andar data fetch, event listener, aur timer set karna padta tha. Unrelated logic mix ho jata tha.</li>
+                <li><strong>'this' Keyword Confusion:</strong> Class methods me <code>this.handleClick.bind(this)</code> likhna padta tha, jo JS beginners ke liye bohot confusing tha.</li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q17">
+        <div class="q-tag-row">
+            <span class="q-pill">Rules of Hooks</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Crucial Interview</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#17</span>
+        </div>
+        <h3>Q17: What are the two Rules of Hooks, and WHAT happens under the hood if you violate them?</h3>
+        <div class="q-ans">
+            <strong>The Two Non-Negotiable Rules:</strong>
+            <ol>
+                <li><strong>Only Call Hooks at the Top Level:</strong> Kabhi bhi hooks ko <code>if</code> conditions, <code>for</code> loops, ya nested functions ke andar call mat karo.</li>
+                <li><strong>Only Call Hooks from React Functions:</strong> Sirf React functional components ya Custom Hooks ke andar call karo (plain JS utility functions me nahi).</li>
+            </ol>
+            <strong>Under-the-Hood Reason:</strong><br>
+            React Fiber node par hooks ka koi 'name' nahi hota! React hooks ko ek <strong>Singly Linked List</strong> me store karta hai (<code>fiber.memoizedState</code>) aur har render par sequentially pointer aage badhata hai (Hook 1 ➡️ Hook 2 ➡️ Hook 3). Agar tumne <code>if (condition) useState()</code> likha aur kisi render me wo condition false ho gayi, to poori linked list ka order hil jayega, aur React galat state ko galat variable me assign kar dega, crashing the app!
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q18">
+        <div class="q-tag-row">
+            <span class="q-pill">useState Batching</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 8 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#18</span>
+        </div>
+        <h3>Q18: What is Automatic Batching in React 18, and how did it work in React 17?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> <strong>Batching</strong> ka matlab hai multiple state updates ko ek sath group karke sirf <strong>ek single re-render</strong> trigger karna, taaki UI bar-bar na jhatke.<br>
+            <ul>
+                <li><strong>React 17 (Partial Batching):</strong> Sirf React event handlers (jaise <code>onClick</code>) ke andar batching hoti thi. Agar state updates <code>setTimeout</code>, <code>fetch().then()</code>, ya native promises ke andar the, to har ek <code>setState</code> alag se poora component re-render karta tha!</li>
+                <li><strong>React 18 (Automatic Batching):</strong> Chahe state updates promise me ho, timer me ho, ya event me ho — React 18 automatically sabhi updates ko group karke <strong>exactly 1 re-render</strong> karta hai!</li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q19">
+        <div class="q-tag-row">
+            <span class="q-pill">Stale State Trap</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">High-Frequency</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#19</span>
+        </div>
+        <h3>Q19: Why does calling setCount(count + 1) three times in a row only increment the count by 1?</h3>
+        <div class="q-ans">
+            <strong>Answer (The Stale Closure Trap):</strong><br>
+            <code>function handleClick() { setCount(count + 1); setCount(count + 1); setCount(count + 1); }</code><br>
+            Jab ye function render hota hai, closure ke andar <code>count</code> ki value <code>0</code> par lock hoti hai. Teeno calls actually <code>setCount(0 + 1)</code> run kar rahe hote hain! Aakhri call pehle do ko overwrite kar deta hai, isliye count sirf 1 banta hai.<br>
+            <strong>The Fix (Functional Updates):</strong><br>
+            <code>setCount(prev => prev + 1); setCount(prev => prev + 1); setCount(prev => prev + 1);</code><br>
+            Functional update me React queue me se fresh pending state pass karta hai, isliye count 3 banta hai.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q20">
+        <div class="q-tag-row">
+            <span class="q-pill">useEffect Lifecycles</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Core Concept</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#20</span>
+        </div>
+        <h3>Q20: How does useEffect mimic componentDidMount, componentDidUpdate, and componentWillUnmount?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong>
+            <ul>
+                <li><strong>componentDidMount (Initial mount only):</strong> Empty dependency array pass karo: <code>useEffect(() => { ... }, []);</code> (Sirf first render ke baad chalta hai).</li>
+                <li><strong>componentDidUpdate (On specific state/prop change):</strong> Array me variable pass karo: <code>useEffect(() => { ... }, [userId]);</code> (Sirf userId badalne par chalta hai).</li>
+                <li><strong>componentWillUnmount (Cleanup on destroy):</strong> Cleanup function return karo: <code>useEffect(() => { return () => { cleanupTimer(); }; }, []);</code>.</li>
+                <li><strong>Every Render (No array):</strong> Agar dependency array pass hi na karo: <code>useEffect(() => { ... });</code> (Har ek re-render ke baad chalega).</li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q21">
+        <div class="q-tag-row">
+            <span class="q-pill">useEffect Cleanup</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 8 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#21</span>
+        </div>
+        <h3>Q21: When does the useEffect cleanup function execute? Does it ONLY run on unmount?</h3>
+        <div class="q-ans">
+            <strong>Interview Trap Answer:</strong> NO! Cleanup function sirf unmount par nahi chalta! Ye do time chalta hai:
+            <ol>
+                <li><strong>Before EVERY re-run of the effect:</strong> Agar dependencies change hui hain, to React pehle <em>purane render ka cleanup</em> function chalata hai, taaki purane listeners ya subscriptions remove ho sakein, aur uske baad naya effect run karta hai.</li>
+                <li><strong>On Component Unmount:</strong> Jab component screen se destroy hota hai.</li>
+            </ol>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q22">
+        <div class="q-tag-row">
+            <span class="q-pill">Race Conditions</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 10 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#22</span>
+        </div>
+        <h3>Q22: How do you handle Network Race Conditions in useEffect using AbortController?</h3>
+        <div class="q-ans">
+            <strong>Problem:</strong> Agar user tab A click karta hai aur turant tab B click karta hai, network latency ki wajah se tab A ka response agar der se aaya, to screen par tab B ke bajaye tab A ka purana data chipak jayega (Race Condition).<br>
+            <strong>The Solution (AbortController):</strong><br>
+            <pre><code>useEffect(() => {
+    const controller = new AbortController();
+    fetch(`/api/data/${tabId}`, { signal: controller.signal })
+        .then(res => res.json())
+        .then(data => setData(data))
+        .catch(err => { if (err.name !== 'AbortError') console.error(err); });
+
+    return () => controller.abort(); // Cancels previous pending HTTP call!
+}, [tabId]);</code></pre>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q23">
+        <div class="q-tag-row">
+            <span class="q-pill">useMemo vs useCallback</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">High-Frequency</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#23</span>
+        </div>
+        <h3>Q23: What is the exact difference between useMemo and useCallback? Give practical examples.</h3>
+        <div class="q-ans">
+            <strong>Key Difference:</strong>
+            <ul>
+                <li><strong>useMemo:</strong> Function ke <strong>return value (calculated result)</strong> ko cache karta hai taaki heavy calculation dobara na chale.<br>
+                <code>const totalSalary = useMemo(() => computeHeavyMath(list), [list]);</code></li>
+                <li><strong>useCallback:</strong> Function ke <strong>definition (memory reference)</strong> ko cache karta hai taaki child component ko naya function reference na mile aur child re-render hone se bach sake.<br>
+                <code>const handleDelete = useCallback((id) => { deleteItem(id); }, []);</code></li>
+            </ul>
+            <em>Simple Rule:</em> <code>useCallback(fn, deps)</code> is equivalent to <code>useMemo(() => fn, deps)</code>!
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q24">
+        <div class="q-tag-row">
+            <span class="q-pill">useRef vs useState</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Core Concept</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#24</span>
+        </div>
+        <h3>Q24: What is the difference between useRef and useState? When should you use which?</h3>
+        <div class="q-ans">
+            <table class="mechanics-table">
+                <thead><tr><th>Dimension</th><th>useState</th><th>useRef</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Re-render Trigger</strong></td><td>Updating state triggers a <strong>re-render</strong> of the component</td><td>Mutating <code>ref.current = newVal</code> <strong>DOES NOT trigger a re-render</strong></td></tr>
+                    <tr><td><strong>Persistence</strong></td><td>Persists across renders</td><td>Persists across renders</td></tr>
+                    <tr><td><strong>Direct DOM Access</strong></td><td>Cannot directly hold real DOM elements</td><td>Hold direct reference to real DOM nodes (<code>&lt;input ref={inputRef} /&gt;</code>)</td></tr>
+                </tbody>
+            </table>
+            <em>Use Cases for useRef:</em> Storing timer IDs (<code>setInterval</code>), previous props/state, tracking render counts, managing input focus/scroll.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q25">
+        <div class="q-tag-row">
+            <span class="q-pill">useLayoutEffect</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 10 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#25</span>
+        </div>
+        <h3>Q25: What is the exact difference between useLayoutEffect and useEffect? When should useLayoutEffect be used?</h3>
+        <div class="q-ans">
+            <strong>Execution Timing Difference:</strong>
+            <ul>
+                <li><strong>useLayoutEffect:</strong> DOM update hone ke turant baad <strong>SYNCHRONOUSLY</strong> chalta hai, <em>browser ke screen par paint karne se pehle</em>. Ye browser paint ko block karta hai.</li>
+                <li><strong>useEffect:</strong> Browser ke screen par pixels paint karne ke baad <strong>ASYNCHRONOUSLY</strong> chalta hai. Ye UI ko block nahi karta.</li>
+            </ul>
+            <strong>When to use useLayoutEffect:</strong> Sirf tab jab aapko DOM measure karke (e.g. tooltip height, modal position, scroll offset) turant styles adjust karni ho, taaki user ko aadhi second ka visual flicker / UI jump na dikhe.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q26">
+        <div class="q-tag-row">
+            <span class="q-pill">useContext Trap</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 9 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#26</span>
+        </div>
+        <h3>Q26: What is the Context Re-render Pitfall, and how do you optimize it?</h3>
+        <div class="q-ans">
+            <strong>The Pitfall:</strong> Jab Context Provider ki <code>value</code> object update hoti hai, to <strong>har wo component jo useContext(MyContext) call karta hai re-render hota hai</strong>, chahe wo us context ki sirf ek chhoti si un-changed property consume kar raha ho! <code>React.memo</code> bhi is re-render ko rok nahi sakta.<br>
+            <strong>Optimization (Context Splitting Pattern):</strong><br>
+            Frequently changing state (e.g. active tab, theme) aur rarely changing state/dispatch functions (e.g. <code>login, logout</code>) ko do alag-alag Contexts me split karo (<code>AuthDataContext</code> and <code>AuthDispatchContext</code>).
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q27">
+        <div class="q-tag-row">
+            <span class="q-pill">useReducer vs useState</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Architectural</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#27</span>
+        </div>
+        <h3>Q27: When should you prefer useReducer over useState?</h3>
+        <div class="q-ans">
+            <strong>Prefer useReducer when:</strong>
+            <ol>
+                <li>Jab state logic complex ho aur ek state doosre multiple state fields par depend karti ho (e.g. multi-step wizard form, checkout cart).</li>
+                <li>Jab agla state purane state ke complex transitions par depend karta ho (finite state machine: <code>IDLE -> LOADING -> SUCCESS / ERROR</code>).</li>
+                <li>Testing: Reducer pure function hota hai jise bina kisi React UI ke independently unit test kiya ja sakta hai.</li>
+            </ol>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q28">
+        <div class="q-tag-row">
+            <span class="q-pill">React 18 Transitions</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 12 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#28</span>
+        </div>
+        <h3>Q28: What is useTransition in React 18, and how does it prevent UI freezing during heavy updates?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> <code>useTransition()</code> ek hook hai jo aapko kisi state update ko <strong>Non-Urgent Transition</strong> mark karne deta hai.<br>
+            React updates ko 2 categories me baant-ta hai:
+            <ul>
+                <li><strong>Urgent Updates:</strong> Typing, clicking, buttons (needs instant response).</li>
+                <li><strong>Transition Updates:</strong> Large chart rendering, 5,000 item list filtering.</li>
+            </ul>
+            Jab aap <code>startTransition(() => setList(filtered))</code> likhte ho, React background me list filter karta hai. Agar user beech me input me koi doosra letter type kar deta hai, to React transition ko <strong>interrupt / pause</strong> kar deta hai taaki input field smooth rahe!
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q29">
+        <div class="q-tag-row">
+            <span class="q-pill">Custom Hooks</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Core Skill</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#29</span>
+        </div>
+        <h3>Q29: What is a Custom Hook, and what are the naming conventions and rules for creating one?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> Custom Hook ek normal JavaScript function hota hai jiske andar doosre React hooks (<code>useState</code>, <code>useEffect</code>) use hote hain. Iska purpose component se stateful logic extract karke reusable banana hota hai.<br>
+            <strong>Conventions:</strong>
+            1. Name hamesha <strong><code>use</code></strong> se start hona chahiye (e.g. <code>useFetch</code>, <code>useAuth</code>) taaki React ka ESLint linter enforce kar sake ki Rules of Hooks follow ho rahe hain.<br>
+            2. Har component jo custom hook call karta hai, use state ki <strong>apni independent copy</strong> milti hai (state shared nahi hota, sirf logic shared hota hai!).
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="patterns" id="q30">
+        <div class="q-tag-row">
+            <span class="q-pill">Error Boundaries</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Crucial Interview</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#30</span>
+        </div>
+        <h3>Q30: What are Error Boundaries in React, and why can't they be written as Functional Components?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> Error Boundary ek React component hai jo apne child tree me aane wale JS errors ko catch karta hai aur white blank screen ke bajaye ek sundar Fallback UI dikhata hai.<br>
+            <strong>Why it MUST be a Class Component:</strong> Error boundary banne ke liye component ko do specific lifecycle methods implement karne hote hain:
+            <ul>
+                <li><code>static getDerivedStateFromError(error)</code>: State update karta hai fallback UI render karne ke liye.</li>
+                <li><code>componentDidCatch(error, errorInfo)</code>: Error ko Sentry ya monitoring service me log karta hai.</li>
+            </ul>
+            React team ne abhi tak in dono lifecycles ka koi functional hook release nahi kiya hai, isliye Error Boundaries aaj bhi class components me hi likhe jaate hain!
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="patterns" id="q31">
+        <div class="q-tag-row">
+            <span class="q-pill">HOC vs Custom Hooks</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Architecture</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#31</span>
+        </div>
+        <h3>Q31: What is a Higher-Order Component (HOC), and why have Custom Hooks largely replaced them?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> HOC ek function hai jo ek component ko argument me leta hai aur naye data/props ke sath ek wrapped component return karta hai: <code>const Enhanced = withAuth(ProfilePage);</code>.<br>
+            <strong>Why Custom Hooks replaced HOCs:</strong>
+            1. <strong>Props Collision:</strong> HOC props inject karta hai jisse pata nahi chalta kaun sa prop kahan se aaya, aur prop names overwrite ho jaate the.<br>
+            2. <strong>Wrapper Hell:</strong> 4 HOC lagane se React DevTools me 40 nested layers ban jaati thi.<br>
+            3. Custom Hooks bina kisi JSX wrapping ke clean, direct state return karte hain.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="router" id="q32">
+        <div class="q-tag-row">
+            <span class="q-pill">React Router v6</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Routing Master</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#32</span>
+        </div>
+        <h3>Q32: What is the role of <Outlet /> in React Router v6, and how does nested routing work?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> <code>&lt;Outlet /&gt;</code> ek placeholder component hai jo parent layout route ke andar child route ke component ko render karta hai.<br>
+            <strong>Why it's awesome:</strong> Agar tumhara <code>/dashboard</code> par Header aur Sidebar hai, to <code>/dashboard/settings</code> aur <code>/dashboard/profile</code> par navigate karne par Header aur Sidebar <strong>KABHI remount ya re-render nahi hote!</strong> Sirf <code>&lt;Outlet /&gt;</code> ke andar ka chhota sa page swap hota hai, saving huge CPU cycles.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="router" id="q33">
+        <div class="q-tag-row">
+            <span class="q-pill">Protected Routes</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Security / Routing</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#33</span>
+        </div>
+        <h3>Q33: How do you implement Protected Routes and Auth Guards in React Router v6?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> Ek wrapper component banaya jata hai jo authentication token check karta hai:
+            <pre><code>function ProtectedRoute({ isAuthenticated }) {
+    const location = useLocation();
+    if (!isAuthenticated) {
+        // Redirect to login while saving current location in state
+        return &lt;Navigate to="/login" state={{ from: location }} replace /&gt;;
+    }
+    return &lt;Outlet /&gt;; // Renders child pages
+}</code></pre>
+            User login hone ke baad wapas usi URL par redirect ho sakta hai jahan wo pehle jaane ki koshish kar raha tha!
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="redux" id="q34">
+        <div class="q-tag-row">
+            <span class="q-pill">Redux Core</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">State Management</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#34</span>
+        </div>
+        <h3>Q34: What are the 3 Core Principles of Redux, and what problem does it solve?</h3>
+        <div class="q-ans">
+            <strong>The 3 Unbreakable Principles of Redux:</strong>
+            <ol>
+                <li><strong>Single Source of Truth:</strong> Poori application ka global state ek single JavaScript object tree ke andar (Store) store hota hai.</li>
+                <li><strong>State is Read-Only:</strong> State ko direct modify nahi kar sakte. State change karne ka ek hi rasta hai: <em>Dispatch an Action</em> (plain object describing what happened: <code>{ type: 'ADD_ITEM', payload: item }</code>).</li>
+                <li><strong>Changes are made with Pure Functions:</strong> Actions ko accept karke naya state calculate karne ka kaam <strong>Reducers</strong> (pure functions) karte hain. (No side effects, no mutations).</li>
+            </ol>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="redux" id="q35">
+        <div class="q-tag-row">
+            <span class="q-pill">Redux Toolkit (RTK)</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 8 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#35</span>
+        </div>
+        <h3>Q35: Why was Redux Toolkit (RTK) introduced, and why does it allow writing state.count++ in reducers?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong> Legacy Redux me bohot zyada boilerplate tha (action types, action creators, immutable spread operators, switch statements). <strong>Redux Toolkit (RTK)</strong> <code>createSlice()</code> introduce karta hai jo ye sab automate kar deta hai.<br>
+            <strong>Why 'state.count++' works in RTK:</strong><br>
+            RTK internally <strong>Immer</strong> library use karta hai! Jab aap <code>state.count++</code> likhte ho, Immer ek temporary draft state maintain karta hai aur background me ek completely new, safely cloned immutable object generate kar deta hai. Code likhne me simple lagta hai par immutability 100% preserve rehti hai!
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="redux" id="q36">
+        <div class="q-tag-row">
+            <span class="q-pill">Zustand vs Redux</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Modern Frontend</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#36</span>
+        </div>
+        <h3>Q36: Why are top modern frontend teams preferring Zustand over Redux?</h3>
+        <div class="q-ans">
+            <strong>Key Advantages of Zustand:</strong>
+            <ul>
+                <li><strong>Zero Boilerplate:</strong> Na koi <code>&lt;Provider&gt;</code> wrapper chahiye, na complex slices/reducers. Ek simple hook me store ban jata hai: <code>const useStore = create((set) => ({ count: 0 }));</code>.</li>
+                <li><strong>Fine-Grained Selectors:</strong> <code>useStore(s => s.user)</code> likhne par component sirf user change hone par render hoga.</li>
+                <li><strong>Tiny Bundle Size:</strong> Redux Toolkit (~12KB) ke muqable Zustand sirf ~1KB hai!</li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="redux" id="q37">
+        <div class="q-tag-row">
+            <span class="q-pill">React Query vs Redux</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">High-Frequency</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#37</span>
+        </div>
+        <h3>Q37: What is the difference between Client State and Server State? Why should you not store API data in Redux?</h3>
+        <div class="q-ans">
+            <strong>Key Difference:</strong>
+            <ul>
+                <li><strong>Client State:</strong> Jo sirf browser ke paas hota hai (e.g. modal open hai ya nahi, dark mode toggle). Iske liye Zustand / Redux best hai.</li>
+                <li><strong>Server State:</strong> Jo backend database me rehta hai aur HTTP se fetch hota hai (e.g. user list, products). Ye remote hota hai, asynchronous hota hai, aur doosre users ke changes se stale ho sakta hai.</li>
+            </ul>
+            <strong>Why TanStack React Query is better for Server State:</strong> Agar tum Redux me API data rakhoge to caching, background refetching, deduplicating multiple identical calls, loading/error states, aur pagination ka 200 lines ka boilerplate khud likhna padega. React Query ye sab 1 line me handle karta hai (<code>useQuery(['jobs'], fetchJobs)</code>)!
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="perf" id="q38">
+        <div class="q-tag-row">
+            <span class="q-pill">Re-rendering Triggers</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Performance Core</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#38</span>
+        </div>
+        <h3>Q38: What are the 4 triggers that cause a React component to re-render?</h3>
+        <div class="q-ans">
+            <strong>The 4 Triggers:</strong>
+            <ol>
+                <li><strong>Internal State Change:</strong> <code>useState</code> ya <code>useReducer</code> ka setter call hone par.</li>
+                <li><strong>Parent Component Re-render:</strong> Jab parent render hota hai, to by default <em>uske saare children recursively render hote hain</em>, chahe unke props change hue ho ya na hue ho!</li>
+                <li><strong>Props Change:</strong> Parent se aane wale props ki value badalna.</li>
+                <li><strong>Context Value Change:</strong> Context Provider ki <code>value</code> change hone par har consumer render hota hai.</li>
+            </ol>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="perf" id="q39">
+        <div class="q-tag-row">
+            <span class="q-pill">React.memo Gotcha</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 10 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#39</span>
+        </div>
+        <h3>Q39: Explain why passing an inline object or inline function breaks React.memo.</h3>
+        <div class="q-ans">
+            <strong>The Mechanism:</strong> <code>React.memo</code> props ka <strong>shallow comparison (===)</strong> karta hai.<br>
+            In JavaScript: <code>{ a: 1 } === { a: 1 }</code> is <strong>FALSE</strong>! Kyunki har render par memory heap par naya reference pointer banta hai.<br>
+            Agar parent har render par <code>&lt;Child user={{ id: 1 }} onClick={() => {}} /&gt;</code> bhej raha hai, to React.memo dekhega ki dono props ke memory addresses alag hain aur child ko zabardasti re-render kar dega! Isse bachne ke liye object ko <code>useMemo</code> aur function ko <code>useCallback</code> me wrap karna mandatory hai.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="perf" id="q40">
+        <div class="q-tag-row">
+            <span class="q-pill">Virtualization</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">High Scale / 14 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#40</span>
+        </div>
+        <h3>Q40: What is List Virtualization (Windowing), and how does react-window optimize massive lists?</h3>
+        <div class="q-ans">
+            <strong>The Scale Problem:</strong> 10,000 DOM elements render karne par browser 800MB RAM use karta hai aur scroll karte waqt 60FPS se gir kar 5FPS ho jata hai.<br>
+            <strong>Virtualization Solution:</strong> User ke screen viewport me ek time par sirf 10–15 rows dikh sakti hain. Virtualization library (<code>react-window</code>) sirf un 15 rows ko physical DOM me render karti hai. Jaise-jaise user scroll karta hai, upar se nikle hue DOM nodes ko recycle karke niche render kar diya jata hai. <strong>DOM node count hamesha ~15 par constant rehta hai, chahe list me 10 Lakh items kyun na hon!</strong>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="perf" id="q41">
+        <div class="q-tag-row">
+            <span class="q-pill">Debounce vs Throttle</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Core Interview</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#41</span>
+        </div>
+        <h3>Q41: What is the difference between Debouncing and Throttling? Give real frontend use cases.</h3>
+        <div class="q-ans">
+            <strong>Key Difference:</strong>
+            <ul>
+                <li><strong>Debouncing:</strong> Function tab tak execute nahi hoga jab tak user events trigger karna band karke <code>X ms</code> ka pause na le le. Har naye event par purana timer reset ho jata hai.<br>
+                <em>Use Case:</em> <strong>Search Bar autocomplete!</strong> User ke type karne ke 400ms baad ek single API call jaati hai.</li>
+                <li><strong>Throttling:</strong> Ek fixed time interval (e.g. 200ms) me function ko at most <strong>sirf ek baar</strong> execute hone deta hai, chahe user 1,000 baar click ya scroll kare.<br>
+                <em>Use Case:</em> <strong>Infinite Scroll / Window Resize listener!</strong> Scroll event har millisecond fire hota hai, throttling se browser choke nahi hota.</li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="rsc" id="q42">
+        <div class="q-tag-row">
+            <span class="q-pill">SSR vs CSR vs SSG</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Next.js Architecture</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#42</span>
+        </div>
+        <h3>Q42: Explain the architectural difference between CSR, SSR, SSG, and ISR.</h3>
+        <div class="q-ans">
+            <table class="mechanics-table">
+                <thead><tr><th>Type</th><th>HTML Generation Time</th><th>Performance</th><th>SEO Capability</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>CSR</strong> (Vite / CRA)</td><td>Browser downloads empty HTML shell, renders via JS</td><td>First load slow, navigation fast</td><td>Poor (search crawlers struggle)</td></tr>
+                    <tr><td><strong>SSR</strong> (Next.js getServerSideProps)</td><td>On <strong>every incoming request</strong> on the server</td><td>Dynamic, fresh data</td><td>⭐⭐⭐⭐⭐ Excellent</td></tr>
+                    <tr><td><strong>SSG</strong> (Next.js getStaticProps)</td><td>At <strong>Build Time</strong> once</td><td>Blazing fast (served from CDN)</td><td>⭐⭐⭐⭐⭐ Excellent</td></tr>
+                    <tr><td><strong>ISR</strong> (revalidate: 60)</td><td>Static build + background regeneration on timer</td><td>Blazing fast + stays updated</td><td>⭐⭐⭐⭐⭐ Perfect for large e-commerce</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="rsc" id="q43">
+        <div class="q-tag-row">
+            <span class="q-pill">Hydration Errors</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Next.js Debugging</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#43</span>
+        </div>
+        <h3>Q43: What is Hydration, and what causes the 'Hydration failed because the initial UI does not match' error?</h3>
+        <div class="q-ans">
+            <strong>What is Hydration:</strong> Server se aane wale static HTML par React ka VDOM match karke interactive event listeners (clicks, inputs) chipkane ke process ko <strong>Hydration</strong> kehte hain.<br>
+            <strong>Why the Error Happens:</strong> Agar server par generate hua HTML aur client browser par first render ka VDOM match NA kare!<br>
+            <em>Common Triggers:</em>
+            1. Client-only data: <code>new Date().toLocaleTimeString()</code> ya <code>Math.random()</code>. Server ka time aur client ka time alag hota hai!<br>
+            2. Browser globals: Server me <code>window</code> ya <code>localStorage</code> nahi hota.<br>
+            3. Invalid HTML nesting: <code>&lt;p&gt;&lt;div&gt;Hello&lt;/div&gt;&lt;/p&gt;</code> (browser div ko p ke bahar push kar deta hai, breaking hydration).<br>
+            <em>The Fix:</em> Aise code ko <code>useEffect()</code> ke andar run karo jo sirf browser mount ke baad execute ho!
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="rsc" id="q44">
+        <div class="q-tag-row">
+            <span class="q-pill">React Server Components</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 14-18 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#44</span>
+        </div>
+        <h3>Q44: What are React Server Components (RSC), and how do they differ from traditional Client Components?</h3>
+        <div class="q-ans">
+            <strong>Key Answer:</strong> React Server Components (Next.js 13+ App Router default) <strong>sirf aur sirf server par run hote hain</strong>.<br>
+            <ul>
+                <li><strong>Zero Client Bundle Size:</strong> RSC ka JS code browser ko kabhi ship nahi hota! Sirf unka generated HTML/JSON stream browser ko milta hai, reducing bundle size by 50%+.</li>
+                <li><strong>Direct Backend Access:</strong> RSC ke andar tum directly <code>const users = await db.query('SELECT * FROM users');</code> likh sakte ho bina kisi API route ya fetch call ke!</li>
+                <li><strong>When to use 'use client':</strong> Jab aapko user interactivity chahiye (<code>onClick</code>, <code>onChange</code>), React state (<code>useState</code>, <code>useReducer</code>), ya browser APIs (<code>window</code>, <code>localStorage</code>).</li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q45">
+        <div class="q-tag-row">
+            <span class="q-pill">DOM Comparison</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Core Interview</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#45</span>
+        </div>
+        <h3>Q45: What is the difference between Virtual DOM, Shadow DOM, and Real DOM?</h3>
+        <div class="q-ans">
+            <strong>The 3 DOMs Decoded:</strong>
+            <ul>
+                <li><strong>Real DOM:</strong> Browser ka actual tree structure (HTML elements). Real DOM me direct manipulation (jaise <code>document.getElementById().appendChild()</code>) bohot slow hota hai kyunki browser ko poora Layout, Reflow, aur Repaint calculate karna padta hai.</li>
+                <li><strong>Virtual DOM (VDOM):</strong> React dwara banaya gaya lightweight in-memory JavaScript object tree. React changes ko pehle VDOM me calculate karta hai (Diffing) aur minimum Real DOM updates batch karta hai.</li>
+                <li><strong>Shadow DOM:</strong> Browser ka native feature (Web Components) jo DOM tree ke ek hisse ko encapsulate (isolate) karta hai. Shadow DOM ke andar ke CSS styles bahar ke elements ko affect nahi karte (jaise <code>&lt;video&gt;</code> ke native controls).</li>
+            </ul>
+            <strong>Summary:</strong> Real DOM = Actual building, Virtual DOM = Blueprint in memory, Shadow DOM = Gated isolated room inside the building.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q46">
+        <div class="q-tag-row">
+            <span class="q-pill">setState Internals</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Deep Concept</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#46</span>
+        </div>
+        <h3>Q46: Why is setState() asynchronous in React? Can it ever be forced to be synchronous?</h3>
+        <div class="q-ans">
+            <strong>Why Asynchronous:</strong>
+            <ol>
+                <li><strong>Performance Batching:</strong> Agar tum loop me 50 baar <code>setState</code> call karo, to browser 50 baar paint karega to app hang ho jayegi. Asynchronous rakhne se React sabhi updates ko combine karke 1 render me nipta deta hai.</li>
+                <li><strong>Internal Consistency:</strong> Props aur State dono synchronous hone chahiye. Agar Parent ka <code>setState</code> immediately synchronous ho gaya, to Child ko updated Props tab tak nahi milenge jab tak poora tree re-render na ho jaye, creating inconsistent state bugs.</li>
+            </ol>
+            <strong>Can it be forced synchronous?</strong><br>
+            React 18 me <code>flushSync</code> API se tum state update ko synchronously execute karne ke liye force kar sakte ho:<br>
+            <code>import { flushSync } from 'react-dom';<br>
+            flushSync(() => { setCount(count + 1); }); // DOM immediately updates</code>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q47">
+        <div class="q-tag-row">
+            <span class="q-pill">Fiber Architecture</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 12-16 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#47</span>
+        </div>
+        <h3>Q47: What is React Fiber and how does it differ from the old Stack Reconciler?</h3>
+        <div class="q-ans">
+            <strong>The Big Evolution (React 15 vs React 16+):</strong>
+            <ul>
+                <li><strong>Old Stack Reconciler (React 15):</strong> Recursive algorithm use karta tha. Ek baar tree diffing shuru hui, to poora component tree process hone tak JavaScript main thread block ho jata tha. Agar tree bada ho, to user clicks aur keyboard input freeze ho jate the (Frame drops / 60 FPS drop).</li>
+                <li><strong>Fiber Reconciler (React 16+):</strong> Reconciler ko completely re-write kiya gaya. Fiber ek <strong>virtual stack frame</strong> hai. Har component ek 'Fiber Node' ban jata hai jo <strong>Doubly-Linked List</strong> structure me connected rehta hai (<code>child</code>, <code>sibling</code>, <code>return</code> pointers).</li>
+            </ul>
+            <strong>Superpowers of Fiber:</strong>
+            <ul>
+                <li><strong>Time-Slicing:</strong> React heavy work ko chhote-chhote 5ms chunks me todta hai. Agar user click kare, to render ko PAUSE karke pehle click handle karta hai, fir wapas resume karta hai!</li>
+                <li><strong>Priority-based Scheduling:</strong> Animations aur User Typing ko highest priority milti hai, jabki background data fetch ko lowest.</li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q48">
+        <div class="q-tag-row">
+            <span class="q-pill">StrictMode Internals</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Common Trap</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#48</span>
+        </div>
+        <h3>Q48: Why do components render twice in React StrictMode, and does this happen in production?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong><br>
+            Jab tumhara app <code>&lt;React.StrictMode&gt;</code> ke andar wrap hota hai, to <strong>Development Mode me React har component ko intentionally 2 baar render karta hai aur effects ko Mount ➡️ Unmount ➡️ Re-mount karta hai.</strong><br>
+            <strong>Purpose (Why Facebook did this):</strong>
+            <ol>
+                <li>Pure Functions check karne ke liye: Agar tumne render function ke andar koi mutable global variable change kiya hai (impure side-effect), to double render hone par bug turant pakad me aa jayega.</li>
+                <li>Missing Cleanup pakadne ke liye: Agar <code>useEffect</code> me <code>setInterval</code> ya WebSocket listener lagaya aur cleanup return karna bhool gaye, to double mount hone par duplicate listeners expose ho jayenge.</li>
+            </ol>
+            <strong>Production Reality:</strong> Ye behavior <strong>production builds me ZERO effect</strong> karta hai (Production me component sirf 1 baar hi render hota hai).
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q49">
+        <div class="q-tag-row">
+            <span class="q-pill">Prop Drilling</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Architecture</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#49</span>
+        </div>
+        <h3>Q49: What is Prop Drilling, what problems does it cause, and what are 3 ways to solve it?</h3>
+        <div class="q-ans">
+            <strong>Prop Drilling Definiton:</strong><br>
+            Jab kisi state ko deep child component tak pahunchane ke liye beech ke un components se pass karna pade jinhe us data se koi lena-dena nahi hota (e.g., App ➡️ Layout ➡️ Sidebar ➡️ UserMenu ➡️ Avatar).<br>
+            <strong>3 Production Solutions:</strong>
+            <ol>
+                <li><strong>Component Composition (Best & Simple):</strong> Intermediate component ko prop dene ke bajay <code>children</code> ya slot prop pass karo (<code>&lt;Sidebar&gt;&lt;Avatar user={user} /&gt;&lt;/Sidebar&gt;</code>).</li>
+                <li><strong>React Context API:</strong> Low-to-medium frequency data (Theme, Auth, Language) ke liye <code>createContext</code> + <code>useContext</code> use karo.</li>
+                <li><strong>External State Management:</strong> High-frequency ya complex state ke liye modern store jaise <strong>Zustand</strong> use karo.</li>
+            </ol>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="patterns" id="q50">
+        <div class="q-tag-row">
+            <span class="q-pill">Code Splitting</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Performance</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#50</span>
+        </div>
+        <h3>Q50: What are React.lazy and Suspense, and how do they work together for Code Splitting?</h3>
+        <div class="q-ans">
+            <strong>Problem:</strong> Standard <code>import Dashboard from './Dashboard'</code> poore dashboard code ko main <code>bundle.js</code> me pack kar deta hai, jisse initial page load slow ho jata hai.<br>
+            <strong>Solution (Dynamic Import + Suspense):</strong>
+            <pre><code>import React, { Suspense, lazy } from 'react';
+
+// Bundle is loaded over network ONLY when user navigates to this component!
+const HeavyAdminDashboard = lazy(() => import('./HeavyAdminDashboard'));
+
+function App() {
+  return (
+    &lt;Suspense fallback={&lt;div className="spinner"&gt;Loading Dashboard...&lt;/div&gt;}&gt;
+      &lt;HeavyAdminDashboard /&gt;
+    &lt;/Suspense&gt;
+  );
+}</code></pre>
+            <strong>Under-the-Hood:</strong> Webpack/Vite is code ko alag `.chunk.js` file me divide kar deta hai. Jab <code>&lt;Suspense&gt;</code> render hota hai, agar chunk download nahi hua hai to promise suspend hoti hai aur fallback dikhta hai.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q51">
+        <div class="q-tag-row">
+            <span class="q-pill">forwardRef & Imperative</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Intermediate / 8-10 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#51</span>
+        </div>
+        <h3>Q51: What is React.forwardRef, and how does useImperativeHandle restrict child component exposure?</h3>
+        <div class="q-ans">
+            <strong>Concept:</strong> By default, React functional components <code>ref</code> prop accept nahi karte (error throw hota hai). <code>React.forwardRef</code> parent component ko permission deta hai ki wo child ke internal DOM node ka direct reference le sake.<br>
+            <strong>useImperativeHandle (Encapsulation Guard):</strong><br>
+            Agar tum nahi chahte ki parent child ka poora raw DOM node manipulate kare, to tum <code>useImperativeHandle</code> use karke sirf specific methods expose karte ho:
+            <pre><code>import { forwardRef, useImperativeHandle, useRef } from 'react';
+
+const CustomInput = forwardRef((props, ref) => {
+  const inputRef = useRef();
+
+  useImperativeHandle(ref, () => ({
+    focusInput: () => inputRef.current.focus(),
+    clearInput: () => { inputRef.current.value = ''; }
+  }));
+
+  return &lt;input ref={inputRef} /&gt;;
+});
+
+// Parent can only call ref.current.focusInput() and cannot corrupt other DOM properties!</code></pre>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q52">
+        <div class="q-tag-row">
+            <span class="q-pill">useId Hook</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">React 18 Features</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#52</span>
+        </div>
+        <h3>Q52: What is the useId hook in React 18, and why shouldn't you use Math.random() for accessibility IDs?</h3>
+        <div class="q-ans">
+            <strong>The Hydration Trap:</strong><br>
+            Agar tum unique HTML <code>id</code> generate karne ke liye <code>const id = Math.random()</code> use karoge:
+            <ul>
+                <li>Server par Node.js render karega: <code>id="input-0.4821"</code></li>
+                <li>Client browser me JS render karega: <code>id="input-0.9324"</code></li>
+                <li><strong>Result:</strong> React throwing <em>Hydration Mismatch Error</em>! Server aur Client ka HTML alag ho gaya!</li>
+            </ul>
+            <strong>Solution (useId):</strong><br>
+            <code>const id = useId();</code><br>
+            React 18 ka <code>useId</code> component tree ke exact hierarchical position se deterministic ID banata hai (e.g. <code>:r0:</code>, <code>:r1:</code>) jo Server aur Client dono par 100% identical rehti hai!
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q53">
+        <div class="q-tag-row">
+            <span class="q-pill">useDeferredValue</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 12-14 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#53</span>
+        </div>
+        <h3>Q53: What is useDeferredValue in React 18, and how is it different from traditional debouncing?</h3>
+        <div class="q-ans">
+            <strong>Debounce vs useDeferredValue:</strong>
+            <ul>
+                <li><strong>Debounce (setTimeout):</strong> Ek fixed artificial delay (e.g., 300ms) lagata hai. Fast computer ho ya slow computer, user ko hamesha 300ms wait karna hi padega.</li>
+                <li><strong>useDeferredValue:</strong> <strong>Zero artificial delay!</strong> Ye browser ke idle time par depend karta hai.
+                    <ul>
+                        <li>Agar user fast machine par hai aur main thread free hai, to update immediately ho jayega (0ms delay).</li>
+                        <li>Agar user slow phone par hai aur CPU busy hai, to React user input ko priority dega aur deferred value ko frame available hone par hi update karega.</li>
+                    </ul>
+                </li>
+            </ul>
+            <pre><code>const [query, setQuery] = useState('');
+const deferredQuery = useDeferredValue(query);
+// query updates immediately on keystroke; heavy list renders with deferredQuery</code></pre>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q54">
+        <div class="q-tag-row">
+            <span class="q-pill">useSyncExternalStore</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Senior / 14-18 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#54</span>
+        </div>
+        <h3>Q54: What is useSyncExternalStore, and what problem ('tearing') does it solve in concurrent React?</h3>
+        <div class="q-ans">
+            <strong>What is Tearing?</strong><br>
+            React 18 Concurrent mode me render ko beech me interrupt (pause) kar sakta hai. Maan lo React ne Component A ko render kiya jab window width 1000px thi. Tabhi user ne browser window resize ki (width = 800px). Ab jab React ne Component B render kiya, to store ki value change ho chuki thi! Ek hi frame me screen par aadha UI 1000px dikhayega aur aadha 800px — is graphical glitch ko <strong>Tearing</strong> kehte hain.<br>
+            <strong>The Fix:</strong><br>
+            <code>useSyncExternalStore</code> external state stores (Zustand, Redux, <code>window.navigator.onLine</code>) ko React ke concurrent scheduler ke sath safely sync karta hai aur tearing completely prevent karta hai.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q55">
+        <div class="q-tag-row">
+            <span class="q-pill">Data Flow</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Fresher / Core</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#55</span>
+        </div>
+        <h3>Q55: How do you pass data from a Child component back to its Parent component in React?</h3>
+        <div class="q-ans">
+            <strong>Callback Props Pattern:</strong><br>
+            React me data flow unidirectional hota hai (Parent ➡️ Child via Props). Child se Parent me data bhejne ke liye Parent ek <strong>callback function</strong> define karke Child ko as prop pass karta hai, aur Child us function ko data arguments ke sath trigger karta hai:
+            <pre><code>// Parent Component
+function Parent() {
+  const [selectedCity, setSelectedCity] = useState('');
+
+  const handleCitySelect = (cityName) => {
+    setSelectedCity(cityName);
+  };
+
+  return &lt;CityPicker onSelectCity={handleCitySelect} /&gt;;
+}
+
+// Child Component
+function CityPicker({ onSelectCity }) {
+  return (
+    &lt;button onClick={() => onSelectCity('Mumbai')}&gt;
+      Select Mumbai
+    &lt;/button&gt;
+  );
+}</code></pre>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q56">
+        <div class="q-tag-row">
+            <span class="q-pill">Element API</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Core Concept</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#56</span>
+        </div>
+        <h3>Q56: What is the difference between React.createElement and React.cloneElement?</h3>
+        <div class="q-ans">
+            <strong>Key Differences:</strong>
+            <ul>
+                <li><strong>React.createElement(type, props, ...children):</strong> Ek brand new React Element object create karta hai scratch se (JSX behind the scenes isi ko call karta hai).</li>
+                <li><strong>React.cloneElement(element, [props], [...children]):</strong> Ek existing already-created element ko clone karta hai aur usme naye props ya children merge karta hai bina original element ko mutate kiye.</li>
+            </ul>
+            <strong>Real-world Use Case:</strong> UI libraries me jaise <code>&lt;RadioGroup&gt;</code> ke andar <code>&lt;RadioButton /&gt;</code> ko automatically <code>name</code> ya <code>onChange</code> inject karne ke liye <code>React.Children.map</code> ke sath <code>cloneElement</code> use hota hai.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q57">
+        <div class="q-tag-row">
+            <span class="q-pill">Mount vs Render</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Interview Trap</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#57</span>
+        </div>
+        <h3>Q57: What is the difference between a Component Re-rendering vs a Component Remounting?</h3>
+        <div class="q-ans">
+            <strong>Mounting vs Re-rendering:</strong>
+            <table style="width:100%; border-collapse: collapse; margin-top:10px; font-size:20px;">
+                <tr style="background:#e0f2fe; text-align:left;">
+                    <th style="padding:8px; border:1px solid #cbd5e1;">Feature</th>
+                    <th style="padding:8px; border:1px solid #cbd5e1;">Re-render</th>
+                    <th style="padding:8px; border:1px solid #cbd5e1;">Remount</th>
+                </tr>
+                <tr>
+                    <td style="padding:8px; border:1px solid #cbd5e1;">Component State</td>
+                    <td style="padding:8px; border:1px solid #cbd5e1;"><strong>Preserved</strong> (Purani values rehti hain)</td>
+                    <td style="padding:8px; border:1px solid #cbd5e1;"><strong>Reset to initial</strong> (Sab vanish ho jata hai)</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px; border:1px solid #cbd5e1;">DOM Node</td>
+                    <td style="padding:8px; border:1px solid #cbd5e1;">Same DOM node reuse hota hai (attributes update)</td>
+                    <td style="padding:8px; border:1px solid #cbd5e1;">Purana DOM node destroy, naya DOM node create</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px; border:1px solid #cbd5e1;">Trigger</td>
+                    <td style="padding:8px; border:1px solid #cbd5e1;">State/Props change in parent or self</td>
+                    <td style="padding:8px; border:1px solid #cbd5e1;"><code>key</code> prop badalna ya element type change hona</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="perf" id="q58">
+        <div class="q-tag-row">
+            <span class="q-pill">Inline Objects Trap</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Performance / 8 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#58</span>
+        </div>
+        <h3>Q58: Why is passing inline objects or inline arrow functions considered a performance trap in React?</h3>
+        <div class="q-ans">
+            <strong>The Referential Equality Trap:</strong><br>
+            JavaScript me har render par <code>{{ color: 'red' }} === {{ color: 'red' }}</code> false hota hai kyunki dono objects memory me alag-alag heap address par bante hain.<br>
+            Agar tum child component ko memoize karte ho (<code>React.memo(Child)</code>), lekin parent me aisi JSX likhte ho:
+            <pre><code>// BAD: In every parent render, a new object reference and new function reference is created!
+&lt;MemoizedChild 
+  style={{ margin: 10 }} 
+  onClick={() => handleClick(id)} 
+/&gt;</code></pre>
+            <strong>Consequence:</strong> <code>React.memo</code> shallow comparison karega (<code>prevStyle === nextStyle</code>), aur check FAIL ho jayega! Natija: Tumhara memoization useless ho gaya, aur Child bina baat ke re-render ho jayega!<br>
+            <strong>Fix:</strong> Inline object ko component ke bahar constant banao ya <code>useMemo</code> use karo, aur function ko <code>useCallback</code> me wrap karo.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q59">
+        <div class="q-tag-row">
+            <span class="q-pill">State Architecture</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Core Concept</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#59</span>
+        </div>
+        <h3>Q59: What does 'Lifting State Up' mean in React, and when should you do it?</h3>
+        <div class="q-ans">
+            <strong>Definition:</strong><br>
+            Jab do sibling components ko aapas me data share karna ho ya ek-dusre ke state change par sync rehna ho, to us state ko dono siblings se hata kar unke <strong>closest common parent (ancestor)</strong> me rakhna aur props dwara niche pass karna 'Lifting State Up' kehlata hai.<br>
+            <strong>Classic Example:</strong> Ek Temperature Calculator jisme Celsius Input aur Fahrenheit Input siblings hain. Agar user Celsius me type kare to Fahrenheit update hona chahiye aur vice-versa. Dono ka common state Parent component me lift kiya jata hai.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="core" id="q60">
+        <div class="q-tag-row">
+            <span class="q-pill">JSX Reserved Words</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Fresher Classic</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#60</span>
+        </div>
+        <h3>Q60: Why does JSX use className and htmlFor instead of standard HTML class and for?</h3>
+        <div class="q-ans">
+            <strong>Answer:</strong><br>
+            JSX standard HTML nahi hai; ye JavaScript syntax extension hai jo Babel dwara compile hokar normal JS function calls (<code>React.createElement</code>) me convert hoti hai.<br>
+            JavaScript me:
+            <ul>
+                <li><code>class</code> ek reserved keyword hai (ES6 classes banane ke liye).</li>
+                <li><code>for</code> ek reserved keyword hai (<code>for</code> loops chalane ke liye).</li>
+            </ul>
+            Compiler collision aur syntax conflicts avoid karne ke liye React ne DOM properties <code>className</code> aur <code>htmlFor</code> ko standard banaya.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="perf" id="q61">
+        <div class="q-tag-row">
+            <span class="q-pill">Comparison Types</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Deep Concept</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#61</span>
+        </div>
+        <h3>Q61: What is Shallow Comparison vs Deep Comparison in React? Where does React use shallow comparison?</h3>
+        <div class="q-ans">
+            <strong>Shallow vs Deep Comparison:</strong>
+            <ul>
+                <li><strong>Shallow Comparison (Fast - O(1)):</strong> Primitive types ke liye direct equality check karta hai (<code>a === b</code>). Objects aur Arrays ke liye sirf unka <strong>memory reference</strong> check karta hai, andar ke nested properties check nahi karta.</li>
+                <li><strong>Deep Comparison (Slow - O(N)):</strong> Object ke har ek nested key, sub-object, aur array ko recursively loop karke compare karta hai. Large objects me ye CPU ko choke kar deta hai.</li>
+            </ul>
+            <strong>Where React uses Shallow Comparison:</strong>
+            <ul>
+                <li><code>React.memo(Component)</code> props compare karne ke liye.</li>
+                <li>Hook dependency arrays (<code>useEffect</code>, <code>useMemo</code>, <code>useCallback</code>).</li>
+                <li><code>useState</code> ka bail-out check (<code>Object.is(prevState, nextState)</code>).</li>
+            </ul>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="hooks" id="q62">
+        <div class="q-tag-row">
+            <span class="q-pill">Custom Hook vs Utility</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Interview Frequent</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#62</span>
+        </div>
+        <h3>Q62: What is the exact difference between a Custom Hook and a regular JavaScript Utility Function?</h3>
+        <div class="q-ans">
+            <strong>The Golden Rule:</strong>
+            <ul>
+                <li><strong>Utility Function:</strong> Ek plain JS helper function jo input leta hai aur output return karta hai (e.g. <code>formatCurrency(amount)</code>, <code>calculateAge(dob)</code>). Iske andar React ka koi lifecycle ya state mechanism nahi hota.</li>
+                <li><strong>Custom Hook:</strong> Ek aisi function jiske andar <strong>kam se kam ek React hook (useState, useEffect, useRef, etc.) call hota hai</strong>. Iska naam compulsory <code>use</code> prefix se shuru hona chahiye (e.g. <code>useWindowSize</code>, <code>useLocalStorage</code>).</li>
+            </ul>
+            <strong>Summary:</strong> Utility function sirf data manipulate karti hai; Custom Hook component ke React lifecycle aur state ke sath interact karta hai.
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="patterns" id="q63">
+        <div class="q-tag-row">
+            <span class="q-pill">JWT Interceptors</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Production Architecture / 10-12 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#63</span>
+        </div>
+        <h3>Q63: How do you handle automatic JWT token refresh on 401 Unauthorized responses in a React application?</h3>
+        <div class="q-ans">
+            <strong>Production Token Rotation Flow:</strong><br>
+            Axios Response Interceptors use karke 401 errors ko intercept kiya jata hai:
+            <pre><code>import axios from 'axios';
+
+const api = axios.create({ baseURL: '/api' });
+
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    // If 401 and request hasn't been retried yet
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        // Call refresh endpoint using httpOnly cookie
+        const res = await axios.post('/api/auth/refresh');
+        const newAccessToken = res.data.accessToken;
+        
+        // Update header and retry original failed request
+        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+        return api(originalRequest);
+      } catch (refreshError) {
+        // Refresh token expired too -> redirect to /login
+        window.location.href = '/login';
+        return Promise.reject(refreshError);
+      }
+    }
+    return Promise.reject(error);
+  }
+);</code></pre>
+        </div>
+    </div>
+    
+
+    <div class="q-card" data-category="rsc" id="q64">
+        <div class="q-tag-row">
+            <span class="q-pill">Micro-Frontends</span>
+            <span class="genz-badge" style="margin:0; background:#bae6fd;">Staff / Architect / 16-20 LPA</span>
+            <span style="font-family: var(--font-code); font-size:16px; color:#64748b; margin-left:auto; font-weight:700;">#64</span>
+        </div>
+        <h3>Q64: What are Micro-frontends, and how does Webpack Module Federation enable independent React deployments?</h3>
+        <div class="q-ans">
+            <strong>Concept:</strong><br>
+            Micro-frontends backend ke Microservices jaisa pattern hai. Ek massive monolithic frontend ko multiple independent teams me baant diya jata hai (e.g., Team Checkout, Team Search, Team Profile). Har team apna independent React app deploy karti hai.<br>
+            <strong>Webpack 5 Module Federation Magic:</strong><br>
+            Module Federation ek app ko runtime par kisi dusre app ke JavaScript bundle se remote component load karne deta hai:
+            <pre><code>// Host App (Container Shell)
+import React, { Suspense, lazy } from 'react';
+// Loaded from a completely different domain at runtime!
+const RemoteCart = lazy(() => import('cartApp/CartWidget'));
+
+function Shell() {
+  return (
+    &lt;div&gt;
+      &lt;Navbar /&gt;
+      &lt;Suspense fallback="Loading Cart..."&gt;
+        &lt;RemoteCart /&gt;
+      &lt;/Suspense&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            <strong>Shared Dependencies:</strong> Module Federation React aur ReactDOM ko share karta hai, taaki user ke browser me 2 baar React library download na ho!
+        </div>
+    </div>
+    
+        </div>
+    </div>
+
+    <script>
+        let currentCat = 'all';
+
+        function filterCat(cat, btn) {
+            currentCat = cat;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            applyFilters();
+        }
+
+        function searchQuestions() {
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.q-card');
+            
+            cards.forEach(card => {
+                const catMatch = (currentCat === 'all' || card.getAttribute('data-category') === currentCat);
+                const textContent = card.innerText.toLowerCase();
+                const textMatch = !query || textContent.includes(query);
+
+                if (catMatch && textMatch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

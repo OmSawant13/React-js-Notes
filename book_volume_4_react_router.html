@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 4: React Router v6+ & Client-Side Navigation — React.js Master Engineering Handbook</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@500;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #fbfbfd;
+            --card-bg: #ffffff;
+            --ink-main: #0f172a;
+            --ink-body: #1e293b;
+            --primary: #0284c7;
+            --border: #e2e8f0;
+            --font-hand: 'Patrick Hand', cursive, sans-serif;
+            --font-accent: 'Caveat', cursive, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-hand);
+            background-color: var(--bg-page);
+            color: var(--ink-main);
+            font-size: 24px;
+            line-height: 1.65;
+            min-height: 100vh;
+            padding: 24px 32px 80px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            width: 97%;
+            max-width: 1820px;
+            margin: 0 auto;
+            padding: 0 8px;
+        }
+
+        p { font-size: 25px; margin-bottom: 18px; line-height: 1.7; color: #1e293b; }
+        ol, ul { margin-bottom: 22px; padding-left: 32px; }
+        li { font-size: 25px; margin-bottom: 8px; line-height: 1.65; color: #1e293b; }
+        code { font-family: var(--font-code); font-size: 0.9em; background: #e0f2fe; padding: 2px 6px; border-radius: 6px; color: #0369a1; }
+
+        .genz-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 14px 28px;
+            margin-bottom: 32px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .genz-nav-title {
+            font-family: var(--font-accent);
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--ink-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-pill-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #0f172a;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            color: var(--ink-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px #0f172a;
+            background: #e0f2fe;
+        }
+
+        .genz-badge {
+            background: #ddd6fe;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 2px 2px 0px #0f172a;
+        }
+
+        .brush-banner {
+            background: #0284c7;
+            color: #ffffff;
+            font-family: var(--font-hand);
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            padding: 14px 44px;
+            margin: 28px auto 36px;
+            display: table;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 4px 4px 0px #0f172a;
+            transform: rotate(-1deg);
+        }
+
+        .chapter-page-box {
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 24px;
+            padding: 44px 52px;
+            box-shadow: 6px 6px 0px #0f172a;
+            margin-bottom: 48px;
+        }
+
+        .chapter-header-area {
+            border-bottom: 2.5px solid #0f172a;
+            padding-bottom: 24px;
+            margin-bottom: 36px;
+        }
+
+        .chapter-header-area h2 {
+            font-family: var(--font-accent);
+            font-size: 52px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 8px;
+        }
+
+        .concept-block {
+            background: transparent;
+            margin-bottom: 64px;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 48px;
+        }
+        .concept-block:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 24px;
+        }
+
+        .concept-heading {
+            font-family: var(--font-accent);
+            font-size: 42px;
+            font-weight: 700;
+            color: #0369a1;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2.5px solid #e2e8f0;
+            padding-bottom: 14px;
+        }
+
+        .concept-sub-title {
+            font-family: var(--font-hand);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 36px 0 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analogy-note {
+            background: #fef9c3;
+            border: 2.5px dashed #ca8a04;
+            border-radius: 20px;
+            padding: 30px 36px;
+            margin: 36px 0 42px;
+            box-shadow: 4px 4px 0px rgba(202, 138, 4, 0.25);
+        }
+
+        .analogy-note-title {
+            font-family: var(--font-accent);
+            font-size: 32px;
+            font-weight: 700;
+            color: #854d0e;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .analogy-note p {
+            color: #713f12;
+            font-size: 25px;
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        .bio-anatomy-board {
+            background-color: #ffffff;
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 22px 22px;
+            border: 3px solid #0f172a;
+            border-radius: 22px;
+            padding: 38px 44px;
+            margin: 40px 0 48px;
+            box-shadow: 6px 6px 0px #0f172a;
+            position: relative;
+        }
+
+        .anatomy-board-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            border-bottom: 2px dashed #94a3b8;
+            padding-bottom: 14px;
+        }
+
+        .anatomy-board-title {
+            font-family: var(--font-accent);
+            font-size: 34px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .anatomy-code-center {
+            background: #0f172a;
+            border: 2.5px solid #0f172a;
+            border-radius: 18px;
+            padding: 24px 30px;
+            color: #ffffff;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.85;
+            box-shadow: 5px 5px 0px #38bdf8;
+            overflow-x: auto;
+        }
+
+        .pill-kw { background: #fde047; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 800; }
+        .pill-fn { background: #38bdf8; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 800; }
+        .pill-await { background: #4ade80; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 800; }
+        .pill-err { background: #f87171; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 800; }
+
+        .code-container {
+            background: #0b1120;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            margin: 32px 0 40px;
+            overflow: hidden;
+            box-shadow: 5px 5px 0px #0f172a;
+        }
+
+        .code-top-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-code);
+            font-size: 16px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .code-container pre {
+            padding: 24px 28px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: var(--font-code);
+            font-size: 16.5px;
+            line-height: 1.8;
+            color: #f1f5f9;
+        }
+
+        .tok-kw { color: #f43f5e; font-weight: 700; }
+        .tok-fn { color: #38bdf8; font-weight: 600; }
+        .tok-str { color: #a5f3fc; }
+        .tok-num { color: #fde047; }
+        .tok-com { color: #64748b; font-style: italic; }
+
+        .mechanics-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 22px 0 32px;
+            border: 2px solid #0f172a;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 3px 3px 0px #0f172a;
+            font-family: var(--font-hand);
+            font-size: 23px;
+        }
+
+        .mechanics-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+            text-align: left;
+            padding: 14px 20px;
+            font-family: var(--font-accent);
+            font-size: 26px;
+            font-weight: 700;
+            border-bottom: 2px solid #0f172a;
+        }
+
+        .mechanics-table td {
+            padding: 14px 20px;
+            border-bottom: 1.5px solid #e2e8f0;
+            vertical-align: top;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .mechanics-table tr:last-child td { border-bottom: none; }
+        .mechanics-table tr:nth-child(even) td { background: #fafaf9; }
+
+        .q-card {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            padding: 26px 32px;
+            margin-bottom: 24px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .q-tag-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .q-pill {
+            background: #e0f2fe;
+            border: 1.5px solid #0f172a;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .q-card h3 {
+            font-family: var(--font-accent);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 14px;
+            line-height: 1.3;
+        }
+
+        .q-ans {
+            background: #f0f9ff;
+            border-left: 5px solid #0284c7;
+            border-radius: 0 12px 12px 0;
+            padding: 18px 24px;
+            font-size: 23px;
+            color: #1e293b;
+            line-height: 1.65;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <nav class="genz-nav-bar">
+            <a href="index.html" class="genz-nav-title">
+                <span>⚛️</span> React.js 6–18 LPA Master Revision Handbook
+            </a>
+            <div class="nav-pill-group">
+                <a href="index.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">🏠 Home</a><a href="book_volume_1_core_react.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">⚛️ Vol 1: Core</a><a href="book_volume_2_hooks_mastery.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">🪝 Vol 2: Hooks</a><a href="book_volume_3_state_forms.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">📦 Vol 3: State & Forms</a><a href="book_volume_4_react_router.html" class="nav-btn" style="background:#cffafe; font-size:18px; padding:6px 12px;">🛣️ Vol 4: Router v6</a><a href="book_volume_5_performance.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">⚡ Vol 5: Perf & VDOM</a><a href="book_volume_6_nextjs_rsc.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">🌐 Vol 6: Next.js & RSC</a><a href="book_volume_7_capstone_project.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">🏆 Vol 7: Project</a>
+            </div>
+        </nav>
+
+        <div class="chapter-page-box">
+            <div class="chapter-header-area">
+                <span class="genz-badge">PART 4 • ROUTING MASTERY</span>
+                <h2>Part 4: React Router v6+ & Client-Side Navigation</h2>
+            </div>
+
+            <div class="brush-banner">History API, Dynamic Routing, Nested Outlets & Protected Route Guards</div>
+
+            
+    <!-- ==================== PART 4: REACT ROUTER V6+ ==================== -->
+    <div class="concept-block" id="topic-router">
+        <div class="concept-heading">1. React Router v6+: Architecture, Nested Routes & &lt;Outlet /&gt;</div>
+        
+        <div class="concept-sub-title">📌 1.1 Client-Side Routing Mechanics</div>
+        <p>In traditional multi-page apps, clicking a link issues a full HTTP GET request to the server, reloading the whole page (blank white flash). In React Single Page Applications (SPA), <strong>Client-Side Routing (CSR)</strong> intercepts URL clicks via the HTML5 <strong>History API</strong> (<code>pushState</code> / <code>replaceState</code>), swapping out components in the VDOM without requesting a new HTML page from the server.</p>
+
+        <div class="bio-anatomy-board">
+            <div class="anatomy-board-header">
+                <span class="anatomy-board-title">🔬 Bio-Anatomy: Nested Routing & The &lt;Outlet /&gt; Placeholder</span>
+                <span class="genz-badge">ROUTER ARCHITECTURE</span>
+            </div>
+            <div class="anatomy-code-center">
+<div>URL: /dashboard/settings</div>
+<div>┌────────────────────────────────────────────────────────┐</div>
+<div>│ &lt;DashboardLayout&gt; (Header, Sidebar Navigation)         │</div>
+<div>│                                                        │</div>
+<div>│    ┌──────────────────────────────────────────────┐    │</div>
+<div>│    │ &lt;Outlet /&gt; ──▶ Replaced with &lt;SettingsPage /&gt;│    │</div>
+<div>│    └──────────────────────────────────────────────┘    │</div>
+<div>└────────────────────────────────────────────────────────┘</div>
+<div>💡 INTERVIEW POINT: Header and Sidebar DO NOT RE-RENDER or remount when navigating</div>
+<div>between nested routes! Only the &lt;Outlet /&gt; child swaps!</div>
+            </div>
+        </div>
+
+        <div class="concept-sub-title">💻 1.2 Practical Code: Protected Routes & Auth Guards Pattern</div>
+        <div class="code-container">
+            <div class="code-top-bar"><span>AppRouter.jsx</span><span>Production React Router v6</span></div>
+            <pre><code><span class="tok-kw">import</span> { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } <span class="tok-kw">from</span> <span class="tok-str">"react-router-dom"</span>;
+
+<span class="tok-com">// 1. Protected Route Guard Component</span>
+<span class="tok-kw">function</span> <span class="tok-fn">ProtectedRoute</span>({ isAuthenticated }) {
+    <span class="tok-kw">const</span> location = <span class="tok-fn">useLocation</span>();
+
+    <span class="tok-kw">if</span> (!isAuthenticated) {
+        <span class="tok-com">// Redirect to login, but preserve the attempted URL to redirect back after login!</span>
+        <span class="tok-kw">return</span> &lt;Navigate to=<span class="tok-str">"/login"</span> state={{ from: location }} replace /&gt;;
+    }
+    <span class="tok-kw">return</span> &lt;Outlet /&gt;; <span class="tok-com">// Renders the matching child route if authenticated!</span>
+}
+
+<span class="tok-com">// 2. Master Route Configuration</span>
+<span class="tok-kw">function</span> <span class="tok-fn">App</span>() {
+    <span class="tok-kw">const</span> isAuth = <span class="tok-kw">true</span>; <span class="tok-com">// In real app, consume from useAuth() hook</span>
+
+    <span class="tok-kw">return</span> (
+        &lt;BrowserRouter&gt;
+            &lt;Routes&gt;
+                &lt;Route path=<span class="tok-str">"/login"</span> element={&lt;LoginPage /&gt;} /&gt;
+
+                {<span class="tok-com">/* Protected Subtree */</span>}
+                &lt;Route element={&lt;ProtectedRoute isAuthenticated={isAuth} /&gt;}&gt;
+                    &lt;Route path=<span class="tok-str">"/dashboard"</span> element={&lt;DashboardLayout /&gt;}&gt;
+                        &lt;Route index element={&lt;Overview /&gt;} /&gt;
+                        &lt;Route path=<span class="tok-str">"jobs/:id"</span> element={&lt;JobDetail /&gt;} /&gt;
+                        &lt;Route path=<span class="tok-str">"settings"</span> element={&lt;Settings /&gt;} /&gt;
+                    &lt;/Route&gt;
+                &lt;/Route&gt;
+
+                &lt;Route path=<span class="tok-str">"*"</span> element={&lt;NotFound404 /&gt;} /&gt;
+            &lt;/Routes&gt;
+        &lt;/BrowserRouter&gt;
+    );
+}</code></pre>
+        </div>
+
+        <div class="concept-sub-title">💼 1.3 Sudheer J Style Interview Q&A Cards</div>
+        <div class="q-card">
+            <div class="q-tag-row">
+                <span class="q-pill">React Router</span>
+                <span class="genz-badge">Senior / 7 LPA</span>
+            </div>
+            <h3>Q: What is the difference between Link, NavLink, and useNavigate in React Router?</h3>
+            <div class="q-ans">
+                <strong>Key Answer:</strong> 
+                <ul>
+                    <li><code>&lt;Link to="/path"&gt;</code>: Standard declarative navigation that renders an accessible <code>&lt;a&gt;</code> tag and updates the URL without page reloads.</li>
+                    <li><code>&lt;NavLink to="/path"&gt;</code>: Specialized Link that automatically knows if its URL matches the current active route, injecting an <code>isActive</code> boolean prop for styling active navigation pills.</li>
+                    <li><code>useNavigate()</code>: Programmatic imperative navigation hook used inside event handlers (e.g. redirecting after successful form submission: <code>navigate('/dashboard')</code>).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+        </div>
+    </div>
+</body>
+</html>

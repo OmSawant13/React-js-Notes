@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@500;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #fbfbfd;
+            --card-bg: #ffffff;
+            --ink-main: #0f172a;
+            --ink-body: #1e293b;
+            --primary: #0284c7;
+            --border: #e2e8f0;
+            --font-hand: 'Patrick Hand', cursive, sans-serif;
+            --font-accent: 'Caveat', cursive, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-hand);
+            background-color: var(--bg-page);
+            color: var(--ink-main);
+            font-size: 24px;
+            line-height: 1.65;
+            min-height: 100vh;
+            padding: 24px 32px 80px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            width: 97%;
+            max-width: 1820px;
+            margin: 0 auto;
+            padding: 0 8px;
+        }
+
+        p { font-size: 25px; margin-bottom: 18px; line-height: 1.7; color: #1e293b; }
+        ol, ul { margin-bottom: 22px; padding-left: 32px; }
+        li { font-size: 25px; margin-bottom: 8px; line-height: 1.65; color: #1e293b; }
+        code { font-family: var(--font-code); font-size: 0.9em; background: #e0f2fe; padding: 2px 6px; border-radius: 6px; color: #0369a1; }
+
+        .genz-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 14px 28px;
+            margin-bottom: 32px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .genz-nav-title {
+            font-family: var(--font-accent);
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--ink-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-pill-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 18px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #0f172a;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            color: var(--ink-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px #0f172a;
+            background: #e0f2fe;
+        }
+
+        .nav-btn.active {
+            background: #0284c7;
+            color: #ffffff;
+        }
+
+        .genz-badge {
+            background: #bae6fd;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 2px 2px 0px #0f172a;
+        }
+
+        .brush-banner {
+            background: #0284c7;
+            color: #ffffff;
+            font-family: var(--font-hand);
+            font-size: 34px;
+            font-weight: 700;
+            text-align: center;
+            padding: 14px 44px;
+            margin: 28px auto 36px;
+            display: table;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 4px 4px 0px #0f172a;
+            transform: rotate(-1deg);
+        }
+
+        .chapter-page-box {
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 24px;
+            padding: 44px 52px;
+            box-shadow: 6px 6px 0px #0f172a;
+            margin-bottom: 48px;
+        }
+
+        .chapter-header-area {
+            border-bottom: 2.5px solid #0f172a;
+            padding-bottom: 24px;
+            margin-bottom: 36px;
+        }
+
+        .chapter-header-area h2 {
+            font-family: var(--font-accent);
+            font-size: 52px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 8px;
+        }
+
+        .concept-block {
+            background: transparent;
+            margin-bottom: 64px;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 48px;
+        }
+        .concept-block:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 24px;
+        }
+
+        .concept-heading {
+            font-family: var(--font-accent);
+            font-size: 42px;
+            font-weight: 700;
+            color: #0369a1;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2.5px solid #e2e8f0;
+            padding-bottom: 14px;
+        }
+
+        .concept-sub-title {
+            font-family: var(--font-hand);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 36px 0 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analogy-note {
+            background: #fef9c3;
+            border: 2.5px dashed #ca8a04;
+            border-radius: 20px;
+            padding: 26px 32px;
+            margin: 28px 0 34px;
+            box-shadow: 4px 4px 0px rgba(202, 138, 4, 0.25);
+        }
+
+        .analogy-note-title {
+            font-family: var(--font-accent);
+            font-size: 30px;
+            font-weight: 700;
+            color: #854d0e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .analogy-note p {
+            color: #713f12;
+            font-size: 24px;
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        .bio-anatomy-board {
+            background-color: #ffffff;
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 22px 22px;
+            border: 3px solid #0f172a;
+            border-radius: 22px;
+            padding: 34px 40px;
+            margin: 32px 0 38px;
+            box-shadow: 6px 6px 0px #0f172a;
+            position: relative;
+        }
+
+        .anatomy-board-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #94a3b8;
+            padding-bottom: 12px;
+        }
+
+        .anatomy-board-title {
+            font-family: var(--font-accent);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .anatomy-code-center {
+            background: #0f172a;
+            border: 2.5px solid #0f172a;
+            border-radius: 16px;
+            padding: 22px 26px;
+            color: #ffffff;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.85;
+            box-shadow: 4px 4px 0px #38bdf8;
+            overflow-x: auto;
+        }
+
+        .code-container {
+            background: #0b1120;
+            border: 2px solid #0f172a;
+            border-radius: 16px;
+            margin: 28px 0 34px;
+            overflow: hidden;
+            box-shadow: 5px 5px 0px #0f172a;
+        }
+
+        .code-top-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 10px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-code);
+            font-size: 15px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .code-container pre {
+            padding: 22px 26px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.8;
+            color: #f1f5f9;
+        }
+
+        .tok-kw { color: #f43f5e; font-weight: 700; }
+        .tok-fn { color: #38bdf8; font-weight: 600; }
+        .tok-str { color: #a5f3fc; }
+        .tok-num { color: #fde047; }
+        .tok-com { color: #64748b; font-style: italic; }
+
+        .mechanics-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0 28px;
+            border: 2px solid #0f172a;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 3px 3px 0px #0f172a;
+            font-family: var(--font-hand);
+            font-size: 22px;
+        }
+
+        .mechanics-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+            text-align: left;
+            padding: 12px 18px;
+            font-family: var(--font-accent);
+            font-size: 25px;
+            font-weight: 700;
+            border-bottom: 2px solid #0f172a;
+        }
+
+        .mechanics-table td {
+            padding: 12px 18px;
+            border-bottom: 1.5px solid #e2e8f0;
+            vertical-align: top;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .mechanics-table tr:last-child td { border-bottom: none; }
+        .mechanics-table tr:nth-child(even) td { background: #fafaf9; }
+
+        .q-card {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            padding: 24px 28px;
+            margin-bottom: 22px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .q-tag-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .q-pill {
+            background: #e0f2fe;
+            border: 1.5px solid #0f172a;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .q-card h3 {
+            font-family: var(--font-accent);
+            font-size: 30px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .q-ans {
+            background: #f0f9ff;
+            border-left: 5px solid #0284c7;
+            border-radius: 0 12px 12px 0;
+            padding: 16px 22px;
+            font-size: 22px;
+            color: #1e293b;
+            line-height: 1.65;
+        }
+
+        .practical-box {
+            background: #f0fdf4;
+            border: 2.5px solid #16a34a;
+            border-radius: 20px;
+            padding: 32px 38px;
+            margin: 36px 0;
+            box-shadow: 5px 5px 0px #16a34a;
+        }
+
+        .practical-title {
+            font-family: var(--font-accent);
+            font-size: 36px;
+            font-weight: 700;
+            color: #15803d;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+
+    <title>Module 6: Global State Management (Redux Toolkit &amp; Context) — React.js Master Handbook</title>
+</head>
+<body>
+    <div class="app-wrapper">
+        
+        <nav class="genz-nav-bar">
+            <a href="index.html" class="genz-nav-title">
+                <span>⚛️</span> React.js 8-Module Master Handbook
+            </a>
+            <div class="nav-pill-group">
+                <a href="index.html" class="nav-btn">🏠 Home</a><a href="module_1_react_fundamentals.html" class="nav-btn">M1 Fundamentals</a><a href="module_2_props_state_events.html" class="nav-btn">M2 Props & State</a><a href="module_3_react_hooks.html" class="nav-btn">M3 Hooks</a><a href="module_4_forms_api_integration.html" class="nav-btn">M4 Forms & APIs</a><a href="module_5_routing.html" class="nav-btn">M5 Routing</a><a href="module_6_state_management.html" class="nav-btn active">M6 State Mgmt</a><a href="module_7_advanced_react.html" class="nav-btn">M7 Advanced</a><a href="module_8_production_development.html" class="nav-btn">M8 Production</a><a href="book_interview_masterclass_hub.html" class="nav-btn" style="background:#fef08a;">💼 64 Q&A Hub</a>
+            </div>
+        </nav>
+    
+
+        <div class="chapter-page-box">
+            <div class="chapter-header-area">
+                <span class="genz-badge">MODULE 6 • ENTERPRISE STATE MANAGEMENT</span>
+                <h2>Module 6 — State Management (Context API &amp; Redux Toolkit)</h2>
+                <p>Scaling React applications: Prop Drilling, Context API, Provider Pattern, Redux 3 Principles, Redux Toolkit (RTK), Slices, Reducers, useSelector, useDispatch, createAsyncThunk, and Context vs Redux vs Zustand comparison.</p>
+            </div>
+
+            <div class="brush-banner">Module 6: Global State Management — Prop Drilling ka The End aur Redux Toolkit Mastery!</div>
+
+            <!-- TOPIC 1: PROP DRILLING -->
+            <div class="concept-block" id="topic-1">
+                <div class="concept-heading">1. Prop Drilling: Pain Points &amp; Architectural Debt</div>
+                <div class="concept-sub-title">📌 1.1 Colony ki Paani ki Line</div>
+                <p>Jab Parent component se 5 level deep Child ko data bhejna ho, toh beech ke un saare components se props pass karne padte hain jinhe us data se koi lena-dena nahi hota (e.g., App ➡️ Layout ➡️ Sidebar ➡️ UserMenu ➡️ Avatar). Isse refactoring mushkil ho jaati hai aur code me boilerplate clutter badhta hai.</p>
+            </div>
+
+            <!-- TOPIC 2: CONTEXT API -->
+            <div class="concept-block" id="topic-2">
+                <div class="concept-heading">2. Context API &amp; The Provider Pattern</div>
+                <div class="concept-sub-title">📌 2.1 createContext &amp; useContext</div>
+                <p>React ka native Context API low-to-medium frequency updates (jaise Theme, Authentication state, Language/i18n) ke liye built-in solution hai:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>AuthContext.jsx</span><span>Context Provider Pattern</span></div>
+                    <pre><code>import React, { createContext, useContext, useState } from 'react';
+
+const AuthContext = createContext();
+
+export function AuthProvider({ children }) {
+    const [user, setUser] = useState(null);
+
+    const login = (userData) => setUser(userData);
+    const logout = () => setUser(null);
+
+    return (
+        <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
+            {children}
+        </AuthContext.Provider>
+    );
+}
+
+// Custom hook to consume context safely
+export function useAuth() {
+    const context = useContext(AuthContext);
+    if (!context) throw new Error("useAuth must be used inside AuthProvider!");
+    return context;
+}</code></pre>
+                </div>
+
+                <div class="analogy-note">
+                    <div class="analogy-note-title">⚠️ Context API Re-render Trap</div>
+                    <p>Jab bhi Context Provider ki <code>value</code> badalti hai, us context ko consume karne wale <strong>saare components bina kisi shart ke re-render hote hain</strong>! Isliye high-frequency data (jaise live stock prices, animations, heavy form state) ke liye Context API use mat karo—wahan Redux Toolkit ya Zustand use karo!</p>
+                </div>
+            </div>
+
+            <!-- TOPIC 3: REDUX FUNDAMENTALS & RTK -->
+            <div class="concept-block" id="topic-3">
+                <div class="concept-heading">3. Redux Fundamentals &amp; Redux Toolkit (RTK)</div>
+                <div class="concept-sub-title">📌 3.1 The 3 Core Principles of Redux</div>
+                <ol>
+                    <li><strong>Single Source of Truth:</strong> Poori app ka global state ek single JavaScript object store ke andar rehta hai.</li>
+                    <li><strong>State is Read-Only:</strong> State ko badalne ka sirf ek hi tareeqa hai: Ek <code>Action</code> dispatch karo (a plain object describing what happened).</li>
+                    <li><strong>Changes are made with Pure Reducer Functions:</strong> Reducer ek pure function hoti hai jo `(previousState, action) => newState` calculate karti hai bina side-effects ke.</li>
+                </ol>
+
+                <div class="concept-sub-title">📌 3.2 Why Redux Toolkit (RTK) is Modern Standard</div>
+                <p>Pehle Redux me 40 boilerplate files banani padti thi. Redux Toolkit ne aakar sab aasan kar diya:</p>
+                <ul>
+                    <li><code>configureStore()</code>: Automatically DevTools aur Thunk middleware setup kar deta hai.</li>
+                    <li><code>createSlice()</code>: Actions aur Reducers ko ek hi jagah combine kar deta hai.</li>
+                    <li><strong>Immer.js Integration:</strong> Reducers ke andar direct <code>state.count++</code> ya <code>state.items.push(item)</code> likh sakte ho! Behind the scenes Immer automatically ek naya immutable state produce karta hai!</li>
+                </ul>
+            </div>
+
+            <!-- TOPIC 4: USEDISPATCH & USESELECTOR -->
+            <div class="concept-block" id="topic-4">
+                <div class="concept-heading">4. useSelector &amp; useDispatch</div>
+                <div class="concept-sub-title">📌 4.1 State Read karna aur Action Bhejna</div>
+                <ul>
+                    <li><code>useSelector(state => state.cart.items)</code>: Store se specific data nikaalta hai aur component ko us data ke sath subscribe karta hai.</li>
+                    <li><code>useDispatch()</code>: Dispatcher function deta hai jisse hum action trigger karte hain: <code>dispatch(addToCart(product))</code>.</li>
+                </ul>
+            </div>
+
+            <!-- TOPIC 5: CREATEASYNCTHUNK -->
+            <div class="concept-block" id="topic-5">
+                <div class="concept-heading">5. Async State Management with `createAsyncThunk`</div>
+                <div class="concept-sub-title">📌 5.1 Pending, Fulfilled, Rejected Lifecycles</div>
+                <p>Backend API se data laane ke liye RTK <code>createAsyncThunk</code> deta hai jo automatically 3 action types generate karta hai:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>productSlice.js</span><span>createAsyncThunk Pattern</span></div>
+                    <pre><code>import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+// 1. Async Thunk
+export const fetchProducts = createAsyncThunk(
+    'products/fetchProducts',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await axios.get('/api/products');
+            return res.data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+// 2. Slice with extraReducers
+const productSlice = createSlice({
+    name: 'products',
+    initialState: { items: [], loading: false, error: null },
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchProducts.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchProducts.fulfilled, (state, action) => {
+                state.loading = false;
+                state.items = action.payload;
+            })
+            .addCase(fetchProducts.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload || "Failed to load products";
+            });
+    }
+});
+
+export default productSlice.reducer;</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 6: CONTEXT VS REDUX VS ZUSTAND -->
+            <div class="concept-block" id="topic-6">
+                <div class="concept-heading">6. When to use Context vs Redux vs Zustand</div>
+                <table class="mechanics-table">
+                    <tr>
+                        <th>Criteria</th>
+                        <th>Context API</th>
+                        <th>Redux Toolkit</th>
+                        <th>Zustand</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Setup Complexity</strong></td>
+                        <td>Zero (Built-in)</td>
+                        <td>Medium (Store, Slices)</td>
+                        <td><strong>Ultra-Low</strong> (1 file store)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Re-render Performance</strong></td>
+                        <td>Poor on frequent changes</td>
+                        <td>Excellent (Selective subscription)</td>
+                        <td><strong>Fastest</strong> (Micro-selectors)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best For</strong></td>
+                        <td>Theme, Auth, Language</td>
+                        <td>Enterprise complex apps with huge teams</td>
+                        <td>Modern fast-moving React startups</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- PRACTICAL LAB -->
+            <div class="practical-box">
+                <div class="practical-title">🛠️ Module 6 Practical Lab: Shopping Cart State Management with Redux Toolkit</div>
+                <p>Neeche complete runnable shopping cart implementation hai: Store configuration, Cart Slice with Immer mutations, Add to Cart, Remove, Quantity increment, and Total calculation:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>src/cartSlice.js &amp; CartComponent.jsx</span><span>Complete RTK Implementation</span></div>
+                    <pre><code>// 1. src/features/cartSlice.js
+import { createSlice, configureStore } from '@reduxjs/toolkit';
+
+const cartSlice = createSlice({
+    name: 'cart',
+    initialState: {
+        items: [] // { id, name, price, quantity }
+    },
+    reducers: {
+        addToCart: (state, action) => {
+            const existing = state.items.find(i => i.id === action.payload.id);
+            if (existing) {
+                existing.quantity += 1; // 👈 Immer allows direct mutation!
+            } else {
+                state.items.push({ ...action.payload, quantity: 1 });
+            }
+        },
+        removeFromCart: (state, action) => {
+            state.items = state.items.filter(i => i.id !== action.payload);
+        },
+        clearCart: (state) => {
+            state.items = [];
+        }
+    }
+});
+
+export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
+
+// Configure Global Store
+export const store = configureStore({
+    reducer: {
+        cart: cartSlice.reducer
+    }
+});
+
+// 2. Component Usage (CartView.jsx)
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+export function CartView() {
+    const items = useSelector(state => state.cart.items);
+    const dispatch = useDispatch();
+
+    const grandTotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+    return (
+        <div style={{ maxWidth: '600px', margin: '30px auto', padding: '24px', border: '2.5px solid #0f172a', borderRadius: '16px', background: '#fff' }}>
+            <h2>🛒 Shopping Cart ({items.length} items)</h2>
+
+            {items.length === 0 ? <p>Your cart is empty.</p> : (
+                <>
+                    <ul style={{ listStyle: 'none', padding: 0 }}>
+                        {items.map(item => (
+                            <li key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: '1px solid #e2e8f0' }}>
+                                <div>
+                                    <strong>{item.name}</strong>
+                                    <p style={{ margin: 0, color: '#64748b' }}>₹{item.price} × {item.quantity}</p>
+                                </div>
+                                <button onClick={() => dispatch(removeFromCart(item.id))} style={{ background: '#fee2e2', border: 'none', color: '#dc2626', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer' }}>
+                                    Remove
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                    <h3>Grand Total: ₹{grandTotal.toLocaleString('en-IN')}</h3>
+                    <button onClick={() => dispatch(clearCart())} style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '8px', cursor: 'pointer' }}>
+                        Clear Cart
+                    </button>
+                </>
+            )}
+        </div>
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- SUDHEER J INTERVIEW CARDS -->
+            <div class="concept-sub-title">💼 Module 6 Interview Bank (Sudheer J Style)</div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">Redux Core</span>
+                    <span class="genz-badge">Senior / 8-10 LPA</span>
+                </div>
+                <h3>Q: Why does Redux Toolkit allow writing mutable code like `state.items.push()` inside reducers?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> Redux Toolkit uses <strong>Immer.js</strong> under the hood. Immer wraps the state in a Proxy. When you write "mutative" code like `state.count++` or `state.items.push(item)`, Immer records all operations on a "draft state" and produces a brand new, pristine, deeply-immutable state object behind the scenes, preventing manual spreading bugs.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">Architecture</span>
+                    <span class="genz-badge">High Frequency</span>
+                </div>
+                <h3>Q: What is the main difference between Client State and Server State? Should you put API cache in Redux?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> <strong>Client State</strong> is ephemeral UI data owned completely by the browser (modals open/closed, current dark mode theme, draft form values). <strong>Server State</strong> is remote data persisted in databases (users, products, orders); it is asynchronous, shared, and can become stale. Modern industry architecture discourages storing raw API data in Redux; instead, dedicated server-state tools like <strong>TanStack Query (React Query)</strong> or RTK Query are used for automatic caching, background refetching, and deduplication.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">Context vs Redux</span>
+                    <span class="genz-badge">Core Concept</span>
+                </div>
+                <h3>Q: Why is Context API not a complete replacement for Redux or Zustand in large applications?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> Context API lacks fine-grained selector subscriptions. Whenever any property in a Context Provider's value object changes, <em>every single component</em> subscribed to that context re-renders, causing massive performance bottlenecks in high-frequency state updates. Redux and Zustand use selective subscriptions (`useSelector(state => state.foo)`), re-rendering only the components whose specific slice changed.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

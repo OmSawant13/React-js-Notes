@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 1: Core React Foundations & VDOM Fiber Architecture — React.js Master Engineering Handbook</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@500;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #fbfbfd;
+            --card-bg: #ffffff;
+            --ink-main: #0f172a;
+            --ink-body: #1e293b;
+            --primary: #0284c7;
+            --border: #e2e8f0;
+            --font-hand: 'Patrick Hand', cursive, sans-serif;
+            --font-accent: 'Caveat', cursive, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-hand);
+            background-color: var(--bg-page);
+            color: var(--ink-main);
+            font-size: 24px;
+            line-height: 1.65;
+            min-height: 100vh;
+            padding: 24px 32px 80px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            width: 97%;
+            max-width: 1820px;
+            margin: 0 auto;
+            padding: 0 8px;
+        }
+
+        p { font-size: 25px; margin-bottom: 18px; line-height: 1.7; color: #1e293b; }
+        ol, ul { margin-bottom: 22px; padding-left: 32px; }
+        li { font-size: 25px; margin-bottom: 8px; line-height: 1.65; color: #1e293b; }
+        code { font-family: var(--font-code); font-size: 0.9em; background: #e0f2fe; padding: 2px 6px; border-radius: 6px; color: #0369a1; }
+
+        .genz-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 14px 28px;
+            margin-bottom: 32px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .genz-nav-title {
+            font-family: var(--font-accent);
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--ink-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-pill-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #0f172a;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            color: var(--ink-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px #0f172a;
+            background: #e0f2fe;
+        }
+
+        .genz-badge {
+            background: #bae6fd;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 2px 2px 0px #0f172a;
+        }
+
+        .brush-banner {
+            background: #0284c7;
+            color: #ffffff;
+            font-family: var(--font-hand);
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            padding: 14px 44px;
+            margin: 28px auto 36px;
+            display: table;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 4px 4px 0px #0f172a;
+            transform: rotate(-1deg);
+        }
+
+        .chapter-page-box {
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 24px;
+            padding: 44px 52px;
+            box-shadow: 6px 6px 0px #0f172a;
+            margin-bottom: 48px;
+        }
+
+        .chapter-header-area {
+            border-bottom: 2.5px solid #0f172a;
+            padding-bottom: 24px;
+            margin-bottom: 36px;
+        }
+
+        .chapter-header-area h2 {
+            font-family: var(--font-accent);
+            font-size: 52px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 8px;
+        }
+
+        .concept-block {
+            background: transparent;
+            margin-bottom: 64px;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 48px;
+        }
+        .concept-block:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 24px;
+        }
+
+        .concept-heading {
+            font-family: var(--font-accent);
+            font-size: 42px;
+            font-weight: 700;
+            color: #0369a1;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2.5px solid #e2e8f0;
+            padding-bottom: 14px;
+        }
+
+        .concept-sub-title {
+            font-family: var(--font-hand);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 36px 0 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analogy-note {
+            background: #fef9c3;
+            border: 2.5px dashed #ca8a04;
+            border-radius: 20px;
+            padding: 30px 36px;
+            margin: 36px 0 42px;
+            box-shadow: 4px 4px 0px rgba(202, 138, 4, 0.25);
+        }
+
+        .analogy-note-title {
+            font-family: var(--font-accent);
+            font-size: 32px;
+            font-weight: 700;
+            color: #854d0e;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .analogy-note p {
+            color: #713f12;
+            font-size: 25px;
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        .bio-anatomy-board {
+            background-color: #ffffff;
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 22px 22px;
+            border: 3px solid #0f172a;
+            border-radius: 22px;
+            padding: 38px 44px;
+            margin: 40px 0 48px;
+            box-shadow: 6px 6px 0px #0f172a;
+            position: relative;
+        }
+
+        .anatomy-board-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            border-bottom: 2px dashed #94a3b8;
+            padding-bottom: 14px;
+        }
+
+        .anatomy-board-title {
+            font-family: var(--font-accent);
+            font-size: 34px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .anatomy-code-center {
+            background: #0f172a;
+            border: 2.5px solid #0f172a;
+            border-radius: 18px;
+            padding: 24px 30px;
+            color: #ffffff;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.85;
+            box-shadow: 5px 5px 0px #38bdf8;
+            overflow-x: auto;
+        }
+
+        .pill-kw { background: #fde047; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 800; }
+        .pill-fn { background: #38bdf8; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 800; }
+        .pill-await { background: #4ade80; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 800; }
+        .pill-err { background: #f87171; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 800; }
+
+        .code-container {
+            background: #0b1120;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            margin: 32px 0 40px;
+            overflow: hidden;
+            box-shadow: 5px 5px 0px #0f172a;
+        }
+
+        .code-top-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-code);
+            font-size: 16px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .code-container pre {
+            padding: 24px 28px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: var(--font-code);
+            font-size: 16.5px;
+            line-height: 1.8;
+            color: #f1f5f9;
+        }
+
+        .tok-kw { color: #f43f5e; font-weight: 700; }
+        .tok-fn { color: #38bdf8; font-weight: 600; }
+        .tok-str { color: #a5f3fc; }
+        .tok-num { color: #fde047; }
+        .tok-com { color: #64748b; font-style: italic; }
+
+        .mechanics-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 22px 0 32px;
+            border: 2px solid #0f172a;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 3px 3px 0px #0f172a;
+            font-family: var(--font-hand);
+            font-size: 23px;
+        }
+
+        .mechanics-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+            text-align: left;
+            padding: 14px 20px;
+            font-family: var(--font-accent);
+            font-size: 26px;
+            font-weight: 700;
+            border-bottom: 2px solid #0f172a;
+        }
+
+        .mechanics-table td {
+            padding: 14px 20px;
+            border-bottom: 1.5px solid #e2e8f0;
+            vertical-align: top;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .mechanics-table tr:last-child td { border-bottom: none; }
+        .mechanics-table tr:nth-child(even) td { background: #fafaf9; }
+
+        .q-card {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            padding: 26px 32px;
+            margin-bottom: 24px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .q-tag-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .q-pill {
+            background: #e0f2fe;
+            border: 1.5px solid #0f172a;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .q-card h3 {
+            font-family: var(--font-accent);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 14px;
+            line-height: 1.3;
+        }
+
+        .q-ans {
+            background: #f0f9ff;
+            border-left: 5px solid #0284c7;
+            border-radius: 0 12px 12px 0;
+            padding: 18px 24px;
+            font-size: 23px;
+            color: #1e293b;
+            line-height: 1.65;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <nav class="genz-nav-bar">
+            <a href="index.html" class="genz-nav-title">
+                <span>⚛️</span> React.js 6–18 LPA Master Revision Handbook
+            </a>
+            <div class="nav-pill-group">
+                <a href="index.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">🏠 Home</a><a href="book_volume_1_core_react.html" class="nav-btn" style="background:#cffafe; font-size:18px; padding:6px 12px;">⚛️ Vol 1: Core</a><a href="book_volume_2_hooks_mastery.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">🪝 Vol 2: Hooks</a><a href="book_volume_3_state_forms.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">📦 Vol 3: State & Forms</a><a href="book_volume_4_react_router.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">🛣️ Vol 4: Router v6</a><a href="book_volume_5_performance.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">⚡ Vol 5: Perf & VDOM</a><a href="book_volume_6_nextjs_rsc.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">🌐 Vol 6: Next.js & RSC</a><a href="book_volume_7_capstone_project.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">🏆 Vol 7: Project</a>
+            </div>
+        </nav>
+
+        <div class="chapter-page-box">
+            <div class="chapter-header-area">
+                <span class="genz-badge">PART 1 • THE REACT MENTAL MODEL</span>
+                <h2>Part 1: Core React Foundations & VDOM Fiber Architecture</h2>
+            </div>
+
+            <div class="brush-banner">Declarative Mental Model, VDOM Reconciliation & Fiber Internals</div>
+
+            
+    <!-- ==================== TOPIC 1: DECLARATIVE VS IMPERATIVE UI ==================== -->
+    <div class="concept-block" id="topic-1">
+        <div class="concept-heading">1. Declarative UI vs Imperative DOM: The React Mental Model</div>
+        
+        <div class="concept-sub-title">📌 1.1 Definition & Mental Model Shift</div>
+        <p>Before React, web development was predominantly <strong>Imperative</strong> (vanilla JavaScript and jQuery). In an imperative model, you write step-by-step instructions telling the browser <em>HOW</em> to change the DOM (find element, add class, change text, append child). React introduced a <strong>Declarative</strong> paradigm: you describe <em>WHAT</em> the UI should look like for a given state (<code>UI = f(State)</code>). When the state changes, React automatically handles the complex, error-prone DOM transitions under the hood.</p>
+
+        <div class="bio-anatomy-board">
+            <div class="anatomy-board-header">
+                <span class="anatomy-board-title">🔬 Bio-Anatomy: Imperative (jQuery) vs Declarative (React)</span>
+                <span class="genz-badge">MENTAL MODEL</span>
+            </div>
+            <div class="anatomy-code-center">
+<div>// 1. IMPERATIVE (Vanilla JS / jQuery) ── Manual Step-by-Step Micro-Management:</div>
+<div>const btn = document.getElementById('btn');</div>
+<div>btn.addEventListener('click', () => {</div>
+<div>    btn.classList.add('loading');          // Step 1: Mutate class</div>
+<div>    btn.innerText = 'Submitting...';        // Step 2: Mutate text</div>
+<div>    document.getElementById('spinner').style.display = 'block'; // Step 3: Mutate DOM</div>
+<div>});</div>
+<div>─────────────────────────────────────────────────────────────────────────────</div>
+<div>// 2. DECLARATIVE (React) ── UI is a direct pure reflection of State:</div>
+<div>function SubmitButton({ isLoading }) {</div>
+<div>    return (</div>
+<div>        &lt;button className={isLoading ? "loading" : ""}&gt;</div>
+<div>            {isLoading ? &lt;Spinner /&gt; : "Submit"}</div>
+<div>        &lt;/button&gt;</div>
+<div>    );</div>
+<div>}</div>
+            </div>
+            <div class="anatomy-callout-grid">
+                <div class="anatomy-callout-card">
+                    <span class="callout-badge bg-red">⚠️ Imperative Hazard</span>
+                    <div>Easy for state and DOM to fall out of sync (e.g. spinner remains visible even after request fails), creating ghost UI bugs.</div>
+                </div>
+                <div class="anatomy-callout-card">
+                    <span class="callout-badge bg-green">🛡️ Declarative Determinism</span>
+                    <div>Given <code>isLoading = true</code>, the UI will 100% reliably render the spinner and loading state without exception.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="analogy-note">
+            <div class="analogy-note-title">🏢 Indian Real-Life Analogy: Uber Cab Booking vs Auto-Rickshaw Directions</div>
+            <p>• <strong>Imperative:</strong> Auto-rickshaw driver ko har mod par guide karna: <em>"Bhaiya agle cut se right lo, phir 100 meter aage se left lena, ab thoda dheere karo..."</em> Agar ek instruction galat hua toh rasta bhatak jaoge (DOM State Desync).<br>
+            • <strong>Declarative:</strong> Uber/Ola app me pickup aur drop location pin kar dena (Target State). Car driver GPS dekh kar sahi route se khud le jayega (React VDOM Engine).</p>
+        </div>
+    </div>
+
+    <!-- ==================== TOPIC 2: VIRTUAL DOM & FIBER ARCHITECTURE ==================== -->
+    <div class="concept-block" id="topic-2">
+        <div class="concept-heading">2. Virtual DOM, Reconciliation & React Fiber Architecture</div>
+        
+        <div class="concept-sub-title">📌 2.1 Why Direct DOM Manipulation is Slow</div>
+        <p>A standard browser DOM node is a massive C++ object containing hundreds of properties (<code>clientTop</code>, <code>offsetWidth</code>, event listeners). Directly mutating DOM nodes triggers expensive browser engine recalculations:</p>
+        <ol>
+            <li><strong>Reflow / Layout:</strong> Recalculating the physical geometric positions and dimensions of every affected element on the page.</li>
+            <li><strong>Repaint:</strong> Re-rasterizing pixels, colors, and shadows onto screen layers.</li>
+        </ol>
+
+        <div class="concept-sub-title">🧠 2.2 The Virtual DOM & Diffing Heuristic O(n)</div>
+        <p>The <strong>Virtual DOM (VDOM)</strong> is a lightweight plain JavaScript object representation of the real DOM kept in memory. When state updates, React creates a new VDOM snapshot, compares it with the previous snapshot (<strong>Diffing</strong>), and computes the minimal set of real DOM mutations required (<strong>Reconciliation</strong>).</p>
+        <p>Theoretical tree-diffing algorithms require <code>O(n^3)</code> operations (1,000 elements = 1 Billion comparisons!). React reduced this to linear <strong><code>O(n)</code></strong> based on two foundational heuristics:</p>
+        <ul>
+            <li><strong>Two elements of different types produce different trees:</strong> Changing <code>&lt;div&gt;</code> to <code>&lt;span&gt;</code> will tear down the entire subtree and rebuild it from scratch.</li>
+            <li><strong>Keys identify stable child elements across renders:</strong> Keys give React a persistent identity hint for items in dynamic lists.</li>
+        </ul>
+
+        <div class="concept-sub-title">⚡ 2.3 React Fiber: The Cooperative Scheduling Engine</div>
+        <p>Before React 16, reconciliation was synchronous (the legacy <strong>Stack Reconciler</strong>). If a large tree update took 100ms, the main thread was completely blocked, dropping frames (jank) and ignoring user clicks. <strong>React Fiber</strong> completely re-wrote React's reconciliation engine with:</p>
+        <ul>
+            <li><strong>Incremental Rendering:</strong> Splitting work into small units of work (Fibers) that can be paused, resumed, or aborted.</li>
+            <li><strong>Concurrency & Priority Lanes:</strong> Discrete user inputs (typing in an input, clicking a button) have higher priority than background data updates.</li>
+            <li><strong>Double Buffering:</strong> Fiber maintains two trees simultaneously in memory: the <strong>Current Tree</strong> (rendered on screen) and the <strong>Work-in-Progress (WIP) Tree</strong> (built in background). Once finished, React swaps the pointers in a single instantaneous commit!</li>
+        </ul>
+
+        <div class="bio-anatomy-board">
+            <div class="anatomy-board-header">
+                <span class="anatomy-board-title">🔬 Bio-Anatomy: React Fiber Double-Buffering Tree Swap</span>
+                <span class="genz-badge">FIBER INTERNALS</span>
+            </div>
+            <div class="anatomy-code-center">
+<div>[Screen Displaying]                     [Background Memory]</div>
+<div>Current Fiber Tree                     Work-in-Progress (WIP) Tree</div>
+<div>┌─────────────────┐                     ┌─────────────────┐</div>
+<div>│ Fiber: &lt;App /&gt;  │ ◄─── alternate ───► │ Fiber: &lt;App /&gt;  │</div>
+<div>└────────┬────────┘                     └────────┬────────┘</div>
+<div>         ▼                                       ▼</div>
+<div>┌─────────────────┐                     ┌─────────────────┐</div>
+<div>│ Fiber: &lt;List /&gt; │ ◄─── alternate ───► │ Fiber: &lt;List /&gt; │ (Computing Diff...)</div>
+<div>└─────────────────┘                     └─────────────────┘</div>
+<div>                                                 │</div>
+<div>                                                 ▼ (Render Phase finishes)</div>
+<div>COMMIT PHASE: HostRoot.current = WorkInProgressTree; (Instantaneous Swap!)</div>
+            </div>
+        </div>
+
+        <div class="concept-sub-title">⚠️ 2.4 The 'Key' Prop & The Index Anti-Pattern</div>
+        <div class="code-container">
+            <div class="code-top-bar"><span>key_index_trap.jsx</span><span>React Anti-Pattern vs Best Practice</span></div>
+            <pre><code><span class="tok-com">// ❌ DANGEROUS ANTI-PATTERN: Using Array Index as Key</span>
+{todos.map((todo, index) => (
+    &lt;TodoItem key={index} title={todo.title} /&gt;
+))}
+<span class="tok-com">// Bug: If you delete the FIRST item, item #2 now has key=0! React thinks the first item</span>
+<span class="tok-com">// never changed and reuses its DOM/uncontrolled input state, causing data corruption!</span>
+
+<span class="tok-com">// ✅ PRODUCTION BEST PRACTICE: Use a Stable Unique Primary Identifier</span>
+{todos.map((todo) => (
+    &lt;TodoItem key={todo.id} title={todo.title} /&gt;
+))}</code></pre>
+        </div>
+
+        <div class="concept-sub-title">💼 2.5 Sudheer J Style Interview Q&A Cards</div>
+        <div class="q-card">
+            <div class="q-tag-row">
+                <span class="q-pill">Fiber & VDOM</span>
+                <span class="genz-badge">Senior / 10-14 LPA</span>
+            </div>
+            <h3>Q: What is React Fiber, and how did it enable Concurrent React features in React 18?</h3>
+            <div class="q-ans">
+                <strong>Key Answer:</strong> React Fiber is a complete reimplementation of the reconciliation core. Each React element is converted into a <strong>Fiber node</strong> (a linked-list data structure containing <code>child</code>, <code>sibling</code>, and <code>return</code> pointers). Unlike the call stack which cannot be paused once invoked, Fiber loops check a deadline counter (<code>shouldYield()</code>) via <code>requestIdleCallback</code> / MessageChannel. If browser frame time runs out, Fiber yields control back to the browser main thread to process user clicks or animations, then resumes work seamlessly. This cooperative scheduling is the fundamental foundation behind React 18 Concurrent features (<code>useTransition</code>, <code>Suspense</code>).
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TOPIC 3: JSX INTERNALS ==================== -->
+    <div class="concept-block" id="topic-3">
+        <div class="concept-heading">3. JSX Compilation Internals: Babel, React.createElement & jsx-runtime</div>
+        
+        <div class="concept-sub-title">📌 3.1 Definition & Transpilation</div>
+        <p><strong>JSX (JavaScript XML)</strong> is a syntax extension for JavaScript. Browsers cannot understand JSX directly; it must be transpiled by compilers like Babel, SWC, or ESBuild into standard JavaScript objects.</p>
+
+        <div class="bio-anatomy-board">
+            <div class="anatomy-board-header">
+                <span class="anatomy-board-title">🔬 Bio-Anatomy: JSX Transpilation Flow</span>
+                <span class="genz-badge">JSX COMPILATION</span>
+            </div>
+            <div class="anatomy-code-center">
+<div>// 1. Author-Time JSX:</div>
+<div>&lt;button className="btn-primary" onClick={handleClick}&gt;</div>
+<div>    Click Me!</div>
+<div>&lt;/button&gt;</div>
+<div>                            │</div>
+<div>                            ▼ (Compiled by Babel / SWC)</div>
+<div>// 2. Transpiled Output (React 17+ Modern JSX Transform):</div>
+<div>import { jsx as _jsx } from "react/jsx-runtime";</div>
+<div>_jsx("button", {</div>
+<div>    className: "btn-primary",</div>
+<div>    onClick: handleClick,</div>
+<div>    children: "Click Me!"</div>
+<div>});</div>
+<div>                            │</div>
+<div>                            ▼ (Returns Plain VDOM Object)</div>
+<div>// 3. React Element Object:</div>
+<div>{</div>
+<div>    $$typeof: Symbol.for('react.element'), // Security protection against XSS!</div>
+<div>    type: 'button',</div>
+<div>    props: { className: 'btn-primary', onClick: ..., children: 'Click Me!' },</div>
+<div>    ref: null,</div>
+<div>    key: null</div>
+<div>}</div>
+            </div>
+            <div class="anatomy-callout-grid">
+                <div class="anatomy-callout-card">
+                    <span class="callout-badge bg-yellow">🛡️ $$typeof Symbol Security</span>
+                    <div>Why does every React element have <code>$$typeof: Symbol.for('react.element')</code>? JSON cannot serialize JavaScript Symbols! If an attacker injects a mock React component via an API JSON payload, React rejects it because the Symbol is missing, blocking Cross-Site Scripting (XSS).</div>
+                </div>
+                <div class="anatomy-callout-card">
+                    <span class="callout-badge bg-cyan">⚡ React 17+ Transform</span>
+                    <div>In React 17+, you no longer need <code>import React from 'react'</code> at the top of every file because the compiler automatically imports functions from <code>react/jsx-runtime</code>.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TOPIC 4: COMPONENTS, PROPS & COMPOSITION ==================== -->
+    <div class="concept-block" id="topic-4">
+        <div class="concept-heading">4. Components, Props Immutability & Composition vs Inheritance</div>
+        
+        <div class="concept-sub-title">📌 4.1 Pure Functions & Props Immutability</div>
+        <p>React functional components must act as <strong>pure functions</strong> with respect to their props. A component must never mutate its own props (<code>props.user = "new"</code> will fail or cause unpredictable bugs). Props flow in a single direction: <strong>Unidirectional Downward Data Flow</strong> (Parent ➡️ Child).</p>
+
+        <div class="concept-sub-title">💻 4.2 Component Composition & The Children Prop (Slots Pattern)</div>
+        <div class="code-container">
+            <div class="code-top-bar"><span>ModalComposition.jsx</span><span>React Production Pattern</span></div>
+            <pre><code><span class="tok-com">// Reusable Card Container using Composition (Eliminates Prop Drilling!)</span>
+<span class="tok-kw">function</span> <span class="tok-fn">Card</span>({ title, headerAction, children, footer }) {
+    <span class="tok-kw">return</span> (
+        &lt;div className=<span class="tok-str">"card-container"</span>&gt;
+            &lt;div className=<span class="tok-str">"card-header"</span>&gt;
+                &lt;h3&gt;{title}&lt;/h3&gt;
+                {headerAction && &lt;div className=<span class="tok-str">"header-action"</span>&gt;{headerAction}&lt;/div&gt;}
+            &lt;/div&gt;
+            &lt;div className=<span class="tok-str">"card-body"</span>&gt;
+                {children} <span class="tok-com">/* Injects any arbitrary JSX passed between tags */</span>
+            &lt;/div&gt;
+            {footer && &lt;div className=<span class="tok-str">"card-footer"</span>&gt;{footer}&lt;/div&gt;}
+        &lt;/div&gt;
+    );
+}
+
+<span class="tok-com">// Usage with clean slots:</span>
+<span class="tok-kw">function</span> <span class="tok-fn">UserProfilePage</span>() {
+    <span class="tok-kw">return</span> (
+        &lt;Card 
+            title=<span class="tok-str">"Developer Profile"</span>
+            headerAction={&lt;button&gt;Edit&lt;/button&gt;}
+            footer={&lt;p&gt;Last login: 2 mins ago&lt;/p&gt;}
+        &gt;
+            &lt;p&gt;Name: Om Sawant&lt;/p&gt;
+            &lt;p&gt;Role: Senior Backend Engineer&lt;/p&gt;
+        &lt;/Card&gt;
+    );
+}</code></pre>
+        </div>
+    </div>
+
+    <!-- ==================== TOPIC 5: RENDER VS COMMIT PHASE ==================== -->
+    <div class="concept-block" id="topic-5">
+        <div class="concept-heading">5. The React Lifecycle: Render Phase vs Commit Phase vs Paint</div>
+        
+        <div class="concept-sub-title">📌 5.1 The 3 Stages of Every React Update</div>
+        <ol>
+            <li><strong>Trigger Phase:</strong> A state change is scheduled (e.g. <code>setCount(1)</code> or initial mount via <code>root.render()</code>).</li>
+            <li><strong>Render Phase (Pure & Interruptible):</strong> React calls the component functions, builds the new VDOM tree, and diffs it against the old tree. <strong>No real DOM changes happen here!</strong> Fiber can pause or abort this phase if high-priority input arrives.</li>
+            <li><strong>Commit Phase (Synchronous & Non-interruptible):</strong> React applies the computed changes to the real DOM (<code>appendChild</code>, <code>removeChild</code>, attribute mutations). Runs <code>useLayoutEffect</code> synchronously.</li>
+            <li><strong>Browser Paint:</strong> The browser repaints pixels to the physical screen. <code>useEffect</code> callbacks execute asynchronously <em>after</em> paint.</li>
+        </ol>
+
+        <div class="bio-anatomy-board">
+            <div class="anatomy-board-header">
+                <span class="anatomy-board-title">🔬 Bio-Anatomy: Render Phase vs Commit Phase Pipeline</span>
+                <span class="genz-badge">LIFECYCLE FLOW</span>
+            </div>
+            <div class="anatomy-code-center">
+<div>[Trigger] ──▶ setState() called</div>
+<div>    │</div>
+<div>    ▼</div>
+<div>[RENDER PHASE] ── Pure calculation (NO DOM SIDE EFFECTS!)</div>
+<div>  ├── Executes component function: App()</div>
+<div>  ├── Builds Work-In-Progress Fiber Tree</div>
+<div>  └── Computes Diff (Reconciliation)</div>
+<div>    │</div>
+<div>    ▼</div>
+<div>[COMMIT PHASE] ── Mutates real DOM synchronously</div>
+<div>  ├── React updates real DOM nodes</div>
+<div>  └── Executes useLayoutEffect() synchronously before paint</div>
+<div>    │</div>
+<div>    ▼</div>
+<div>[BROWSER PAINT] ── User physically sees new pixels on screen</div>
+<div>    │</div>
+<div>    ▼</div>
+<div>[PASSIVE EFFECTS] ── useEffect() fires asynchronously in background</div>
+            </div>
+        </div>
+
+        <div class="concept-sub-title">💼 5.2 Sudheer J Style Interview Q&A Cards</div>
+        <div class="q-card">
+            <div class="q-tag-row">
+                <span class="q-pill">Lifecycle</span>
+                <span class="genz-badge">Senior / 9 LPA</span>
+            </div>
+            <h3>Q: Why does React 18 run component functions TWICE in StrictMode in development?</h3>
+            <div class="q-ans">
+                <strong>Key Answer:</strong> In React 18 <code>&lt;React.StrictMode&gt;</code>, development mode intentionally invokes render functions twice and mounts ➡️ unmounts ➡️ remounts effects. This is done to help developers uncover <strong>accidental side effects in the Render Phase</strong> (such as mutating global variables or modifying external state during render) and ensure cleanup functions in <code>useEffect</code> correctly restore state, preparing your app for Concurrent features. In production builds, double-rendering is completely disabled.
+            </div>
+        </div>
+    </div>
+    
+        </div>
+    </div>
+</body>
+</html>

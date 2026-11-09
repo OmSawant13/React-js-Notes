@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@500;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #fbfbfd;
+            --card-bg: #ffffff;
+            --ink-main: #0f172a;
+            --ink-body: #1e293b;
+            --primary: #0284c7;
+            --border: #e2e8f0;
+            --font-hand: 'Patrick Hand', cursive, sans-serif;
+            --font-accent: 'Caveat', cursive, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-hand);
+            background-color: var(--bg-page);
+            color: var(--ink-main);
+            font-size: 24px;
+            line-height: 1.65;
+            min-height: 100vh;
+            padding: 24px 32px 80px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            width: 97%;
+            max-width: 1820px;
+            margin: 0 auto;
+            padding: 0 8px;
+        }
+
+        p { font-size: 25px; margin-bottom: 18px; line-height: 1.7; color: #1e293b; }
+        ol, ul { margin-bottom: 22px; padding-left: 32px; }
+        li { font-size: 25px; margin-bottom: 8px; line-height: 1.65; color: #1e293b; }
+        code { font-family: var(--font-code); font-size: 0.9em; background: #e0f2fe; padding: 2px 6px; border-radius: 6px; color: #0369a1; }
+
+        .genz-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 14px 28px;
+            margin-bottom: 32px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .genz-nav-title {
+            font-family: var(--font-accent);
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--ink-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-pill-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 18px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #0f172a;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            color: var(--ink-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px #0f172a;
+            background: #e0f2fe;
+        }
+
+        .nav-btn.active {
+            background: #0284c7;
+            color: #ffffff;
+        }
+
+        .genz-badge {
+            background: #bae6fd;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 2px 2px 0px #0f172a;
+        }
+
+        .brush-banner {
+            background: #0284c7;
+            color: #ffffff;
+            font-family: var(--font-hand);
+            font-size: 34px;
+            font-weight: 700;
+            text-align: center;
+            padding: 14px 44px;
+            margin: 28px auto 36px;
+            display: table;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 4px 4px 0px #0f172a;
+            transform: rotate(-1deg);
+        }
+
+        .chapter-page-box {
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 24px;
+            padding: 44px 52px;
+            box-shadow: 6px 6px 0px #0f172a;
+            margin-bottom: 48px;
+        }
+
+        .chapter-header-area {
+            border-bottom: 2.5px solid #0f172a;
+            padding-bottom: 24px;
+            margin-bottom: 36px;
+        }
+
+        .chapter-header-area h2 {
+            font-family: var(--font-accent);
+            font-size: 52px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 8px;
+        }
+
+        .concept-block {
+            background: transparent;
+            margin-bottom: 64px;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 48px;
+        }
+        .concept-block:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 24px;
+        }
+
+        .concept-heading {
+            font-family: var(--font-accent);
+            font-size: 42px;
+            font-weight: 700;
+            color: #0369a1;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2.5px solid #e2e8f0;
+            padding-bottom: 14px;
+        }
+
+        .concept-sub-title {
+            font-family: var(--font-hand);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 36px 0 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analogy-note {
+            background: #fef9c3;
+            border: 2.5px dashed #ca8a04;
+            border-radius: 20px;
+            padding: 26px 32px;
+            margin: 28px 0 34px;
+            box-shadow: 4px 4px 0px rgba(202, 138, 4, 0.25);
+        }
+
+        .analogy-note-title {
+            font-family: var(--font-accent);
+            font-size: 30px;
+            font-weight: 700;
+            color: #854d0e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .analogy-note p {
+            color: #713f12;
+            font-size: 24px;
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        .bio-anatomy-board {
+            background-color: #ffffff;
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 22px 22px;
+            border: 3px solid #0f172a;
+            border-radius: 22px;
+            padding: 34px 40px;
+            margin: 32px 0 38px;
+            box-shadow: 6px 6px 0px #0f172a;
+            position: relative;
+        }
+
+        .anatomy-board-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #94a3b8;
+            padding-bottom: 12px;
+        }
+
+        .anatomy-board-title {
+            font-family: var(--font-accent);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .anatomy-code-center {
+            background: #0f172a;
+            border: 2.5px solid #0f172a;
+            border-radius: 16px;
+            padding: 22px 26px;
+            color: #ffffff;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.85;
+            box-shadow: 4px 4px 0px #38bdf8;
+            overflow-x: auto;
+        }
+
+        .code-container {
+            background: #0b1120;
+            border: 2px solid #0f172a;
+            border-radius: 16px;
+            margin: 28px 0 34px;
+            overflow: hidden;
+            box-shadow: 5px 5px 0px #0f172a;
+        }
+
+        .code-top-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 10px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-code);
+            font-size: 15px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .code-container pre {
+            padding: 22px 26px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.8;
+            color: #f1f5f9;
+        }
+
+        .tok-kw { color: #f43f5e; font-weight: 700; }
+        .tok-fn { color: #38bdf8; font-weight: 600; }
+        .tok-str { color: #a5f3fc; }
+        .tok-num { color: #fde047; }
+        .tok-com { color: #64748b; font-style: italic; }
+
+        .mechanics-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0 28px;
+            border: 2px solid #0f172a;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 3px 3px 0px #0f172a;
+            font-family: var(--font-hand);
+            font-size: 22px;
+        }
+
+        .mechanics-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+            text-align: left;
+            padding: 12px 18px;
+            font-family: var(--font-accent);
+            font-size: 25px;
+            font-weight: 700;
+            border-bottom: 2px solid #0f172a;
+        }
+
+        .mechanics-table td {
+            padding: 12px 18px;
+            border-bottom: 1.5px solid #e2e8f0;
+            vertical-align: top;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .mechanics-table tr:last-child td { border-bottom: none; }
+        .mechanics-table tr:nth-child(even) td { background: #fafaf9; }
+
+        .q-card {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            padding: 24px 28px;
+            margin-bottom: 22px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .q-tag-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .q-pill {
+            background: #e0f2fe;
+            border: 1.5px solid #0f172a;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .q-card h3 {
+            font-family: var(--font-accent);
+            font-size: 30px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .q-ans {
+            background: #f0f9ff;
+            border-left: 5px solid #0284c7;
+            border-radius: 0 12px 12px 0;
+            padding: 16px 22px;
+            font-size: 22px;
+            color: #1e293b;
+            line-height: 1.65;
+        }
+
+        .practical-box {
+            background: #f0fdf4;
+            border: 2.5px solid #16a34a;
+            border-radius: 20px;
+            padding: 32px 38px;
+            margin: 36px 0;
+            box-shadow: 5px 5px 0px #16a34a;
+        }
+
+        .practical-title {
+            font-family: var(--font-accent);
+            font-size: 36px;
+            font-weight: 700;
+            color: #15803d;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+
+    <title>Module 8: Production-Level Development — React.js Master Handbook</title>
+</head>
+<body>
+    <div class="app-wrapper">
+        
+        <nav class="genz-nav-bar">
+            <a href="index.html" class="genz-nav-title">
+                <span>⚛️</span> React.js 8-Module Master Handbook
+            </a>
+            <div class="nav-pill-group">
+                <a href="index.html" class="nav-btn">🏠 Home</a><a href="module_1_react_fundamentals.html" class="nav-btn">M1 Fundamentals</a><a href="module_2_props_state_events.html" class="nav-btn">M2 Props & State</a><a href="module_3_react_hooks.html" class="nav-btn">M3 Hooks</a><a href="module_4_forms_api_integration.html" class="nav-btn">M4 Forms & APIs</a><a href="module_5_routing.html" class="nav-btn">M5 Routing</a><a href="module_6_state_management.html" class="nav-btn">M6 State Mgmt</a><a href="module_7_advanced_react.html" class="nav-btn">M7 Advanced</a><a href="module_8_production_development.html" class="nav-btn active">M8 Production</a><a href="book_interview_masterclass_hub.html" class="nav-btn" style="background:#fef08a;">💼 64 Q&A Hub</a>
+            </div>
+        </nav>
+    
+
+        <div class="chapter-page-box">
+            <div class="chapter-header-area">
+                <span class="genz-badge">MODULE 8 • PRODUCTION ENGINEERING (CAPSTONE &amp; ARCHITECTURE)</span>
+                <h2>Module 8 — Production-Level Development</h2>
+                <p>Enterprise Frontend Architecture: Production Folder Structure, Custom Hooks for Logic Separation, JWT Authentication &amp; Token Rotation Interceptor, File Uploads with FormData, Server Pagination, Debounce/Throttle, Toast Notifications, RTL Testing, and Production Deployment.</p>
+            </div>
+
+            <div class="brush-banner">Module 8: Production Grade Engineering — Enterprise Scalable Architecture!</div>
+
+            <!-- TOPIC 1: PRODUCTION FOLDER STRUCTURE -->
+            <div class="concept-block" id="topic-1">
+                <div class="concept-heading">1. Production Folder Structure &amp; Separation of Concerns</div>
+                <div class="concept-sub-title">📌 1.1 Feature-Driven Architecture (Used in Uber, Airbnb, Stripe)</div>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>Enterprise Folder Architecture</span><span>Scalable React Structure</span></div>
+                    <pre><code>src/
+├── assets/            # Static images, icons, global SVGs
+├── components/        # Reusable design system UI components (Button, Modal, Input, Badge)
+├── features/          # Domain-driven feature modules (auth, jobs, cart, billing)
+│   ├── auth/
+│   │   ├── components/LoginForm.jsx
+│   │   ├── hooks/useAuthUser.js
+│   │   └── authSlice.js
+│   └── jobs/
+│       ├── components/JobCard.jsx
+│       ├── hooks/useJobs.js
+│       └── jobsApi.js
+├── hooks/             # Global utility hooks (useDebounce, useWindowSize, useOnlineStatus)
+├── layouts/           # App shells (DashboardLayout, AuthLayout)
+├── pages/             # Route-level views (HomePage, JobsPage, CheckoutPage)
+├── services/          # Axios HTTP clients, interceptors & API helpers
+│   └── api.js
+├── utils/             # Helper formatters (formatCurrency, formatDate)
+├── App.jsx            # Router definitions & providers
+└── main.jsx           # Entry point</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 2: JWT AUTH & REFRESH TOKEN INTERCEPTOR -->
+            <div class="concept-block" id="topic-2">
+                <div class="concept-heading">2. Authentication with JWT: Access &amp; Refresh Token Rotation Flow</div>
+                <div class="concept-sub-title">📌 2.1 The Seamless 401 Interceptor Flow</div>
+
+                <div class="bio-anatomy-board">
+                    <div class="anatomy-board-header">
+                        <span class="anatomy-board-title">🔬 Production JWT Token Rotation Mechanics</span>
+                        <span class="genz-badge">SECURITY ARCHITECTURE</span>
+                    </div>
+                    <div class="anatomy-code-center">
+<div>1. Access Token: Short-lived (15 minutes). Stored in memory or Authorization Bearer header.</div>
+<div>2. Refresh Token: Long-lived (7-30 days). Stored in secure `httpOnly` cookie (XSS immune).</div>
+<div>3. User triggers API ──▶ Server responds `401 Unauthorized` (Access Token expired).</div>
+<div>4. Axios Response Interceptor catches 401 ──▶ Calls `/api/auth/refresh` endpoint silently.</div>
+<div>5. Server verifies refresh cookie ──▶ Returns fresh Access Token.</div>
+<div>6. Interceptor updates Authorization header ──▶ Replays original failed API request!</div>
+<div>Result: Zero user interruption! User never gets logged out while active!</div>
+                    </div>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>src/services/api.js</span><span>Production Axios Interceptor</span></div>
+                    <pre><code>import axios from 'axios';
+
+const api = axios.create({
+    baseURL: import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api',
+    withCredentials: true // Sends httpOnly cookies automatically!
+});
+
+// Response Interceptor for Token Rotation
+api.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+        const originalRequest = error.config;
+
+        // If 401 and request hasn't been retried yet
+        if (error.response?.status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true;
+
+            try {
+                // Call refresh endpoint to get fresh token
+                const refreshRes = await axios.post('/api/auth/refresh', {}, { withCredentials: true });
+                const newAccessToken = refreshRes.data.accessToken;
+
+                // Update authorization header and replay
+                originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+                return api(originalRequest);
+            } catch (refreshErr) {
+                // Refresh token expired or revoked -> redirect to login
+                window.location.href = '/login';
+                return Promise.reject(refreshErr);
+            }
+        }
+        return Promise.reject(error);
+    }
+);
+
+export default api;</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 3: FILE UPLOADS WITH FORMDATA -->
+            <div class="concept-block" id="topic-3">
+                <div class="concept-heading">3. File Uploads with FormData &amp; Multipart Headers</div>
+                <div class="concept-sub-title">📌 3.1 Images aur Resumes Backend par bhejna</div>
+                <p>Files ko JSON me nahi bhej sakte! Browser ke native <code>FormData</code> object me wrap karke <code>multipart/form-data</code> header se bhejna padta hai:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>FileUpload.jsx</span><span>FormData File Upload</span></div>
+                    <pre><code>import { useState } from 'react';
+import api from './api';
+
+export function ResumeUploader() {
+    const [file, setFile] = useState(null);
+    const [uploading, setUploading] = useState(false);
+    const [previewUrl, setPreviewUrl] = useState(null);
+
+    const handleFileChange = (e) => {
+        const selected = e.target.files[0];
+        setFile(selected);
+        if (selected && selected.type.startsWith('image/')) {
+            setPreviewUrl(URL.createObjectURL(selected)); // Instant client-side preview!
+        }
+    };
+
+    const handleUpload = async () => {
+        if (!file) return alert("Please select a file first!");
+
+        const formData = new FormData();
+        formData.append("resume", file); // Key matches backend multer field name!
+
+        try {
+            setUploading(true);
+            const res = await api.post('/upload', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            alert("File uploaded successfully! URL: " + res.data.fileUrl);
+        } catch (err) {
+            alert("Upload failed: " + err.message);
+        } finally {
+            setUploading(false);
+        }
+    };
+
+    return (
+        <div>
+            <input type="file" onChange={handleFileChange} />
+            {previewUrl && <img src={previewUrl} width="120" alt="Preview" />}
+            <button onClick={handleUpload} disabled={uploading}>
+                {uploading ? "Uploading..." : "Upload File"}
+            </button>
+        </div>
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 4: SERVER PAGINATION & SEARCH -->
+            <div class="concept-block" id="topic-4">
+                <div class="concept-heading">4. Server Pagination, Debounced Search &amp; Multi-Filtering</div>
+                <div class="concept-sub-title">📌 4.1 100,000 Records ko Handle karne ka Standard Flow</div>
+                <p>Client par 100,000 records laoge toh browser mar jayega! Server-side query parameters se page by page data mangwao (<code>/api/jobs?page=1&limit=10&search=react</code>):</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>PaginationControls.jsx</span><span>Server Pagination UI</span></div>
+                    <pre><code>function PaginationBar({ currentPage, totalPages, onPageChange }) {
+    return (
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginTop: '20px' }}>
+            <button disabled={currentPage <= 1} onClick={() => onPageChange(currentPage - 1)}>
+                ◀ Previous
+            </button>
+            <span>Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong></span>
+            <button disabled={currentPage >= totalPages} onClick={() => onPageChange(currentPage + 1)}>
+                Next ▶
+            </button>
+        </div>
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 5: BASIC TESTING WITH REACT TESTING LIBRARY -->
+            <div class="concept-block" id="topic-5">
+                <div class="concept-heading">5. Unit &amp; Integration Testing with React Testing Library (RTL)</div>
+                <div class="concept-sub-title">📌 5.1 Test User Behavior, Not Implementation Details!</div>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>Counter.test.jsx</span><span>RTL & Vitest</span></div>
+                    <pre><code>import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import Counter from './Counter';
+
+describe('Counter Component Unit Tests', () => {
+    it('renders initial count as 0', () => {
+        render(<Counter />);
+        const countText = screen.getByText(/Current Count: 0/i);
+        expect(countText).toBeInTheDocument();
+    });
+
+    it('increments count by 1 when button clicked', () => {
+        render(<Counter />);
+        const button = screen.getByRole('button', { name: /Increment/i });
+        fireEvent.click(button);
+
+        expect(screen.getByText(/Current Count: 1/i)).toBeInTheDocument();
+    });
+});</code></pre>
+                </div>
+            </div>
+
+            <!-- PRACTICAL LAB -->
+            <div class="practical-box">
+                <div class="practical-title">🛠️ Module 8 Practical Lab: Production Capstone Application (React + Node.js + MongoDB)</div>
+                <p>TechTalent Portal: Complete production-ready frontend connecting to our Node.js Backend with Auth Context, Custom useJobs hook, Real-time Debounced Search, Domain Filters, and Protected Routes:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>src/features/jobs/useJobs.js</span><span>Production Data Hook</span></div>
+                    <pre><code>import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+export function useJobs(searchTerm, selectedCategory, page = 1) {
+    const [jobs, setJobs] = useState([]);
+    const [totalPages, setTotalPages] = useState(1);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const controller = new AbortController();
+        setLoading(true);
+        setError(null);
+
+        const params = {
+            search: searchTerm || undefined,
+            category: selectedCategory !== 'ALL' ? selectedCategory : undefined,
+            page,
+            limit: 6
+        };
+
+        axios.get('http://localhost:5000/api/jobs', { params, signal: controller.signal })
+            .then(res => {
+                setJobs(res.data.jobs || res.data.data);
+                setTotalPages(res.data.totalPages || 1);
+                setLoading(false);
+            })
+            .catch(err => {
+                if (err.name !== 'CanceledError' && err.name !== 'AbortError') {
+                    setError(err.message);
+                    setLoading(false);
+                }
+            });
+
+        return () => controller.abort();
+    }, [searchTerm, selectedCategory, page]);
+
+    return { jobs, totalPages, loading, error };
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- SUDHEER J INTERVIEW CARDS -->
+            <div class="concept-sub-title">💼 Module 8 Interview Bank (Sudheer J Style)</div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">Debounce vs Throttle</span>
+                    <span class="genz-badge">Senior / 10-12 LPA</span>
+                </div>
+                <h3>Q: What is the exact difference between Debouncing and Throttling? Give real frontend examples.</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> <strong>Debouncing</strong> bunches a series of sequential events and delays execution until after a specified period of inactivity (e.g., executing a search query only after the user stops typing for 400ms). <strong>Throttling</strong> guarantees that a function is executed at most once per specified time interval, regardless of how many times the event fires (e.g., updating a progress indicator on infinite window scroll or resizing every 100ms).
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">JWT Security</span>
+                    <span class="genz-badge">Enterprise Security</span>
+                </div>
+                <h3>Q: Where should you store JWT access tokens in a React frontend? LocalStorage or Memory?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> Never store sensitive JWT access tokens in `localStorage` or `sessionStorage` in high-security applications because any third-party script or Cross-Site Scripting (XSS) vulnerability can access them via JavaScript. The enterprise standard is to keep the short-lived access token in <strong>JavaScript in-memory state</strong> (or closure/context) and store the long-lived refresh token in an <strong><code>httpOnly</code>, <code>secure</code>, <code>sameSite=strict</code> cookie</strong> which JavaScript cannot read, eliminating token theft via XSS.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">Testing</span>
+                    <span class="genz-badge">Production Standard</span>
+                </div>
+                <h3>Q: What is the core philosophy of React Testing Library (RTL) vs Enzyme?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> <em>"The more your tests resemble the way your software is used, the more confidence they can give you."</em> Enzyme focused on testing internal implementation details (component state, internal method calls, shallow rendering). React Testing Library focuses on testing user behavior from the user's perspective (finding elements by accessible text/role, firing clicks, and asserting visible screen output), ensuring tests don't break during refactoring if behavior remains unchanged.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 5: React Performance Optimization & Profiling — React.js Master Engineering Handbook</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@500;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #fbfbfd;
+            --card-bg: #ffffff;
+            --ink-main: #0f172a;
+            --ink-body: #1e293b;
+            --primary: #0284c7;
+            --border: #e2e8f0;
+            --font-hand: 'Patrick Hand', cursive, sans-serif;
+            --font-accent: 'Caveat', cursive, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-hand);
+            background-color: var(--bg-page);
+            color: var(--ink-main);
+            font-size: 24px;
+            line-height: 1.65;
+            min-height: 100vh;
+            padding: 24px 32px 80px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            width: 97%;
+            max-width: 1820px;
+            margin: 0 auto;
+            padding: 0 8px;
+        }
+
+        p { font-size: 25px; margin-bottom: 18px; line-height: 1.7; color: #1e293b; }
+        ol, ul { margin-bottom: 22px; padding-left: 32px; }
+        li { font-size: 25px; margin-bottom: 8px; line-height: 1.65; color: #1e293b; }
+        code { font-family: var(--font-code); font-size: 0.9em; background: #e0f2fe; padding: 2px 6px; border-radius: 6px; color: #0369a1; }
+
+        .genz-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 14px 28px;
+            margin-bottom: 32px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .genz-nav-title {
+            font-family: var(--font-accent);
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--ink-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-pill-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #0f172a;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            color: var(--ink-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px #0f172a;
+            background: #e0f2fe;
+        }
+
+        .genz-badge {
+            background: #bbf7d0;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 2px 2px 0px #0f172a;
+        }
+
+        .brush-banner {
+            background: #0284c7;
+            color: #ffffff;
+            font-family: var(--font-hand);
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            padding: 14px 44px;
+            margin: 28px auto 36px;
+            display: table;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 4px 4px 0px #0f172a;
+            transform: rotate(-1deg);
+        }
+
+        .chapter-page-box {
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 24px;
+            padding: 44px 52px;
+            box-shadow: 6px 6px 0px #0f172a;
+            margin-bottom: 48px;
+        }
+
+        .chapter-header-area {
+            border-bottom: 2.5px solid #0f172a;
+            padding-bottom: 24px;
+            margin-bottom: 36px;
+        }
+
+        .chapter-header-area h2 {
+            font-family: var(--font-accent);
+            font-size: 52px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 8px;
+        }
+
+        .concept-block {
+            background: transparent;
+            margin-bottom: 64px;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 48px;
+        }
+        .concept-block:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 24px;
+        }
+
+        .concept-heading {
+            font-family: var(--font-accent);
+            font-size: 42px;
+            font-weight: 700;
+            color: #0369a1;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2.5px solid #e2e8f0;
+            padding-bottom: 14px;
+        }
+
+        .concept-sub-title {
+            font-family: var(--font-hand);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 36px 0 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analogy-note {
+            background: #fef9c3;
+            border: 2.5px dashed #ca8a04;
+            border-radius: 20px;
+            padding: 30px 36px;
+            margin: 36px 0 42px;
+            box-shadow: 4px 4px 0px rgba(202, 138, 4, 0.25);
+        }
+
+        .analogy-note-title {
+            font-family: var(--font-accent);
+            font-size: 32px;
+            font-weight: 700;
+            color: #854d0e;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .analogy-note p {
+            color: #713f12;
+            font-size: 25px;
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        .bio-anatomy-board {
+            background-color: #ffffff;
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 22px 22px;
+            border: 3px solid #0f172a;
+            border-radius: 22px;
+            padding: 38px 44px;
+            margin: 40px 0 48px;
+            box-shadow: 6px 6px 0px #0f172a;
+            position: relative;
+        }
+
+        .anatomy-board-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            border-bottom: 2px dashed #94a3b8;
+            padding-bottom: 14px;
+        }
+
+        .anatomy-board-title {
+            font-family: var(--font-accent);
+            font-size: 34px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .anatomy-code-center {
+            background: #0f172a;
+            border: 2.5px solid #0f172a;
+            border-radius: 18px;
+            padding: 24px 30px;
+            color: #ffffff;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.85;
+            box-shadow: 5px 5px 0px #38bdf8;
+            overflow-x: auto;
+        }
+
+        .pill-kw { background: #fde047; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 800; }
+        .pill-fn { background: #38bdf8; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 800; }
+        .pill-await { background: #4ade80; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 800; }
+        .pill-err { background: #f87171; color: #000; padding: 2px 8px; border-radius: 6px; font-weight: 800; }
+
+        .code-container {
+            background: #0b1120;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            margin: 32px 0 40px;
+            overflow: hidden;
+            box-shadow: 5px 5px 0px #0f172a;
+        }
+
+        .code-top-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-code);
+            font-size: 16px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .code-container pre {
+            padding: 24px 28px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: var(--font-code);
+            font-size: 16.5px;
+            line-height: 1.8;
+            color: #f1f5f9;
+        }
+
+        .tok-kw { color: #f43f5e; font-weight: 700; }
+        .tok-fn { color: #38bdf8; font-weight: 600; }
+        .tok-str { color: #a5f3fc; }
+        .tok-num { color: #fde047; }
+        .tok-com { color: #64748b; font-style: italic; }
+
+        .mechanics-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 22px 0 32px;
+            border: 2px solid #0f172a;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 3px 3px 0px #0f172a;
+            font-family: var(--font-hand);
+            font-size: 23px;
+        }
+
+        .mechanics-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+            text-align: left;
+            padding: 14px 20px;
+            font-family: var(--font-accent);
+            font-size: 26px;
+            font-weight: 700;
+            border-bottom: 2px solid #0f172a;
+        }
+
+        .mechanics-table td {
+            padding: 14px 20px;
+            border-bottom: 1.5px solid #e2e8f0;
+            vertical-align: top;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .mechanics-table tr:last-child td { border-bottom: none; }
+        .mechanics-table tr:nth-child(even) td { background: #fafaf9; }
+
+        .q-card {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            padding: 26px 32px;
+            margin-bottom: 24px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .q-tag-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .q-pill {
+            background: #e0f2fe;
+            border: 1.5px solid #0f172a;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .q-card h3 {
+            font-family: var(--font-accent);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 14px;
+            line-height: 1.3;
+        }
+
+        .q-ans {
+            background: #f0f9ff;
+            border-left: 5px solid #0284c7;
+            border-radius: 0 12px 12px 0;
+            padding: 18px 24px;
+            font-size: 23px;
+            color: #1e293b;
+            line-height: 1.65;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <nav class="genz-nav-bar">
+            <a href="index.html" class="genz-nav-title">
+                <span>⚛️</span> React.js 6–18 LPA Master Revision Handbook
+            </a>
+            <div class="nav-pill-group">
+                <a href="index.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">🏠 Home</a><a href="book_volume_1_core_react.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">⚛️ Vol 1: Core</a><a href="book_volume_2_hooks_mastery.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">🪝 Vol 2: Hooks</a><a href="book_volume_3_state_forms.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">📦 Vol 3: State & Forms</a><a href="book_volume_4_react_router.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">🛣️ Vol 4: Router v6</a><a href="book_volume_5_performance.html" class="nav-btn" style="background:#cffafe; font-size:18px; padding:6px 12px;">⚡ Vol 5: Perf & VDOM</a><a href="book_volume_6_nextjs_rsc.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">🌐 Vol 6: Next.js & RSC</a><a href="book_volume_7_capstone_project.html" class="nav-btn" style="background:#ffffff; font-size:18px; padding:6px 12px;">🏆 Vol 7: Project</a>
+            </div>
+        </nav>
+
+        <div class="chapter-page-box">
+            <div class="chapter-header-area">
+                <span class="genz-badge">PART 5 • PERFORMANCE TUNING</span>
+                <h2>Part 5: React Performance Optimization & Profiling</h2>
+            </div>
+
+            <div class="brush-banner">Re-render Triggers, React.memo Traps, List Virtualization & Profiling</div>
+
+            
+    <!-- ==================== PART 5: PERFORMANCE OPTIMIZATION ==================== -->
+    <div class="concept-block" id="topic-performance">
+        <div class="concept-heading">1. Performance Tuning: Re-render Triggers, React.memo & Virtualization</div>
+        
+        <div class="concept-sub-title">📌 1.1 The 4 Reasons a React Component Re-renders</div>
+        <ol>
+            <li><strong>State Update:</strong> A component's own state changed via <code>setState()</code>.</li>
+            <li><strong>Parent Re-render:</strong> When a parent component renders, by default <strong>ALL its child components re-render recursively</strong>, regardless of whether their props changed!</li>
+            <li><strong>Props Update:</strong> New prop values passed from parent.</li>
+            <li><strong>Context Update:</strong> Any component calling <code>useContext(MyContext)</code> will re-render whenever the context provider's <code>value</code> changes.</li>
+        </ol>
+
+        <div class="bio-anatomy-board">
+            <div class="anatomy-board-header">
+                <span class="anatomy-board-title">🔬 Bio-Anatomy: Breaking React.memo via Referential Inequality</span>
+                <span class="genz-badge">MEMOIZATION GOTCHA</span>
+            </div>
+            <div class="anatomy-code-center">
+<div>ParentComponent renders:</div>
+<div>const config = { theme: 'dark' }; // ❌ Brand new object reference on EVERY render!</div>
+<div>const handleClick = () => {};     // ❌ Brand new function reference on EVERY render!</div>
+<div>─────────────────────────────────────────────────────────────────────────────</div>
+<div>&lt;MemoizedChild config={config} onClick={handleClick} /&gt;</div>
+<div>React.memo compares:</div>
+<div>prevProps.config === nextProps.config ──▶ FALSE! (Different memory addresses)</div>
+<div>prevProps.onClick === nextProps.onClick ──▶ FALSE! (Different memory addresses)</div>
+<div>Result: &lt;MemoizedChild /&gt; RE-RENDERS ANYWAY! React.memo was completely useless!</div>
+<div>─────────────────────────────────────────────────────────────────────────────</div>
+<div>✅ FIX: Wrap config in useMemo() and handleClick in useCallback()!</div>
+            </div>
+        </div>
+
+        <div class="concept-sub-title">⚡ 1.2 List Virtualization (Windowing): Rendering 100,000 Rows</div>
+        <p>If you render 100,000 items in standard React, the browser creates 100,000 physical DOM nodes, consuming 800MB of RAM and freezing scrolling. <strong>Virtualization</strong> renders only the <strong>15–20 items currently visible in the user's viewport</strong>, recycling DOM nodes dynamically as the user scrolls.</p>
+
+        <div class="code-container">
+            <div class="code-top-bar"><span>VirtualList.jsx</span><span>react-window Pattern</span></div>
+            <pre><code><span class="tok-kw">import</span> { FixedSizeList <span class="tok-kw">as</span> List } <span class="tok-kw">from</span> <span class="tok-str">"react-window"</span>;
+
+<span class="tok-kw">const</span> Row = ({ index, style }) => (
+    &lt;div style={style} className=<span class="tok-str">"list-row"</span>&gt;
+        Row #{index}: Fast 60FPS Virtualized DOM node
+    &lt;/div&gt;
+);
+
+<span class="tok-kw">function</span> <span class="tok-fn">LargeDataset</span>() {
+    <span class="tok-kw">return</span> (
+        &lt;List
+            height={<span class="tok-num">500</span>}         <span class="tok-com">// Viewport height in px</span>
+            itemCount={<span class="tok-num">100000</span>}   <span class="tok-com">// 1 Lakh items</span>
+            itemSize={<span class="tok-num">45</span>}         <span class="tok-com">// Row height in px</span>
+            width={<span class="tok-str">"100%"</span>}
+        &gt;
+            {Row}
+        &lt;/List&gt;
+    );
+}</code></pre>
+        </div>
+
+        <div class="concept-sub-title">💼 1.3 Sudheer J Style Interview Q&A Cards</div>
+        <div class="q-card">
+            <div class="q-tag-row">
+                <span class="q-pill">Performance</span>
+                <span class="genz-badge">Senior / 12 LPA</span>
+            </div>
+            <h3>Q: When should you NOT use React.memo?</h3>
+            <div class="q-ans">
+                <strong>Key Answer:</strong> Do not wrap components in <code>React.memo</code> if:
+                1. The component is very simple/cheap to render (the shallow prop comparison check costs more CPU than just letting it re-render).
+                2. The component’s props change almost every single render anyway (you pay the cost of shallow comparison PLUS the render cost).
+                3. The component takes children or un-memoized object/function props, which breaks shallow equality every time.
+            </div>
+        </div>
+    </div>
+    
+        </div>
+    </div>
+</body>
+</html>

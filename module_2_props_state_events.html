@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@500;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #fbfbfd;
+            --card-bg: #ffffff;
+            --ink-main: #0f172a;
+            --ink-body: #1e293b;
+            --primary: #0284c7;
+            --border: #e2e8f0;
+            --font-hand: 'Patrick Hand', cursive, sans-serif;
+            --font-accent: 'Caveat', cursive, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-hand);
+            background-color: var(--bg-page);
+            color: var(--ink-main);
+            font-size: 24px;
+            line-height: 1.65;
+            min-height: 100vh;
+            padding: 24px 32px 80px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            width: 97%;
+            max-width: 1820px;
+            margin: 0 auto;
+            padding: 0 8px;
+        }
+
+        p { font-size: 25px; margin-bottom: 18px; line-height: 1.7; color: #1e293b; }
+        ol, ul { margin-bottom: 22px; padding-left: 32px; }
+        li { font-size: 25px; margin-bottom: 8px; line-height: 1.65; color: #1e293b; }
+        code { font-family: var(--font-code); font-size: 0.9em; background: #e0f2fe; padding: 2px 6px; border-radius: 6px; color: #0369a1; }
+
+        .genz-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 14px 28px;
+            margin-bottom: 32px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .genz-nav-title {
+            font-family: var(--font-accent);
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--ink-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-pill-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 18px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #0f172a;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            color: var(--ink-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px #0f172a;
+            background: #e0f2fe;
+        }
+
+        .nav-btn.active {
+            background: #0284c7;
+            color: #ffffff;
+        }
+
+        .genz-badge {
+            background: #bae6fd;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 2px 2px 0px #0f172a;
+        }
+
+        .brush-banner {
+            background: #0284c7;
+            color: #ffffff;
+            font-family: var(--font-hand);
+            font-size: 34px;
+            font-weight: 700;
+            text-align: center;
+            padding: 14px 44px;
+            margin: 28px auto 36px;
+            display: table;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 4px 4px 0px #0f172a;
+            transform: rotate(-1deg);
+        }
+
+        .chapter-page-box {
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 24px;
+            padding: 44px 52px;
+            box-shadow: 6px 6px 0px #0f172a;
+            margin-bottom: 48px;
+        }
+
+        .chapter-header-area {
+            border-bottom: 2.5px solid #0f172a;
+            padding-bottom: 24px;
+            margin-bottom: 36px;
+        }
+
+        .chapter-header-area h2 {
+            font-family: var(--font-accent);
+            font-size: 52px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 8px;
+        }
+
+        .concept-block {
+            background: transparent;
+            margin-bottom: 64px;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 48px;
+        }
+        .concept-block:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 24px;
+        }
+
+        .concept-heading {
+            font-family: var(--font-accent);
+            font-size: 42px;
+            font-weight: 700;
+            color: #0369a1;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2.5px solid #e2e8f0;
+            padding-bottom: 14px;
+        }
+
+        .concept-sub-title {
+            font-family: var(--font-hand);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 36px 0 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analogy-note {
+            background: #fef9c3;
+            border: 2.5px dashed #ca8a04;
+            border-radius: 20px;
+            padding: 26px 32px;
+            margin: 28px 0 34px;
+            box-shadow: 4px 4px 0px rgba(202, 138, 4, 0.25);
+        }
+
+        .analogy-note-title {
+            font-family: var(--font-accent);
+            font-size: 30px;
+            font-weight: 700;
+            color: #854d0e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .analogy-note p {
+            color: #713f12;
+            font-size: 24px;
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        .bio-anatomy-board {
+            background-color: #ffffff;
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 22px 22px;
+            border: 3px solid #0f172a;
+            border-radius: 22px;
+            padding: 34px 40px;
+            margin: 32px 0 38px;
+            box-shadow: 6px 6px 0px #0f172a;
+            position: relative;
+        }
+
+        .anatomy-board-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #94a3b8;
+            padding-bottom: 12px;
+        }
+
+        .anatomy-board-title {
+            font-family: var(--font-accent);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .anatomy-code-center {
+            background: #0f172a;
+            border: 2.5px solid #0f172a;
+            border-radius: 16px;
+            padding: 22px 26px;
+            color: #ffffff;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.85;
+            box-shadow: 4px 4px 0px #38bdf8;
+            overflow-x: auto;
+        }
+
+        .code-container {
+            background: #0b1120;
+            border: 2px solid #0f172a;
+            border-radius: 16px;
+            margin: 28px 0 34px;
+            overflow: hidden;
+            box-shadow: 5px 5px 0px #0f172a;
+        }
+
+        .code-top-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 10px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-code);
+            font-size: 15px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .code-container pre {
+            padding: 22px 26px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.8;
+            color: #f1f5f9;
+        }
+
+        .tok-kw { color: #f43f5e; font-weight: 700; }
+        .tok-fn { color: #38bdf8; font-weight: 600; }
+        .tok-str { color: #a5f3fc; }
+        .tok-num { color: #fde047; }
+        .tok-com { color: #64748b; font-style: italic; }
+
+        .mechanics-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0 28px;
+            border: 2px solid #0f172a;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 3px 3px 0px #0f172a;
+            font-family: var(--font-hand);
+            font-size: 22px;
+        }
+
+        .mechanics-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+            text-align: left;
+            padding: 12px 18px;
+            font-family: var(--font-accent);
+            font-size: 25px;
+            font-weight: 700;
+            border-bottom: 2px solid #0f172a;
+        }
+
+        .mechanics-table td {
+            padding: 12px 18px;
+            border-bottom: 1.5px solid #e2e8f0;
+            vertical-align: top;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .mechanics-table tr:last-child td { border-bottom: none; }
+        .mechanics-table tr:nth-child(even) td { background: #fafaf9; }
+
+        .q-card {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            padding: 24px 28px;
+            margin-bottom: 22px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .q-tag-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .q-pill {
+            background: #e0f2fe;
+            border: 1.5px solid #0f172a;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .q-card h3 {
+            font-family: var(--font-accent);
+            font-size: 30px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .q-ans {
+            background: #f0f9ff;
+            border-left: 5px solid #0284c7;
+            border-radius: 0 12px 12px 0;
+            padding: 16px 22px;
+            font-size: 22px;
+            color: #1e293b;
+            line-height: 1.65;
+        }
+
+        .practical-box {
+            background: #f0fdf4;
+            border: 2.5px solid #16a34a;
+            border-radius: 20px;
+            padding: 32px 38px;
+            margin: 36px 0;
+            box-shadow: 5px 5px 0px #16a34a;
+        }
+
+        .practical-title {
+            font-family: var(--font-accent);
+            font-size: 36px;
+            font-weight: 700;
+            color: #15803d;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+
+    <title>Module 2: Props, State &amp; Events — React.js Master Handbook</title>
+</head>
+<body>
+    <div class="app-wrapper">
+        
+        <nav class="genz-nav-bar">
+            <a href="index.html" class="genz-nav-title">
+                <span>⚛️</span> React.js 8-Module Master Handbook
+            </a>
+            <div class="nav-pill-group">
+                <a href="index.html" class="nav-btn">🏠 Home</a><a href="module_1_react_fundamentals.html" class="nav-btn">M1 Fundamentals</a><a href="module_2_props_state_events.html" class="nav-btn active">M2 Props & State</a><a href="module_3_react_hooks.html" class="nav-btn">M3 Hooks</a><a href="module_4_forms_api_integration.html" class="nav-btn">M4 Forms & APIs</a><a href="module_5_routing.html" class="nav-btn">M5 Routing</a><a href="module_6_state_management.html" class="nav-btn">M6 State Mgmt</a><a href="module_7_advanced_react.html" class="nav-btn">M7 Advanced</a><a href="module_8_production_development.html" class="nav-btn">M8 Production</a><a href="book_interview_masterclass_hub.html" class="nav-btn" style="background:#fef08a;">💼 64 Q&A Hub</a>
+            </div>
+        </nav>
+    
+
+        <div class="chapter-page-box">
+            <div class="chapter-header-area">
+                <span class="genz-badge">MODULE 2 • DATA &amp; USER INTERACTION</span>
+                <h2>Module 2 — Props, State &amp; Events</h2>
+                <p>Learn how data moves and how apps react to user clicks: Props destructuring, Default values, Props vs State, One-way data flow, useState, Functional updates, Event handling, Conditional rendering, map() lists &amp; Keys.</p>
+            </div>
+
+            <div class="brush-banner">Module 2: Props, State, Events — Dukan ka Bill, Galla aur Button Clicks!</div>
+
+            <!-- TOPIC 1: PROPS & DESTRUCTURING -->
+            <div class="concept-block" id="topic-1">
+                <div class="concept-heading">1. Props and Prop Destructuring</div>
+                <div class="concept-sub-title">📌 1.1 Definition &amp; Real Purpose</div>
+                <p><strong>Props (Properties):</strong> Jab Parent component apne Child component ko koi data bhejna chahta hai, toh wo <strong>Props</strong> use karta hai. Yeh bilkul HTML ke attributes jaisa hota hai jaise <code>&lt;img src="..." alt="..." /&gt;</code>, lekin yahan hum numbers, strings, objects, arrays, aur functions sab bhej sakte hain!</p>
+                <p><strong>Destructuring:</strong> Puraane zamaane me log har jagah <code>props.name</code>, <code>props.age</code> likhte the. Modern JavaScript me hum direct parameters ke andar curly braces <code>{ name, age }</code> laga kar props ko destructure kar lete hain. Code 5 guna clean ho jata hai!</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>UserCard.jsx</span><span>Props & Destructuring</span></div>
+                    <pre><code><span class="tok-com">// ❌ PURAANA TAREEEQA (Lamba aur repetitive)</span>
+function OldUserCard(props) {
+    return &lt;div&gt;Hello, {props.name}! You are {props.age} years old.&lt;/div&gt;;
+}
+
+<span class="tok-com">// ✅ MODERN PRODUCTION TAREEEQA (Clean Destructuring)</span>
+function UserCard({ name, age, city }) {
+    return (
+        &lt;div className="user-badge"&gt;
+            &lt;h3&gt;{name}&lt;/h3&gt;
+            &lt;p&gt;Age: {age} | City: {city}&lt;/p&gt;
+        &lt;/div&gt;
+    );
+}
+
+<span class="tok-com">// Parent Component Call:</span>
+&lt;UserCard name="Aman Gupta" age={24} city="Delhi" /&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 2: DEFAULT VALUES -->
+            <div class="concept-block" id="topic-2">
+                <div class="concept-heading">2. Default Values for Props</div>
+                <div class="concept-sub-title">📌 2.1 Fallback Data Setting</div>
+                <p>Agar Parent component ne koi prop bhejna bhool gaya (ya data API se null aaya), toh app crash na ho isliye hum <strong>Default Values</strong> assign karte hain:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>Badge.jsx</span><span>Default Values Syntax</span></div>
+                    <pre><code><span class="tok-com">// ES6 Default Parameter Syntax (Modern Standard)</span>
+function Avatar({ imageUrl = "/default-avatar.png", size = 50, isOnline = false }) {
+    return (
+        &lt;div className="avatar-wrap"&gt;
+            &lt;img src={imageUrl} width={size} height={size} alt="User Profile" /&gt;
+            {isOnline && &lt;span className="online-dot"&gt;🟢&lt;/span&gt;}
+        &lt;/div&gt;
+    );
+}
+
+<span class="tok-com">// Usage without passing props: uses defaults automatically!</span>
+&lt;Avatar /&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 3: PROPS VS STATE -->
+            <div class="concept-block" id="topic-3">
+                <div class="concept-heading">3. Props vs State: The Ultimate Breakdown</div>
+                <div class="concept-sub-title">📌 3.1 Apna Paisa vs Baap ki Pocket Money</div>
+
+                <div class="analogy-note">
+                    <div class="analogy-note-title">💰 Desi Analogy: Props vs State</div>
+                    <p>• <strong>Props:</strong> Baap ki di hui Pocket Money! Parent deta hai, Child isko badal nahi sakta (Read-Only).<br>
+                    • <strong>State:</strong> Tera khud ka Bank Account! Tu jab chahe kama sakta hai, uda sakta hai (`setBalance()`), aur tere balance badalne par teri lifestyle (UI) re-render ho jaati hai!</p>
+                </div>
+
+                <table class="mechanics-table">
+                    <tr>
+                        <th>Criteria</th>
+                        <th>Props</th>
+                        <th>State</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Ownership</strong></td>
+                        <td>Parent component ke paas hoti hai</td>
+                        <td>Component ka khud ka private data hota hai</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mutability</strong></td>
+                        <td><strong>Immutable!</strong> Child ise change nahi kar sakta</td>
+                        <td><strong>Mutable via Setter!</strong> (`setCount()`)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Passing</strong></td>
+                        <td>Parent se Child me pass hota hai</td>
+                        <td>Component ke andar hi rehta hai</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Re-render Trigger</strong></td>
+                        <td>Jab Parent naye props bhejta hai</td>
+                        <td>Jab setter function call hota hai</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- TOPIC 4: ONE-WAY DATA FLOW -->
+            <div class="concept-block" id="topic-4">
+                <div class="concept-heading">4. One-Way Data Flow (Unidirectional)</div>
+                <div class="concept-sub-title">📌 4.1 Paani Hamesha Pahad se Nadi ki Taraf Bahta Hai</div>
+                <p>React me data hamesha <strong>Parent ➡️ Child</strong> ki taraf niche flow hota hai via Props. Kabhi bhi Child direct Parent ki state nahi badal sakta. Isse debugging predictable hoti hai: agar screen par koi bug aaya, toh hume pata hota hai ki data upar se kahan se aa raha hai!</p>
+                <p><strong>Child se Parent me data kaise bhejte hain?</strong> Parent ek <em>Callback Function</em> as a prop Child ko deta hai. Jab Child me koi event hota hai, wo us function ko data dekar call kar deta hai!</p>
+            </div>
+
+            <!-- TOPIC 5: USESTATE HOOK -->
+            <div class="concept-block" id="topic-5">
+                <div class="concept-heading">5. useState Hook: Component ki Yaaddasht (Memory)</div>
+                <div class="concept-sub-title">📌 5.1 Syntax aur Internal Working</div>
+                <p>Normal JavaScript function execution ke baad apne local variables ko bhool jaata hai (Garbage Collection). <code>useState</code> React Fiber node par data ko preserve karke rakhta hai taaki re-render hone par bhi data zinda rahe!</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>Counter.jsx</span><span>Basic useState</span></div>
+                    <pre><code>import { useState } from 'react';
+
+function Counter() {
+    <span class="tok-com">// [currentValue, setterFunction] = useState(initialValue);</span>
+    const [count, setCount] = useState(0);
+
+    return (
+        &lt;div&gt;
+            &lt;h2&gt;Current Count: {count}&lt;/h2&gt;
+            &lt;button onClick={() => setCount(count + 1)}&gt;Increment ➕&lt;/button&gt;
+            &lt;button onClick={() => setCount(count - 1)}&gt;Decrement ➖&lt;/button&gt;
+            &lt;button onClick={() => setCount(0)}&gt;Reset 🔄&lt;/button&gt;
+        &lt;/div&gt;
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 6: STATE UPDATES AND RE-RENDERING -->
+            <div class="concept-block" id="topic-6">
+                <div class="concept-heading">6. State Updates and Re-rendering Cycle</div>
+                <div class="concept-sub-title">📌 6.1 State badalti hai toh kya hota hai?</div>
+                <ol>
+                    <li>Jab tu <code>setCount(5)</code> call karta hai, React is update ko ek queue me daal deta hai.</li>
+                    <li>React component function ko dobara execute karta hai (<strong>Re-render Phase</strong>).</li>
+                    <li>Function naya JSX return karta hai.</li>
+                    <li>React naye aur purane Virtual DOM ko compare karta hai (<strong>Diffing</strong>).</li>
+                    <li>Real DOM me sirf wahi number update hota hai (<strong>Commit Phase</strong>).</li>
+                </ol>
+            </div>
+
+            <!-- TOPIC 7: PREVIOUS STATE UPDATES -->
+            <div class="concept-block" id="topic-7">
+                <div class="concept-heading">7. Previous State Updates (Functional Updates)</div>
+                <div class="concept-sub-title">📌 7.1 Ghajini Stale Closure Trap aur uska Ilaaj</div>
+                <p>Agar tu ek function ke andar 3 baar <code>setCount(count + 1)</code> likhega, toh count 3 nahi badhega, sirf 1 badhega! Kyunki us render me <code>count</code> purana tha.</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>SafeStateUpdate.jsx</span><span>Functional Updates</span></div>
+                    <pre><code><span class="tok-com">// ❌ BUGGY: Stale closure captures count as 0 in all 3 calls!</span>
+const badAddThree = () => {
+    setCount(count + 1); // 0 + 1
+    setCount(count + 1); // 0 + 1
+    setCount(count + 1); // 0 + 1 -> Final result: 1!
+};
+
+<span class="tok-com">// ✅ SAFE & INDUSTRY STANDARD: Functional Update</span>
+const goodAddThree = () => {
+    setCount(prev => prev + 1); // prev is 0 -> becomes 1
+    setCount(prev => prev + 1); // prev is 1 -> becomes 2
+    setCount(prev => prev + 1); // prev is 2 -> becomes 3! Final result: 3!
+};</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 8: EVENT HANDLING -->
+            <div class="concept-block" id="topic-8">
+                <div class="concept-heading">8. Event Handling in React</div>
+                <div class="concept-sub-title">📌 8.1 CamelCase, SyntheticEvents &amp; Parameter Passing</div>
+                <p>HTML me hum <code>onclick="handleClick()"</code> likhte the (all lowercase, string me call). React me:</p>
+                <ul>
+                    <li>Events <strong>camelCase</strong> me likhe jaate hain: <code>onClick</code>, <code>onChange</code>, <code>onSubmit</code>.</li>
+                    <li>Tu function call nahi pass karta, <strong>Function Reference</strong> pass karta hai: <code>onClick={handleClick}</code> (paranthesis `()` mat lagana, varna render hote hi chal jayega!).</li>
+                    <li>Agar parameter bhejna hai, toh arrow function use karo: <code>onClick={() => handleDelete(item.id)}</code>.</li>
+                </ul>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>EventsDemo.jsx</span><span>Event Handling Patterns</span></div>
+                    <pre><code>function EventDemo() {
+    const handleClick = (e) => {
+        console.log("Synthetic Event:", e);
+        console.log("Clicked Element:", e.target);
+    };
+
+    const handleParam = (userId) => {
+        alert("Deleting user: " + userId);
+    };
+
+    return (
+        &lt;div&gt;
+            &lt;button onClick={handleClick}&gt;Click Me (Normal)&lt;/button&gt;
+            &lt;button onClick={() => handleParam(101)}&gt;Delete User #101&lt;/button&gt;
+        &lt;/div&gt;
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 9: CONDITIONAL RENDERING -->
+            <div class="concept-block" id="topic-9">
+                <div class="concept-heading">9. Conditional Rendering: 4 Real-World Tarike</div>
+                <div class="concept-sub-title">📌 9.1 Kab kya screen par dikhana hai</div>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>ConditionalRendering.jsx</span><span>All 4 Methods</span></div>
+                    <pre><code>function AuthStatus({ isLoggedIn, userRole, unreadCount }) {
+    <span class="tok-com">// Method 1: Early Return (Guard Clause)</span>
+    if (!isLoggedIn) {
+        return &lt;div&gt;Please &lt;button&gt;Login&lt;/button&gt; to continue.&lt;/div&gt;;
+    }
+
+    return (
+        &lt;div&gt;
+            &lt;h2&gt;Welcome back!&lt;/h2&gt;
+
+            <span class="tok-com">// Method 2: Ternary Operator (if-else in JSX)</span>
+            &lt;p&gt;Role: {userRole === "admin" ? "👑 Admin Access" : "👤 Standard User"}&lt;/p&gt;
+
+            <span class="tok-com">// Method 3: Logical AND && (Show if true, show nothing if false)</span>
+            {unreadCount &gt; 0 && &lt;span className="badge"&gt;🔔 {unreadCount} New Messages&lt;/span&gt;}
+
+            <span class="tok-com">// ⚠️ TRAP ALERT: Never do `count && &lt;p&gt;...&lt;/p&gt;` if count can be 0!</span>
+            <span class="tok-com">// Because `0 && ...` prints the number `0` on screen! Always use `count > 0 && ...`!</span>
+        &lt;/div&gt;
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 10: RENDERING LISTS USING MAP() -->
+            <div class="concept-block" id="topic-10">
+                <div class="concept-heading">10. Rendering Lists Using map()</div>
+                <div class="concept-sub-title">📌 10.1 For loop kyu nahi aur map() kyu?</div>
+                <p>JSX ke curly braces <code>{ ... }</code> ke andar standard <code>for</code> loop nahi chal sakta kyunki <code>for</code> ek statement hai jo koi value return nahi karta. JavaScript ka <code>array.map()</code> har item ke badle ek naya JSX element return karta hai, isliye React me list render karne ke liye 100% <code>map()</code> use hota hai!</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>ProductList.jsx</span><span>map() List Rendering</span></div>
+                    <pre><code>const products = [
+    { id: "p1", name: "MacBook Air M2", price: 99999, inStock: true },
+    { id: "p2", name: "Sony WH-1000XM5", price: 29999, inStock: false },
+    { id: "p3", name: "Keychron K2 Keyboard", price: 8499, inStock: true }
+];
+
+function ProductCatalog() {
+    return (
+        &lt;div className="catalog"&gt;
+            &lt;h2&gt;Available Gadgets&lt;/h2&gt;
+            &lt;ul&gt;
+                {products.map((item) => (
+                    &lt;li key={item.id} style={{ opacity: item.inStock ? 1 : 0.5 }}&gt;
+                        &lt;strong&gt;{item.name}&lt;/strong&gt; ── ₹{item.price.toLocaleString('en-IN')}
+                        {!item.inStock && &lt;span style={{ color: 'red', marginLeft: '10px' }}&gt;(Out of Stock)&lt;/span&gt;}
+                    &lt;/li&gt;
+                ))}
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 11: KEYS AND WHY THEY MATTER -->
+            <div class="concept-block" id="topic-11">
+                <div class="concept-heading">11. Keys and Why They Matter (The Index Trap)</div>
+                <div class="concept-sub-title">📌 11.1 Aadhar Card vs Roll Number</div>
+
+                <div class="analogy-note">
+                    <div class="analogy-note-title">🚨 The Index as Key Disaster</div>
+                    <p>Maan le ek todo list hai: <code>[0: Brush teeth, 1: Take bath, 2: Have breakfast]</code>. Har item ke aage ek checkbox hai.<br>
+                    Tune pehla item (Brush teeth) delete kar diya! Ab 'Take bath' index 0 ban gaya! React sochega: *"Arey index 0 pehle se ticked tha, toh main naye wale item ka checkbox bhi ticked hi rakhunga!"* Natija: Galat checkbox tick ho jayega aur data corrupt!</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>KeyRules.jsx</span><span>Key Rules</span></div>
+                    <pre><code><span class="tok-com">// ❌ DANGEROUS: Using index as key in dynamic lists</span>
+{items.map((item, index) => &lt;TodoItem key={index} {...item} /&gt;)}
+
+<span class="tok-com">// ❌ DANGEROUS: Random keys create and destroy DOM on every single re-render!</span>
+{items.map((item) => &lt;TodoItem key={Math.random()} {...item} /&gt;)}
+
+<span class="tok-com">// ✅ PRODUCTION RULE: Stable, Unique Primary Key from Database / UUID</span>
+{items.map((item) => &lt;TodoItem key={item.id} {...item} /&gt;)}</code></pre>
+                </div>
+            </div>
+
+            <!-- PRACTICAL LAB -->
+            <div class="practical-box">
+                <div class="practical-title">🛠️ Module 2 Practical Lab: Interactive Todo App with State, Events &amp; Filtering</div>
+                <p>Neeche complete runnable interactive Todo application hai jisme addition, deletion, toggle status, aur filter counts sab shamil hai:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>src/TodoApp.jsx</span><span>Complete Interactive App</span></div>
+                    <pre><code>import React, { useState } from 'react';
+
+export default function TodoApp() {
+    const [todos, setTodos] = useState([
+        { id: 1, text: "Revise React Module 1 & 2", completed: true },
+        { id: 2, text: "Build Todo App from scratch", completed: false },
+        { id: 3, text: "Practice Sudheer J interview Q&As", completed: false }
+    ]);
+    const [inputValue, setInputValue] = useState("");
+
+    // 1. Add new todo
+    const handleAddTodo = (e) => {
+        e.preventDefault();
+        if (!inputValue.trim()) return;
+
+        const newTodo = {
+            id: Date.now(), // Unique stable timestamp ID
+            text: inputValue.trim(),
+            completed: false
+        };
+
+        setTodos(prev => [...prev, newTodo]);
+        setInputValue("");
+    };
+
+    // 2. Toggle completed status
+    const handleToggle = (id) => {
+        setTodos(prev => prev.map(todo => 
+            todo.id === id ? { ...todo, completed: !todo.completed } : todo
+        ));
+    };
+
+    // 3. Delete todo
+    const handleDelete = (id) => {
+        setTodos(prev => prev.filter(todo => todo.id !== id));
+    };
+
+    const completedCount = todos.filter(t => t.completed).length;
+
+    return (
+        &lt;div style={{ maxWidth: '600px', margin: '40px auto', padding: '24px', background: '#fff', border: '2.5px solid #0f172a', borderRadius: '16px', boxShadow: '5px 5px 0px #0f172a' }}&gt;
+            &lt;h2 style={{ marginTop: 0 }}&gt;📝 Pro Todo Manager&lt;/h2&gt;
+            &lt;p style={{ color: '#64748b' }}&gt;Done: {completedCount} / {todos.length} completed&lt;/p&gt;
+
+            &lt;form onSubmit={handleAddTodo} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}&gt;
+                &lt;input 
+                    type="text" 
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder="What needs to be done?"
+                    style={{ flex: 1, padding: '10px 14px', fontSize: '18px', border: '2px solid #0f172a', borderRadius: '8px' }}
+                /&gt;
+                &lt;button type="submit" style={{ padding: '10px 20px', background: '#0284c7', color: '#fff', border: '2px solid #0f172a', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}&gt;
+                    Add Task
+                &lt;/button&gt;
+            &lt;/form&gt;
+
+            &lt;ul style={{ listStyle: 'none', padding: 0 }}&gt;
+                {todos.map(todo => (
+                    &lt;li key={todo.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px', borderBottom: '1px solid #e2e8f0' }}&gt;
+                        &lt;span 
+                            onClick={() => handleToggle(todo.id)}
+                            style={{ textDecoration: todo.completed ? 'line-through' : 'none', color: todo.completed ? '#94a3b8' : '#0f172a', cursor: 'pointer', fontSize: '20px' }}
+                        &gt;
+                            {todo.completed ? '✅' : '⚪'} {todo.text}
+                        &lt;/span&gt;
+                        &lt;button onClick={() => handleDelete(todo.id)} style={{ background: '#fee2e2', border: '1px solid #ef4444', color: '#dc2626', borderRadius: '6px', padding: '4px 10px', cursor: 'pointer' }}&gt;
+                            Delete
+                        &lt;/button&gt;
+                    &lt;/li&gt;
+                ))}
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- SUDHEER J INTERVIEW CARDS -->
+            <div class="concept-sub-title">💼 Module 2 Interview Bank (Sudheer J Style)</div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">State vs Props</span>
+                    <span class="genz-badge">Fresher / 4-6 LPA</span>
+                </div>
+                <h3>Q: What is the difference between State and Props in React? Can a Child component modify Props?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> <strong>Props</strong> are inputs passed from a parent component down to a child component; they are strictly <em>immutable</em> (read-only) and the child cannot modify them. <strong>State</strong> is a component's private, internal data managed by `useState`; it is mutable using its setter function. When state changes, the component and its children re-render.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">State Updates</span>
+                    <span class="genz-badge">High Frequency</span>
+                </div>
+                <h3>Q: Why does calling setCount(count + 1) three times inside an event handler only increase count by 1?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> Due to <em>closures and batching</em>. In that render's scope, the `count` variable is captured with its current value (e.g. `0`). All three calls execute `setCount(0 + 1)`. The last call overwrites previous ones, setting count to 1. To fix this, use the <strong>functional update form</strong>: `setCount(prev => prev + 1)`, which queues updates against the latest pending state.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">Keys Trap</span>
+                    <span class="genz-badge">Senior / 8-10 LPA</span>
+                </div>
+                <h3>Q: Why should you never use the array index as a 'key' prop when rendering dynamic lists?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> React uses `key` to identify which items have changed, been added, or been removed. If items are reordered, inserted at the beginning, or deleted, their array indices change. React assumes the item at that index is the same component as before, reusing its existing DOM node and uncontrolled input state, leading to silent bugs, misplaced text inputs, and performance degradation.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

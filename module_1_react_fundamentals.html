@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@500;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #fbfbfd;
+            --card-bg: #ffffff;
+            --ink-main: #0f172a;
+            --ink-body: #1e293b;
+            --primary: #0284c7;
+            --border: #e2e8f0;
+            --font-hand: 'Patrick Hand', cursive, sans-serif;
+            --font-accent: 'Caveat', cursive, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-hand);
+            background-color: var(--bg-page);
+            color: var(--ink-main);
+            font-size: 24px;
+            line-height: 1.65;
+            min-height: 100vh;
+            padding: 24px 32px 80px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            width: 97%;
+            max-width: 1820px;
+            margin: 0 auto;
+            padding: 0 8px;
+        }
+
+        p { font-size: 25px; margin-bottom: 18px; line-height: 1.7; color: #1e293b; }
+        ol, ul { margin-bottom: 22px; padding-left: 32px; }
+        li { font-size: 25px; margin-bottom: 8px; line-height: 1.65; color: #1e293b; }
+        code { font-family: var(--font-code); font-size: 0.9em; background: #e0f2fe; padding: 2px 6px; border-radius: 6px; color: #0369a1; }
+
+        .genz-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 14px 28px;
+            margin-bottom: 32px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .genz-nav-title {
+            font-family: var(--font-accent);
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--ink-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-pill-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 18px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #0f172a;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            color: var(--ink-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px #0f172a;
+            background: #e0f2fe;
+        }
+
+        .nav-btn.active {
+            background: #0284c7;
+            color: #ffffff;
+        }
+
+        .genz-badge {
+            background: #bae6fd;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 2px 2px 0px #0f172a;
+        }
+
+        .brush-banner {
+            background: #0284c7;
+            color: #ffffff;
+            font-family: var(--font-hand);
+            font-size: 34px;
+            font-weight: 700;
+            text-align: center;
+            padding: 14px 44px;
+            margin: 28px auto 36px;
+            display: table;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 4px 4px 0px #0f172a;
+            transform: rotate(-1deg);
+        }
+
+        .chapter-page-box {
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 24px;
+            padding: 44px 52px;
+            box-shadow: 6px 6px 0px #0f172a;
+            margin-bottom: 48px;
+        }
+
+        .chapter-header-area {
+            border-bottom: 2.5px solid #0f172a;
+            padding-bottom: 24px;
+            margin-bottom: 36px;
+        }
+
+        .chapter-header-area h2 {
+            font-family: var(--font-accent);
+            font-size: 52px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 8px;
+        }
+
+        .concept-block {
+            background: transparent;
+            margin-bottom: 64px;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 48px;
+        }
+        .concept-block:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 24px;
+        }
+
+        .concept-heading {
+            font-family: var(--font-accent);
+            font-size: 42px;
+            font-weight: 700;
+            color: #0369a1;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2.5px solid #e2e8f0;
+            padding-bottom: 14px;
+        }
+
+        .concept-sub-title {
+            font-family: var(--font-hand);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 36px 0 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analogy-note {
+            background: #fef9c3;
+            border: 2.5px dashed #ca8a04;
+            border-radius: 20px;
+            padding: 26px 32px;
+            margin: 28px 0 34px;
+            box-shadow: 4px 4px 0px rgba(202, 138, 4, 0.25);
+        }
+
+        .analogy-note-title {
+            font-family: var(--font-accent);
+            font-size: 30px;
+            font-weight: 700;
+            color: #854d0e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .analogy-note p {
+            color: #713f12;
+            font-size: 24px;
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        .bio-anatomy-board {
+            background-color: #ffffff;
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 22px 22px;
+            border: 3px solid #0f172a;
+            border-radius: 22px;
+            padding: 34px 40px;
+            margin: 32px 0 38px;
+            box-shadow: 6px 6px 0px #0f172a;
+            position: relative;
+        }
+
+        .anatomy-board-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #94a3b8;
+            padding-bottom: 12px;
+        }
+
+        .anatomy-board-title {
+            font-family: var(--font-accent);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .anatomy-code-center {
+            background: #0f172a;
+            border: 2.5px solid #0f172a;
+            border-radius: 16px;
+            padding: 22px 26px;
+            color: #ffffff;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.85;
+            box-shadow: 4px 4px 0px #38bdf8;
+            overflow-x: auto;
+        }
+
+        .code-container {
+            background: #0b1120;
+            border: 2px solid #0f172a;
+            border-radius: 16px;
+            margin: 28px 0 34px;
+            overflow: hidden;
+            box-shadow: 5px 5px 0px #0f172a;
+        }
+
+        .code-top-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 10px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-code);
+            font-size: 15px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .code-container pre {
+            padding: 22px 26px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.8;
+            color: #f1f5f9;
+        }
+
+        .tok-kw { color: #f43f5e; font-weight: 700; }
+        .tok-fn { color: #38bdf8; font-weight: 600; }
+        .tok-str { color: #a5f3fc; }
+        .tok-num { color: #fde047; }
+        .tok-com { color: #64748b; font-style: italic; }
+
+        .mechanics-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0 28px;
+            border: 2px solid #0f172a;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 3px 3px 0px #0f172a;
+            font-family: var(--font-hand);
+            font-size: 22px;
+        }
+
+        .mechanics-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+            text-align: left;
+            padding: 12px 18px;
+            font-family: var(--font-accent);
+            font-size: 25px;
+            font-weight: 700;
+            border-bottom: 2px solid #0f172a;
+        }
+
+        .mechanics-table td {
+            padding: 12px 18px;
+            border-bottom: 1.5px solid #e2e8f0;
+            vertical-align: top;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .mechanics-table tr:last-child td { border-bottom: none; }
+        .mechanics-table tr:nth-child(even) td { background: #fafaf9; }
+
+        .q-card {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            padding: 24px 28px;
+            margin-bottom: 22px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .q-tag-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .q-pill {
+            background: #e0f2fe;
+            border: 1.5px solid #0f172a;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .q-card h3 {
+            font-family: var(--font-accent);
+            font-size: 30px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .q-ans {
+            background: #f0f9ff;
+            border-left: 5px solid #0284c7;
+            border-radius: 0 12px 12px 0;
+            padding: 16px 22px;
+            font-size: 22px;
+            color: #1e293b;
+            line-height: 1.65;
+        }
+
+        .practical-box {
+            background: #f0fdf4;
+            border: 2.5px solid #16a34a;
+            border-radius: 20px;
+            padding: 32px 38px;
+            margin: 36px 0;
+            box-shadow: 5px 5px 0px #16a34a;
+        }
+
+        .practical-title {
+            font-family: var(--font-accent);
+            font-size: 36px;
+            font-weight: 700;
+            color: #15803d;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+
+    <title>Module 1: React Fundamentals — React.js Master Handbook</title>
+</head>
+<body>
+    <div class="app-wrapper">
+        
+        <nav class="genz-nav-bar">
+            <a href="index.html" class="genz-nav-title">
+                <span>⚛️</span> React.js 8-Module Master Handbook
+            </a>
+            <div class="nav-pill-group">
+                <a href="index.html" class="nav-btn">🏠 Home</a><a href="module_1_react_fundamentals.html" class="nav-btn active">M1 Fundamentals</a><a href="module_2_props_state_events.html" class="nav-btn">M2 Props & State</a><a href="module_3_react_hooks.html" class="nav-btn">M3 Hooks</a><a href="module_4_forms_api_integration.html" class="nav-btn">M4 Forms & APIs</a><a href="module_5_routing.html" class="nav-btn">M5 Routing</a><a href="module_6_state_management.html" class="nav-btn">M6 State Mgmt</a><a href="module_7_advanced_react.html" class="nav-btn">M7 Advanced</a><a href="module_8_production_development.html" class="nav-btn">M8 Production</a><a href="book_interview_masterclass_hub.html" class="nav-btn" style="background:#fef08a;">💼 64 Q&A Hub</a>
+            </div>
+        </nav>
+    
+
+        <div class="chapter-page-box">
+            <div class="chapter-header-area">
+                <span class="genz-badge">MODULE 1 • ABSOLUTE FOUNDATIONS (ABCD TO PRO)</span>
+                <h2>Module 1 — React Fundamentals</h2>
+                <p>Ekdum zero se shuru: What is React, SPA vs MPA, DOM vs Virtual DOM, Vite setup, Project Structure, JSX, Functional Components, Component Composition &amp; React Fragments.</p>
+            </div>
+
+            <div class="brush-banner">Module 1: React ki ABCD — Foundation Se lekar Multi-Component Webpage tak!</div>
+
+            <!-- TOPIC 1: WHAT IS REACT AND WHY REACT -->
+            <div class="concept-block" id="topic-1">
+                <div class="concept-heading">1. What is React and Why React?</div>
+                <div class="concept-sub-title">📌 1.1 Definition &amp; Real Purpose</div>
+                <p><strong>React kya hai?</strong> React ek open-source <strong>JavaScript Library</strong> hai (Framework nahi!) jise Meta (Facebook) ke engineer Jordan Walke ne banaya tha. Iska ek hi main kaam hai: <strong>User Interfaces (UI) ko fast, reusable, aur interactive banana.</strong></p>
+                <p><strong>Why React? (Puraane tareeqe me kya dikkat thi?):</strong> Puraane zamaane me hum HTML likhte the aur Vanilla JavaScript se DOM manipulate karte the. Jab Facebook ka notification count badalta tha, toh poora page refresh karna padta tha ya 50 jagah <code>document.getElementById</code> likhna padta tha. Code itna messy ho jata tha ki agar ek line badli toh poori website toot jaati thi! React ne aakar bola: <em>"Bhai tum DOM ko chhedna band karo, tum sirf DATA (State) sambhalo, UI main khud update karunga!"</em></p>
+
+                <div class="analogy-note">
+                    <div class="analogy-note-title">☕ Chai Analogy: Library vs Framework</div>
+                    <p>• <strong>Library (React):</strong> Tu restaurant gaya aur bola <em>"Bhai mujhe aloo chaat me thodi extra meethi chutney chahiye"</em>. Tu apni marzi ka router, state manager, CSS tool laga sakta hai. Tu boss hai!<br>
+                    • <strong>Framework (Angular):</strong> Yeh ghar ka strict baap hai! Menu pehle se fixed hai, unke bataye time aur plate me hi khana padega. Strict rules follow karne padenge.</p>
+                </div>
+
+                <div class="bio-anatomy-board">
+                    <div class="anatomy-board-header">
+                        <span class="anatomy-board-title">🔬 Anatomy: Core Philosophy of React</span>
+                        <span class="genz-badge">PHILOSOPHY</span>
+                    </div>
+                    <div class="anatomy-code-center">
+<div>1. Component-Based: Poori website chhote-chhote Lego blocks me banti hai (Navbar, Button, Card).</div>
+<div>2. Declarative: UI = f(State) ── Tu State badal, screen apne aap badal jaati hai.</div>
+<div>3. Unidirectional Data Flow: Data hamesha Parent se Child ki taraf flow hota hai (Props).</div>
+<div>4. Learn Once, Write Anywhere: React Web pe bhi chalta hai aur React Native se Mobile App bhi banti hai!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOPIC 2: SPA VS MPA -->
+            <div class="concept-block" id="topic-2">
+                <div class="concept-heading">2. SPA (Single Page Application) vs MPA (Multi-Page Application)</div>
+                <div class="concept-sub-title">📌 2.1 The Architectural Difference</div>
+                <p><strong>MPA (Multi-Page App - Classic):</strong> Jaise purani government websites ya Wikipedia. Jab tu "About Us" pe click karta hai, browser white ho jata hai, server se nayi <code>about.html</code> file aati hai, poora page reload hota hai. Bohot slow aur jhatke wala experience!</p>
+                <p><strong>SPA (Single Page App - Modern React):</strong> Jaise Gmail, Spotify, Netflix. Poori website me <strong>sirf ek hi <code>index.html</code> file</strong> hoti hai! Jab tu "About Us" ya "Settings" pe click karta hai, browser reload <strong>NAHI</strong> hota! JavaScript chupke se screen ka beech wala content replace kar deti hai. Fast like a desktop application!</p>
+
+                <table class="mechanics-table">
+                    <tr>
+                        <th>Feature</th>
+                        <th>MPA (Multi-Page)</th>
+                        <th>SPA (Single Page / React)</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Page Reload</strong></td>
+                        <td>Har click par poora page reload hota hai</td>
+                        <td><strong>Zero reload!</strong> Instant component swap</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HTML Files</strong></td>
+                        <td>Server par 50 alag-alag HTML files</td>
+                        <td>Sirf <strong>1 single index.html</strong> file</td>
+                    </tr>
+                    <tr>
+                        <td><strong>User Experience</strong></td>
+                        <td>Jhatka (Flicker) aur slow loading</td>
+                        <td>Mobile App jaisa super smooth</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Initial Load</strong></td>
+                        <td>Pehla page fast khulta hai</td>
+                        <td>Initial JS bundle download hone me thoda time leta hai</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- TOPIC 3: REACT VS TRADITIONAL DOM MANIPULATION -->
+            <div class="concept-block" id="topic-3">
+                <div class="concept-heading">3. React vs Traditional DOM Manipulation</div>
+                <div class="concept-sub-title">📌 3.1 Imperative (jQuery/JS) vs Declarative (React)</div>
+                <p>Traditional DOM manipulation <strong>Imperative</strong> hota hai: Tu browser ko ungli pakad kar har step batata hai. React <strong>Declarative</strong> hai: Tu batata hai ki UI kaisi dikhni chahiye.</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>traditional_vs_react.js</span><span>Code Comparison</span></div>
+                    <pre><code><span class="tok-com">// ❌ TRADITIONAL JAVASCRIPT (Imperative - 5 Steps manual micro-management):</span>
+const button = document.getElementById('login-btn');
+button.addEventListener('click', () => {
+    button.innerText = 'Logging in...';         <span class="tok-com">// Step 1</span>
+    button.disabled = true;                     <span class="tok-com">// Step 2</span>
+    document.getElementById('spinner').style.display = 'block'; <span class="tok-com">// Step 3</span>
+    <span class="tok-com">// Agar koi step bhool gaye toh UI crash ya desync!</span>
+});
+
+<span class="tok-com">// ✅ REACT APPROACH (Declarative - UI is pure reflection of state):</span>
+function LoginButton({ isLoading }) {
+    return (
+        &lt;button disabled={isLoading}&gt;
+            {isLoading ? &lt;Spinner /&gt; : "Login"}
+        &lt;/button&gt;
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 4: VIRTUAL DOM AND RECONCILIATION -->
+            <div class="concept-block" id="topic-4">
+                <div class="concept-heading">4. Virtual DOM &amp; Reconciliation (Conceptual Understanding)</div>
+                <div class="concept-sub-title">📌 4.1 Real DOM kyu slow hai aur VDOM kya karta hai?</div>
+                <p>Real browser DOM ek bohot bada C++ object hota hai. Jab tu direct DOM update karta hai, browser ko <strong>Reflow (geometry layout calculate karna)</strong> aur <strong>Repaint (pixels draw karna)</strong> karna padta hai. Agar 100 baar DOM mutate hua toh browser hang ho jata hai.</p>
+                <p><strong>Virtual DOM (VDOM) kya hai?</strong> Yeh Real DOM ki ek halki-phulki (lightweight) <strong>JavaScript Object copy</strong> hoti hai memory ke andar. React changes ko pehle VDOM me karta hai, fir purane VDOM aur naye VDOM ko compare karta hai (isko bolte hain <strong>Diffing</strong>). Jo farak nikalta hai, sirf wahi Real DOM me jaata hai (isko bolte hain <strong>Reconciliation</strong>).</p>
+
+                <div class="bio-anatomy-board">
+                    <div class="anatomy-board-header">
+                        <span class="anatomy-board-title">🔬 The 3-Step VDOM Lifecycle</span>
+                        <span class="genz-badge">INTERNALS</span>
+                    </div>
+                    <div class="anatomy-code-center">
+<div>[Step 1: State Change] ──▶ React naya Virtual DOM tree memory me generate karta hai.</div>
+<div>[Step 2: Diffing Algorithm] ──▶ Purana VDOM vs Naya VDOM compare hota hai (O(n) speed me).</div>
+<div>[Step 3: Reconciliation Batch] ──▶ Sirf jo node badla hai, utna hi Real DOM me chipkaya jata hai!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOPIC 5: SETTING UP REACT WITH VITE -->
+            <div class="concept-block" id="topic-5">
+                <div class="concept-heading">5. Setting up React with Vite</div>
+                <div class="concept-sub-title">📌 5.1 Why Vite over Create-React-App (CRA)?</div>
+                <p>Pehle Facebook ka <code>create-react-app</code> use hota tha jo Webpack pe chalta tha. Webpack itna slow tha ki server start hone me 1-2 minute lag jaate the! <strong>Vite (French word for 'Fast')</strong> modern browser ke native ES Modules aur Go-based <code>esbuild</code> par chalta hai. Yeh <strong>100 guna fast</strong> server start karta hai aur instantaneous Hot Module Replacement (HMR) deta hai.</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>terminal</span><span>Setup Commands</span></div>
+                    <pre><code><span class="tok-com"># Step 1: Vite project create karo (Latest standard)</span>
+npm create vite@latest my-first-react-app -- --template react
+
+<span class="tok-com"># Step 2: Project folder me jao</span>
+cd my-first-react-app
+
+<span class="tok-com"># Step 3: Dependencies install karo</span>
+npm install
+
+<span class="tok-com"># Step 4: Development server chalao (Usually http://localhost:5173/)</span>
+npm run dev</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 6: PROJECT STRUCTURE -->
+            <div class="concept-block" id="topic-6">
+                <div class="concept-heading">6. React Project Structure: Ek-Ek File ka Sach</div>
+                <div class="concept-sub-title">📌 6.1 Har File ka Kya Kaam Hai?</div>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>Folder Structure</span><span>Vite Project</span></div>
+                    <pre><code>my-first-react-app/
+├── index.html         <span class="tok-com"># 👈 Single Page entry point! Isme &lt;div id="root"&gt;&lt;/div&gt; hota hai.</span>
+├── package.json       <span class="tok-com"># Project ki kundali (dependencies, scripts: dev, build).</span>
+├── vite.config.js     <span class="tok-com"># Vite bundler aur plugins ka config.</span>
+├── public/            <span class="tok-com"># Static assets jo bina process kiye serve hote hain (favicon, logo).</span>
+└── src/               <span class="tok-com"># 👈 Yahan hamara 99% React code rehta hai!</span>
+    ├── main.jsx       <span class="tok-com"># React root banata hai aur App ko index.html me inject karta hai.</span>
+    ├── App.jsx        <span class="tok-com"># Main parent component jo screen par render hota hai.</span>
+    ├── App.css        <span class="tok-com"># App component ki styling.</span>
+    └── index.css      <span class="tok-com"># Global styles (reset, font, background).</span></code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 7: JSX AND JS EXPRESSIONS -->
+            <div class="concept-block" id="topic-7">
+                <div class="concept-heading">7. JSX and JavaScript Expressions</div>
+                <div class="concept-sub-title">📌 7.1 JSX kya hai aur Curly Braces ka magic kya hai?</div>
+                <p><strong>JSX (JavaScript XML):</strong> Yeh ek aisi syntax extension hai jo hume JS file ke andar HTML-like code likhne deti hai. Browser JSX direct nahi samajhta, Babel/SWC isko <code>React.createElement()</code> function calls me badal deta hai.</p>
+                <p><strong>Curly Braces <code>{ ... }</code>:</strong> Jab bhi tujhe JSX ke beech me koi JavaScript variable, calculation, ya function chalana ho, toh tu curly braces laga deta hai. Isko bolte hain <strong>JS Expression injection</strong>!</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>JsxDemo.jsx</span><span>Runnable Example</span></div>
+                    <pre><code>function JsxDemo() {
+    const userName = "Rahul Sharma";
+    const userAge = 22;
+    const isPremium = true;
+
+    return (
+        &lt;div className="card"&gt;
+            &lt;h2&gt;User: {userName.toUpperCase()}&lt;/h2&gt;
+            &lt;p&gt;Age Next Year: {userAge + 1}&lt;/p&gt;
+            &lt;p&gt;Status: {isPremium ? "⭐ Gold Member" : "Free User"}&lt;/p&gt;
+        &lt;/div&gt;
+    );
+}
+export default JsxDemo;</code></pre>
+                </div>
+                <p><strong>Golden Rule:</strong> JSX ke andar sirf <em>Expressions</em> chalte hain (jo ek value return karte hain, jaise ternary operator <code>a ? b : c</code>). <em>Statements</em> (jaise <code>if/else</code> ya <code>for</code> loop) curly braces ke andar direct nahi likh sakte!</p>
+            </div>
+
+            <!-- TOPIC 8: FUNCTIONAL COMPONENTS -->
+            <div class="concept-block" id="topic-8">
+                <div class="concept-heading">8. Functional Components</div>
+                <div class="concept-sub-title">📌 8.1 Modern React ka Building Block</div>
+                <p>Puraane zamaane me Class components bante the. Aaj kal industry me <strong>100% Functional Components</strong> use hote hain. Yeh bas ek normal JavaScript function hota hai jo Props accept karta hai aur JSX return karta hai!</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>Greeting.jsx</span><span>Functional Component</span></div>
+                    <pre><code><span class="tok-com">// Regular Function Syntax</span>
+function Greeting() {
+    return &lt;h1&gt;Namaste Dosto! Welcome to React.&lt;/h1&gt;;
+}
+
+<span class="tok-com">// Arrow Function Syntax (Dono 100% valid hain)</span>
+const WelcomeBanner = () => {
+    return &lt;div className="banner"&gt;🚀 Start your frontend journey!&lt;/div&gt;;
+};
+
+export default Greeting;</code></pre>
+                </div>
+                <p><strong>Rule:</strong> Component ka pehla letter hamesha <strong>Capital</strong> hona chahiye (<code>&lt;Greeting /&gt;</code>, not <code>&lt;greeting /&gt;</code>). Agar small letter likhoge toh React sochega yeh standard HTML tag hai!</p>
+            </div>
+
+            <!-- TOPIC 9: COMPONENT COMPOSITION -->
+            <div class="concept-block" id="topic-9">
+                <div class="concept-heading">9. Component Composition: Lego Blocks Jaisi Building</div>
+                <div class="concept-sub-title">📌 9.1 Chhote Components se Badi App Banana</div>
+                <p>Kabhi bhi ek 1000 line ka monolithic file mat banao! React ka asali superpower hai <strong>Composition</strong>: Chhote-chhote components banao aur unhe jod kar bada page khada kar do.</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>CompositionExample.jsx</span><span>Nesting Components</span></div>
+                    <pre><code>function Button() {
+    return &lt;button className="primary-btn"&gt;Order Now&lt;/button&gt;;
+}
+
+function PizzaCard() {
+    return (
+        &lt;div className="pizza-card"&gt;
+            &lt;h3&gt;Margherita Special&lt;/h3&gt;
+            &lt;p&gt;Loaded with fresh mozzarella &amp; basil&lt;/p&gt;
+            &lt;Button /&gt; <span class="tok-com">// 👈 Component ke andar component!</span>
+        &lt;/div&gt;
+    );
+}
+
+function App() {
+    return (
+        &lt;main&gt;
+            &lt;h1&gt;Dominos Menu&lt;/h1&gt;
+            &lt;PizzaCard /&gt;
+            &lt;PizzaCard /&gt;
+        &lt;/main&gt;
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 10: RENDERING COMPONENTS -->
+            <div class="concept-block" id="topic-10">
+                <div class="concept-heading">10. Rendering Components: createRoot Internals</div>
+                <div class="concept-sub-title">📌 10.1 React Screen par kaise chhapta hai?</div>
+                <p>React 18 me rendering ka entry point <code>createRoot</code> hota hai jo <code>src/main.jsx</code> ke andar likha hota hai:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>src/main.jsx</span><span>React 18 Entry Point</span></div>
+                    <pre><code>import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import './index.css';
+
+<span class="tok-com">// 1. HTML ke andar se 'root' div dhoondo</span>
+const rootElement = document.getElementById('root');
+
+<span class="tok-com">// 2. React 18 Concurrent Root create karo</span>
+const root = ReactDOM.createRoot(rootElement);
+
+<span class="tok-com">// 3. App component ko render kar do!</span>
+root.render(
+  &lt;React.StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/React.StrictMode&gt;
+);</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 11: REACT FRAGMENTS -->
+            <div class="concept-block" id="topic-11">
+                <div class="concept-heading">11. React Fragments (&lt;&gt;...&lt;/&gt;)</div>
+                <div class="concept-sub-title">📌 11.1 Extra &lt;div&gt; ki Bimari aur uska Ilaaj</div>
+                <p><strong>The Golden Rule of JSX:</strong> Ek component ko return karte waqt <strong>sirf ek single parent element</strong> hona chahiye. Kyunki JavaScript me ek function ek waqt par sirf ek hi object return kar sakta hai!</p>
+                <p>Pehle log har jagah be-fizool ka <code>&lt;div&gt;</code> laga dete the (jisko bolte hain <strong>div-soup</strong>). Isse HTML structure kharab hota tha aur Flexbox/Grid CSS toot jaati thi. <strong>React Fragment (<code>&lt;&gt;...&lt;/&gt;</code>)</strong> bina kisi real DOM node ke multiple elements ko group kar deta hai!</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>FragmentDemo.jsx</span><span>Clean DOM without Div Soup</span></div>
+                    <pre><code><span class="tok-com">// ❌ BAD: Extra div created in real DOM just for wrapper</span>
+function BadList() {
+    return (
+        &lt;div&gt;
+            &lt;li&gt;Item 1&lt;/li&gt;
+            &lt;li&gt;Item 2&lt;/li&gt;
+        &lt;/div&gt;
+    );
+}
+
+<span class="tok-com">// ✅ GOOD: Zero extra DOM nodes added! Clean HTML</span>
+function GoodList() {
+    return (
+        &lt;&gt;
+            &lt;li&gt;Item 1&lt;/li&gt;
+            &lt;li&gt;Item 2&lt;/li&gt;
+        &lt;/&gt;
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- PRACTICAL LAB -->
+            <div class="practical-box">
+                <div class="practical-title">🛠️ Module 1 Practical Lab: Multi-Component Modern Landing Page</div>
+                <p>Neeche complete runnable multi-component code hai jo ek real-world Tech Startup ka Landing Page banata hai (Navbar, Hero Banner, FeatureCard, Footer):</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>src/LandingPage.jsx</span><span>Complete Runnable Code</span></div>
+                    <pre><code>import React from 'react';
+
+// 1. Navbar Component
+function Navbar() {
+    return (
+        &lt;nav style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 32px', background: '#0f172a', color: '#fff' }}&gt;
+            &lt;h2 style={{ margin: 0 }}&gt;🚀 DevHire&lt;/h2&gt;
+            &lt;div style={{ display: 'flex', gap: '18px' }}&gt;
+                &lt;span&gt;Jobs&lt;/span&gt;
+                &lt;span&gt;Companies&lt;/span&gt;
+                &lt;span&gt;Salaries&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/nav&gt;
+    );
+}
+
+// 2. Feature Card Component (Reusable)
+function FeatureCard({ title, desc, tag }) {
+    return (
+        &lt;div style={{ border: '2px solid #e2e8f0', borderRadius: '12px', padding: '20px', flex: 1, background: '#fff' }}&gt;
+            &lt;span style={{ background: '#e0f2fe', color: '#0369a1', padding: '4px 8px', borderRadius: '6px', fontSize: '14px', fontWeight: 'bold' }}&gt;{tag}&lt;/span&gt;
+            &lt;h3 style={{ marginTop: '12px' }}&gt;{title}&lt;/h3&gt;
+            &lt;p style={{ color: '#64748b' }}&gt;{desc}&lt;/p&gt;
+        &lt;/div&gt;
+    );
+}
+
+// 3. Main Landing Page Parent Component
+export default function LandingPage() {
+    return (
+        &lt;&gt;
+            &lt;Navbar /&gt;
+            &lt;header style={{ textAlign: 'center', padding: '60px 20px', background: '#f8fafc' }}&gt;
+                &lt;h1 style={{ fontSize: '42px', color: '#0f172a' }}&gt;Land Your Dream 12+ LPA Frontend Role&lt;/h1&gt;
+                &lt;p style={{ fontSize: '20px', color: '#475569' }}&gt;Master modern React from absolute scratch to production grade.&lt;/p&gt;
+                &lt;button style={{ padding: '12px 28px', fontSize: '18px', background: '#0284c7', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}&gt;
+                    Explore Syllabus
+                &lt;/button&gt;
+            &lt;/header&gt;
+
+            &lt;section style={{ display: 'flex', gap: '20px', padding: '40px 32px', maxWidth: '1200px', margin: '0 auto' }}&gt;
+                &lt;FeatureCard title="Declarative UI" desc="No more direct DOM errors. State manages screen automatically." tag="CORE" /&gt;
+                &lt;FeatureCard title="Virtual DOM" desc="Fiber reconciler updates only what actually changes." tag="SPEED" /&gt;
+                &lt;FeatureCard title="Production Hooks" desc="Custom hooks for API fetching, caching &amp; debounce." tag="ARCH" /&gt;
+            &lt;/section&gt;
+
+            &lt;footer style={{ textAlign: 'center', padding: '24px', background: '#0f172a', color: '#94a3b8' }}&gt;
+                © 2026 DevHire Handbook. Built with Vite + React.
+            &lt;/footer&gt;
+        &lt;/&gt;
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- SUDHEER J INTERVIEW CARDS -->
+            <div class="concept-sub-title">💼 Module 1 Interview Bank (Sudheer J Style)</div>
+            
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">Core Concept</span>
+                    <span class="genz-badge">Fresher / 4-6 LPA</span>
+                </div>
+                <h3>Q: What is the difference between a Library and a Framework? Why is React called a Library?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> The key architectural difference is <em>Inversion of Control</em>. In a <strong>Framework</strong> (like Angular), the framework is in control and dictates the application structure, routing, and HTTP calls; it calls your code. In a <strong>Library</strong> (like React), you are in control; React only handles the View layer (<code>UI = f(state)</code>). You freely choose routing (React Router), state management (Zustand/Redux), and styling libraries.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">SPA vs MPA</span>
+                    <span class="genz-badge">Interview Classic</span>
+                </div>
+                <h3>Q: What is a Single Page Application (SPA), and how does React achieve it without page reloads?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> An SPA loads a single <code>index.html</code> file on the initial browser request. When the user navigates between pages or clicks links, React prevents the default browser reload via JavaScript (HTML5 History API) and dynamically unmounts/mounts components in the DOM. This gives instant, app-like transitions without white page flickers.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">JSX</span>
+                    <span class="genz-badge">Core Trap</span>
+                </div>
+                <h3>Q: Why can't web browsers read JSX directly? How does it actually work?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> Browsers only understand valid ECMAScript. JSX (<code>&lt;div className="box"&gt;Hello&lt;/div&gt;</code>) is not valid JavaScript syntax. Compilers like Babel or SWC compile JSX into standard function calls: <code>React.createElement('div', { className: 'box' }, 'Hello')</code>. This returns a plain JavaScript object (a React Element) describing what should appear on screen.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">Fragments</span>
+                    <span class="genz-badge">High Frequency</span>
+                </div>
+                <h3>Q: Why are React Fragments (<code>&lt;&gt;...&lt;/&gt;</code>) preferred over wrapping elements in <code>&lt;div&gt;</code> tags?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> React requires components to return a single root element. Wrapping with extra <code>&lt;div&gt;</code> tags pollutes the DOM tree ("div soup"), consumes extra memory, and breaks CSS layouts that rely on direct parent-child relationships like CSS Grid and Flexbox (<code>display: flex</code>). Fragments group children without rendering any actual node into the real DOM.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@500;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #fbfbfd;
+            --card-bg: #ffffff;
+            --ink-main: #0f172a;
+            --ink-body: #1e293b;
+            --primary: #0284c7;
+            --border: #e2e8f0;
+            --font-hand: 'Patrick Hand', cursive, sans-serif;
+            --font-accent: 'Caveat', cursive, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-hand);
+            background-color: var(--bg-page);
+            color: var(--ink-main);
+            font-size: 24px;
+            line-height: 1.65;
+            min-height: 100vh;
+            padding: 24px 32px 80px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            width: 97%;
+            max-width: 1820px;
+            margin: 0 auto;
+            padding: 0 8px;
+        }
+
+        p { font-size: 25px; margin-bottom: 18px; line-height: 1.7; color: #1e293b; }
+        ol, ul { margin-bottom: 22px; padding-left: 32px; }
+        li { font-size: 25px; margin-bottom: 8px; line-height: 1.65; color: #1e293b; }
+        code { font-family: var(--font-code); font-size: 0.9em; background: #e0f2fe; padding: 2px 6px; border-radius: 6px; color: #0369a1; }
+
+        .genz-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 14px 28px;
+            margin-bottom: 32px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .genz-nav-title {
+            font-family: var(--font-accent);
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--ink-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-pill-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 18px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #0f172a;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            color: var(--ink-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px #0f172a;
+            background: #e0f2fe;
+        }
+
+        .nav-btn.active {
+            background: #0284c7;
+            color: #ffffff;
+        }
+
+        .genz-badge {
+            background: #bae6fd;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 2px 2px 0px #0f172a;
+        }
+
+        .brush-banner {
+            background: #0284c7;
+            color: #ffffff;
+            font-family: var(--font-hand);
+            font-size: 34px;
+            font-weight: 700;
+            text-align: center;
+            padding: 14px 44px;
+            margin: 28px auto 36px;
+            display: table;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 4px 4px 0px #0f172a;
+            transform: rotate(-1deg);
+        }
+
+        .chapter-page-box {
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 24px;
+            padding: 44px 52px;
+            box-shadow: 6px 6px 0px #0f172a;
+            margin-bottom: 48px;
+        }
+
+        .chapter-header-area {
+            border-bottom: 2.5px solid #0f172a;
+            padding-bottom: 24px;
+            margin-bottom: 36px;
+        }
+
+        .chapter-header-area h2 {
+            font-family: var(--font-accent);
+            font-size: 52px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 8px;
+        }
+
+        .concept-block {
+            background: transparent;
+            margin-bottom: 64px;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 48px;
+        }
+        .concept-block:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 24px;
+        }
+
+        .concept-heading {
+            font-family: var(--font-accent);
+            font-size: 42px;
+            font-weight: 700;
+            color: #0369a1;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2.5px solid #e2e8f0;
+            padding-bottom: 14px;
+        }
+
+        .concept-sub-title {
+            font-family: var(--font-hand);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 36px 0 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analogy-note {
+            background: #fef9c3;
+            border: 2.5px dashed #ca8a04;
+            border-radius: 20px;
+            padding: 26px 32px;
+            margin: 28px 0 34px;
+            box-shadow: 4px 4px 0px rgba(202, 138, 4, 0.25);
+        }
+
+        .analogy-note-title {
+            font-family: var(--font-accent);
+            font-size: 30px;
+            font-weight: 700;
+            color: #854d0e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .analogy-note p {
+            color: #713f12;
+            font-size: 24px;
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        .bio-anatomy-board {
+            background-color: #ffffff;
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 22px 22px;
+            border: 3px solid #0f172a;
+            border-radius: 22px;
+            padding: 34px 40px;
+            margin: 32px 0 38px;
+            box-shadow: 6px 6px 0px #0f172a;
+            position: relative;
+        }
+
+        .anatomy-board-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #94a3b8;
+            padding-bottom: 12px;
+        }
+
+        .anatomy-board-title {
+            font-family: var(--font-accent);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .anatomy-code-center {
+            background: #0f172a;
+            border: 2.5px solid #0f172a;
+            border-radius: 16px;
+            padding: 22px 26px;
+            color: #ffffff;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.85;
+            box-shadow: 4px 4px 0px #38bdf8;
+            overflow-x: auto;
+        }
+
+        .code-container {
+            background: #0b1120;
+            border: 2px solid #0f172a;
+            border-radius: 16px;
+            margin: 28px 0 34px;
+            overflow: hidden;
+            box-shadow: 5px 5px 0px #0f172a;
+        }
+
+        .code-top-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 10px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-code);
+            font-size: 15px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .code-container pre {
+            padding: 22px 26px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.8;
+            color: #f1f5f9;
+        }
+
+        .tok-kw { color: #f43f5e; font-weight: 700; }
+        .tok-fn { color: #38bdf8; font-weight: 600; }
+        .tok-str { color: #a5f3fc; }
+        .tok-num { color: #fde047; }
+        .tok-com { color: #64748b; font-style: italic; }
+
+        .mechanics-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0 28px;
+            border: 2px solid #0f172a;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 3px 3px 0px #0f172a;
+            font-family: var(--font-hand);
+            font-size: 22px;
+        }
+
+        .mechanics-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+            text-align: left;
+            padding: 12px 18px;
+            font-family: var(--font-accent);
+            font-size: 25px;
+            font-weight: 700;
+            border-bottom: 2px solid #0f172a;
+        }
+
+        .mechanics-table td {
+            padding: 12px 18px;
+            border-bottom: 1.5px solid #e2e8f0;
+            vertical-align: top;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .mechanics-table tr:last-child td { border-bottom: none; }
+        .mechanics-table tr:nth-child(even) td { background: #fafaf9; }
+
+        .q-card {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            padding: 24px 28px;
+            margin-bottom: 22px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .q-tag-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .q-pill {
+            background: #e0f2fe;
+            border: 1.5px solid #0f172a;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .q-card h3 {
+            font-family: var(--font-accent);
+            font-size: 30px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .q-ans {
+            background: #f0f9ff;
+            border-left: 5px solid #0284c7;
+            border-radius: 0 12px 12px 0;
+            padding: 16px 22px;
+            font-size: 22px;
+            color: #1e293b;
+            line-height: 1.65;
+        }
+
+        .practical-box {
+            background: #f0fdf4;
+            border: 2.5px solid #16a34a;
+            border-radius: 20px;
+            padding: 32px 38px;
+            margin: 36px 0;
+            box-shadow: 5px 5px 0px #16a34a;
+        }
+
+        .practical-title {
+            font-family: var(--font-accent);
+            font-size: 36px;
+            font-weight: 700;
+            color: #15803d;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+
+    <title>Module 7: Advanced React &amp; Performance — React.js Master Handbook</title>
+</head>
+<body>
+    <div class="app-wrapper">
+        
+        <nav class="genz-nav-bar">
+            <a href="index.html" class="genz-nav-title">
+                <span>⚛️</span> React.js 8-Module Master Handbook
+            </a>
+            <div class="nav-pill-group">
+                <a href="index.html" class="nav-btn">🏠 Home</a><a href="module_1_react_fundamentals.html" class="nav-btn">M1 Fundamentals</a><a href="module_2_props_state_events.html" class="nav-btn">M2 Props & State</a><a href="module_3_react_hooks.html" class="nav-btn">M3 Hooks</a><a href="module_4_forms_api_integration.html" class="nav-btn">M4 Forms & APIs</a><a href="module_5_routing.html" class="nav-btn">M5 Routing</a><a href="module_6_state_management.html" class="nav-btn">M6 State Mgmt</a><a href="module_7_advanced_react.html" class="nav-btn active">M7 Advanced</a><a href="module_8_production_development.html" class="nav-btn">M8 Production</a><a href="book_interview_masterclass_hub.html" class="nav-btn" style="background:#fef08a;">💼 64 Q&A Hub</a>
+            </div>
+        </nav>
+    
+
+        <div class="chapter-page-box">
+            <div class="chapter-header-area">
+                <span class="genz-badge">MODULE 7 • SENIOR ARCHITECTURE &amp; PERFORMANCE</span>
+                <h2>Module 7 — Advanced React Concepts &amp; Optimization</h2>
+                <p>Component Lifecycle vs Hooks, The 4 Re-render Triggers, Fiber Reconciliation, React.memo, Memoization traps, React.lazy &amp; Suspense, Class Error Boundaries, Code Splitting, Stale Closures, React 18 Auto-Batching, and Lifting State Up.</p>
+            </div>
+
+            <div class="brush-banner">Module 7: Advanced React &amp; 60 FPS Performance Tuning!</div>
+
+            <!-- TOPIC 1: LIFECYCLE VS HOOKS -->
+            <div class="concept-block" id="topic-1">
+                <div class="concept-heading">1. Component Lifecycle vs Hooks</div>
+                <div class="concept-sub-title">📌 1.1 Class Lifecycles ka Functional Hooks me Translation</div>
+
+                <table class="mechanics-table">
+                    <tr>
+                        <th>Class Component Lifecycle</th>
+                        <th>Modern Functional Hook Equivalent</th>
+                        <th>Timing &amp; Purpose</th>
+                    </tr>
+                    <tr>
+                        <td><code>componentDidMount</code></td>
+                        <td><code>useEffect(() => {}, [])</code></td>
+                        <td>Pehli baar screen par aane par chalta hai (API calls, timers)</td>
+                    </tr>
+                    <tr>
+                        <td><code>componentDidUpdate</code></td>
+                        <td><code>useEffect(() => {}, [dep])</code></td>
+                        <td>Jab bhi specific prop ya state badalti hai tab chalta hai</td>
+                    </tr>
+                    <tr>
+                        <td><code>componentWillUnmount</code></td>
+                        <td><code>return () => { /* cleanup */ }</code></td>
+                        <td>Screen se hatne se pehle chalta hai (Clear intervals, remove listeners)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- TOPIC 2: THE 4 RE-RENDER TRIGGERS -->
+            <div class="concept-block" id="topic-2">
+                <div class="concept-heading">2. The 4 Triggers That Cause a Component to Re-render</div>
+                <div class="concept-sub-title">📌 2.1 Re-render kab aur kyu hota hai?</div>
+                <ol>
+                    <li><strong>State Change:</strong> Component ke andar ka <code>useState</code> ya <code>useReducer</code> setter call hona.</li>
+                    <li><strong>Props Change:</strong> Parent se aane wale props ki value badalna.</li>
+                    <li><strong>Parent Re-renders:</strong> Agar Parent component re-render hota hai, toh by default uske <strong>saare child components bhi re-render hote hain</strong> (chahe unke props badle ho ya na badle ho!).</li>
+                    <li><strong>Context Value Change:</strong> Agar component kisi Context ko consume kar raha hai aur Provider ki value badal gayi.</li>
+                </ol>
+            </div>
+
+            <!-- TOPIC 3: REACT.MEMO & MEMOIZATION -->
+            <div class="concept-block" id="topic-3">
+                <div class="concept-heading">3. React.memo &amp; The Referential Equality Trap</div>
+                <div class="concept-sub-title">📌 3.1 Unnecessary Child Re-renders ko Rokna</div>
+                <p>By default agar Parent re-render hota hai toh Child bhi re-render hota hai. <code>React.memo</code> child component ko memoize kar leta hai aur sirf tabhi re-render hone deta hai jab uske <strong>props sach me badle hon</strong>!</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>ReactMemoTrap.jsx</span><span>The Object Reference Trap</span></div>
+                    <pre><code>import React from 'react';
+
+// Memoized Child Component
+const HeavyChild = React.memo(({ style, onClick }) => {
+    console.log("HeavyChild rendering...");
+    return <button style={style} onClick={onClick}>Click Me</button>;
+});
+
+// ❌ ANTI-PATTERN in Parent:
+function Parent() {
+    const [count, setCount] = useState(0);
+    return (
+        <div>
+            {/* BAD: Inline object {{ color: 'red' }} and inline arrow function creates NEW MEMORY REFERENCES on every render! */}
+            {/* React.memo does shallow comparison: prevStyle === nextStyle -> FAILS! Child re-renders anyway! */}
+            <HeavyChild style={{ color: 'red' }} onClick={() => console.log('clicked')} />
+            <button onClick={() => setCount(count + 1)}>Increment ({count})</button>
+        </div>
+    );
+}
+
+// ✅ PRODUCTION FIX:
+const staticStyle = { color: 'red' }; // Outside component!
+function SafeParent() {
+    const [count, setCount] = useState(0);
+    const handleClick = useCallback(() => console.log('clicked'), []); // useCallback!
+
+    return <HeavyChild style={staticStyle} onClick={handleClick} />;
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 4: LAZY LOADING & SUSPENSE -->
+            <div class="concept-block" id="topic-4">
+                <div class="concept-heading">4. Lazy Loading, Suspense &amp; Code Splitting</div>
+                <div class="concept-sub-title">📌 4.1 Initial Bundle Size kam karna</div>
+                <p>Standard <code>import Analytics from './Analytics'</code> se main bundle heavy ho jaata hai. <code>React.lazy</code> + <code>Suspense</code> se component tabhi download hota hai jab user us route par jata hai:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>CodeSplitting.jsx</span><span>Lazy & Suspense</span></div>
+                    <pre><code>import React, { Suspense, lazy } from 'react';
+
+// Dynamic import: Webpack/Vite splits this into a separate chunk.js file!
+const HeavyChart = lazy(() => import('./HeavyChartComponent'));
+
+function AnalyticsDashboard() {
+    return (
+        <div>
+            <h2>Real-time Traffic</h2>
+            <Suspense fallback={<div className="spinner">⏳ Loading heavy charts...</div>}>
+                <HeavyChart />
+            </Suspense>
+        </div>
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 5: ERROR BOUNDARIES -->
+            <div class="concept-block" id="topic-5">
+                <div class="concept-heading">5. Error Boundaries: The Crash Airbag</div>
+                <div class="concept-sub-title">📌 5.1 White Screen of Death ko Rokna</div>
+                <p>React me agar kisi ek child component ke render phase me JavaScript error throw ho jaye, toh poora page white ho jaata hai. <strong>Error Boundaries</strong> ek class component hota hai jo crash hone wale component ki jagah ek graceful fallback UI dikhata hai:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>ErrorBoundary.jsx</span><span>Class Error Boundary</span></div>
+                    <pre><code>import React from 'react';
+
+export class ErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { hasError: false, errorMessage: "" };
+    }
+
+    static getDerivedStateFromError(error) {
+        // Update state so the next render will show the fallback UI.
+        return { hasError: true, errorMessage: error.message };
+    }
+
+    componentDidCatch(error, errorInfo) {
+        // Log the error to an error reporting service like Sentry
+        console.error("ErrorBoundary caught an error:", error, errorInfo);
+    }
+
+    render() {
+        if (this.state.hasError) {
+            return (
+                <div style={{ padding: '20px', background: '#fee2e2', border: '2px solid #ef4444', borderRadius: '10px' }}>
+                    <h3>⚠️ Something went wrong in this widget!</h3>
+                    <p style={{ color: '#dc2626' }}>{this.state.errorMessage}</p>
+                    <button onClick={() => this.setState({ hasError: false })}>Try Again 🔄</button>
+                </div>
+            );
+        }
+        return this.props.children;
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 6: STATE BATCHING IN REACT 18 -->
+            <div class="concept-block" id="topic-6">
+                <div class="concept-heading">6. Automatic State Batching (React 18 vs React 17)</div>
+                <div class="concept-sub-title">📌 6.1 Dukan ke 10 Chakkar vs Ek Grocery List</div>
+                <p><strong>Batching</strong> ka matlab hai multiple state updates ko ek sath group karke sirf <strong>ek single re-render</strong> trigger karna. React 17 me sirf React event handlers me batching hoti thi (promises aur setTimeout me 3 baar re-render hota tha). React 18 me <strong>Automatic Batching</strong> har jagah chalti hai!</p>
+            </div>
+
+            <!-- PRACTICAL LAB -->
+            <div class="practical-box">
+                <div class="practical-title">🛠️ Module 7 Practical Lab: Performance-Optimized Dashboard</div>
+                <p>Neeche complete runnable example hai jisme Error Boundary, React.memo, useMemo, aur lazy-loaded heavy component integrate kiye gaye hain:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>src/OptimizedDashboard.jsx</span><span>Production Performance Suite</span></div>
+                    <pre><code>import React, { useState, useMemo, useCallback } from 'react';
+import { ErrorBoundary } from './ErrorBoundary';
+
+// 1. Memoized Child Metric Card
+const MetricCard = React.memo(({ label, value, onRefresh }) => {
+    console.log(`Rendering MetricCard: ${label}`);
+    return (
+        <div style={{ padding: '16px', border: '1.5px solid #cbd5e1', borderRadius: '8px', background: '#fff' }}>
+            <span style={{ color: '#64748b' }}>{label}</span>
+            <h3 style={{ margin: '8px 0' }}>{value}</h3>
+            <button onClick={onRefresh}>Refresh</button>
+        </div>
+    );
+});
+
+export default function OptimizedDashboard() {
+    const [counter, setCounter] = useState(0);
+    const [items] = useState([10, 25, 45, 90, 150]);
+
+    // useMemo prevents recalculating sum unless items array changes
+    const totalRevenue = useMemo(() => {
+        return items.reduce((acc, curr) => acc + curr, 0);
+    }, [items]);
+
+    // useCallback prevents re-creating function reference on counter clicks
+    const handleRefresh = useCallback(() => {
+        console.log("Refreshed metrics!");
+    }, []);
+
+    return (
+        <div style={{ maxWidth: '800px', margin: '30px auto', padding: '24px', border: '2px solid #0f172a', borderRadius: '14px', background: '#f8fafc' }}>
+            <h2>⚡ 60 FPS Optimized Enterprise Dashboard</h2>
+            <p>Active Re-render Tick: <strong>{counter}</strong></p>
+            <button onClick={() => setCounter(c => c + 1)}>Trigger Parent Re-render</button>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', marginTop: '20px' }}>
+                <ErrorBoundary>
+                    <MetricCard label="Total Revenue" value={`₹${totalRevenue}k`} onRefresh={handleRefresh} />
+                </ErrorBoundary>
+                <ErrorBoundary>
+                    <MetricCard label="Active Sessions" value="1,420 users" onRefresh={handleRefresh} />
+                </ErrorBoundary>
+            </div>
+        </div>
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- SUDHEER J INTERVIEW CARDS -->
+            <div class="concept-sub-title">💼 Module 7 Interview Bank (Sudheer J Style)</div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">Performance</span>
+                    <span class="genz-badge">Senior / 10-14 LPA</span>
+                </div>
+                <h3>Q: What are the 4 main triggers that cause a React component to re-render?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> (1) <strong>Internal State Change:</strong> Calling `useState` or `useReducer` setter functions. (2) <strong>Props Change:</strong> New prop values passed from parent. (3) <strong>Parent Component Re-render:</strong> By default, when a parent re-renders, its entire child subtree re-renders unless memoized with `React.memo`. (4) <strong>Context Provider Value Change:</strong> Changes to the value prop of an active Context.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">Error Boundaries</span>
+                    <span class="genz-badge">High Frequency</span>
+                </div>
+                <h3>Q: What are Error Boundaries and why can't they be written as Functional Components?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> Error Boundaries catch JavaScript errors anywhere in their child component tree during rendering, lifecycle methods, and constructors, displaying a fallback UI instead of crashing the app into a white blank screen. They must be Class Components because there are currently no functional Hook equivalents for `static getDerivedStateFromError()` and `componentDidCatch()`. Note: Error boundaries do not catch errors in event handlers, async code (e.g. `setTimeout` or `fetch`), or server-side rendering.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">Batching</span>
+                    <span class="genz-badge">React 18 Core</span>
+                </div>
+                <h3>Q: What is Automatic Batching in React 18, and how does flushSync alter it?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> In React 18, automatic batching groups all state updates into a single re-render, whether triggered inside event handlers, promises (`fetch().then()`), `setTimeout`, or native events. If a developer requires an immediate, synchronous DOM update (e.g. to measure an element's dimensions right after a state update), React provides <code>ReactDOM.flushSync(() => { setState(val); })</code> to opt out of batching and force a synchronous DOM paint.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

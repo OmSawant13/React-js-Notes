@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Coding & Polyfills Masterclass — React.js Handbook</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@500;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #fbfbfd;
+            --card-bg: #ffffff;
+            --ink-main: #0f172a;
+            --border: #e2e8f0;
+            --font-hand: 'Patrick Hand', cursive, sans-serif;
+            --font-accent: 'Caveat', cursive, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-hand);
+            background-color: var(--bg-page);
+            color: var(--ink-main);
+            font-size: 24px;
+            line-height: 1.65;
+            min-height: 100vh;
+            padding: 24px 32px 80px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            width: 97%;
+            max-width: 1820px;
+            margin: 0 auto;
+            padding: 0 8px;
+        }
+
+        p { font-size: 25px; margin-bottom: 18px; line-height: 1.7; color: #1e293b; }
+        ol, ul { margin-bottom: 22px; padding-left: 32px; }
+        li { font-size: 25px; margin-bottom: 8px; line-height: 1.65; color: #1e293b; }
+        code { font-family: var(--font-code); font-size: 0.9em; background: #e0f2fe; padding: 2px 6px; border-radius: 6px; color: #0369a1; }
+
+        .genz-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 14px 28px;
+            margin-bottom: 32px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .genz-nav-title {
+            font-family: var(--font-accent);
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--ink-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-pill-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #0f172a;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            color: var(--ink-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px #0f172a;
+            background: #f1f5f9;
+        }
+
+        .genz-badge {
+            background: #bae6fd;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 2px 2px 0px #0f172a;
+        }
+
+        .brush-banner {
+            background: #0284c7;
+            color: #ffffff;
+            font-family: var(--font-hand);
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            padding: 14px 44px;
+            margin: 28px auto 36px;
+            display: table;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 4px 4px 0px #0f172a;
+            transform: rotate(-1deg);
+        }
+
+        .chapter-page-box {
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 24px;
+            padding: 44px 52px;
+            box-shadow: 6px 6px 0px #0f172a;
+            margin-bottom: 48px;
+        }
+
+        .chapter-header-area {
+            border-bottom: 2.5px solid #0f172a;
+            padding-bottom: 24px;
+            margin-bottom: 36px;
+        }
+
+        .chapter-header-area h2 {
+            font-family: var(--font-accent);
+            font-size: 52px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 8px;
+        }
+
+        .concept-block {
+            background: transparent;
+            margin-bottom: 64px;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 48px;
+        }
+        .concept-block:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 24px;
+        }
+
+        .concept-heading {
+            font-family: var(--font-accent);
+            font-size: 42px;
+            font-weight: 700;
+            color: #0284c7;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2.5px solid #e2e8f0;
+            padding-bottom: 14px;
+        }
+
+        .concept-sub-title {
+            font-family: var(--font-hand);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 36px 0 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-container {
+            background: #0b1120;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            margin: 32px 0 40px;
+            overflow: hidden;
+            box-shadow: 5px 5px 0px #0f172a;
+        }
+
+        .code-top-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-code);
+            font-size: 16px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .code-container pre {
+            padding: 24px 28px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: var(--font-code);
+            font-size: 16.5px;
+            line-height: 1.8;
+            color: #f1f5f9;
+        }
+
+        .tok-kw { color: #f43f5e; font-weight: 700; }
+        .tok-fn { color: #38bdf8; font-weight: 600; }
+        .tok-str { color: #a5f3fc; }
+        .tok-num { color: #fde047; }
+        .tok-com { color: #64748b; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <nav class="genz-nav-bar">
+            <a href="index.html" class="genz-nav-title">
+                <span>💻</span> Live Coding & Polyfills Masterclass
+            </a>
+            <div class="nav-pill-group">
+                <a href="index.html" class="nav-btn">🏠 Home Dashboard</a>
+                <a href="#polyfills" class="nav-btn" style="background:#fef08a;">⚡ 10 Polyfills</a>
+                <a href="#react-custom-hooks" class="nav-btn" style="background:#bae6fd;">🪝 5 Custom Hooks</a>
+            </div>
+        </nav>
+
+        <div class="chapter-page-box">
+            <div class="chapter-header-area">
+                <span class="genz-badge">LIVE MACHINE CODING ROUND (6–18 LPA)</span>
+                <h2>JavaScript Polyfills & React Custom Hooks Masterclass</h2>
+                <p>Complete runnable implementations for the most demanded machine coding interview utilities: Promise.all, bind, reduce, debounce with immediate flag, throttle, deepClone with circular references, usePrevious, useOnClickOutside, and useLocalStorage with cross-tab syncing.</p>
+            </div>
+
+            <div class="brush-banner">Zero-Library Implementations Written from Scratch</div>
+
+            
+    <!-- ==================== MACHINE CODING: 10 ESSENTIAL POLYFILLS ==================== -->
+    <div class="concept-block" id="polyfills">
+        <div class="concept-heading">🔥 10 Must-Know JavaScript & Frontend Polyfills (Live Coding Round)</div>
+        <p>In high-bar interviews (6–18 LPA), interviewers will ask you to open an empty file and write standard JavaScript utilities from scratch without any external libraries. Here are the exact 10 most frequently asked polyfills with line-by-line mechanics:</p>
+
+        <!-- POLYFILL 1 -->
+        <div class="concept-sub-title">1. Polyfill for Promise.all()</div>
+        <p><strong>Requirements:</strong> Returns a single Promise. Resolves when all input promises fulfill (order preserved). Rejects immediately if ANY input promise rejects (Fail-Fast). Must handle non-promise values and empty arrays.</p>
+        <div class="code-container">
+            <div class="code-top-bar"><span>polyfill_promise_all.js</span><span>Machine Coding Masterclass</span></div>
+            <pre><code><span class="tok-kw">function</span> <span class="tok-fn">myPromiseAll</span>(promises) {
+    <span class="tok-kw">return</span> <span class="tok-kw">new</span> Promise((resolve, reject) => {
+        <span class="tok-com">// 1. Handle non-iterable or empty array</span>
+        <span class="tok-kw">if</span> (!Array.<span class="tok-fn">isArray</span>(promises)) {
+            <span class="tok-kw">return</span> <span class="tok-fn">reject</span>(<span class="tok-kw">new</span> TypeError(<span class="tok-str">"Argument must be an array"</span>));
+        }
+        <span class="tok-kw">if</span> (promises.length === <span class="tok-num">0</span>) {
+            <span class="tok-kw">return</span> <span class="tok-fn">resolve</span>([]);
+        }
+
+        <span class="tok-kw">const</span> results = <span class="tok-kw">new</span> Array(promises.length);
+        <span class="tok-kw">let</span> completedCount = <span class="tok-num">0</span>;
+
+        promises.<span class="tok-fn">forEach</span>((item, index) => {
+            <span class="tok-com">// Wrap in Promise.resolve to handle primitive non-promise values (e.g. 42)</span>
+            Promise.<span class="tok-fn">resolve</span>(item).<span class="tok-fn">then</span>(
+                (value) => {
+                    results[index] = value; <span class="tok-com">// Preserves original array index order!</span>
+                    completedCount++;
+                    <span class="tok-kw">if</span> (completedCount === promises.length) {
+                        <span class="tok-fn">resolve</span>(results);
+                    }
+                },
+                (err) => {
+                    <span class="tok-fn">reject</span>(err); <span class="tok-com">// Fail-fast: Rejects on the very first failure!</span>
+                }
+            );
+        });
+    });
+}</code></pre>
+        </div>
+
+        <!-- POLYFILL 2 -->
+        <div class="concept-sub-title">2. Polyfill for Function.prototype.bind()</div>
+        <p><strong>Requirements:</strong> Returns a new function with bound <code>this</code>. Must support currying (partial arguments). Must handle invocation with <code>new</code> (where <code>this</code> points to the new instance, not the bound context!).</p>
+        <div class="code-container">
+            <div class="code-top-bar"><span>polyfill_bind.js</span><span>Machine Coding Masterclass</span></div>
+            <pre><code>Function.prototype.<span class="tok-fn">myBind</span> = <span class="tok-kw">function</span> (context, ...bindArgs) {
+    <span class="tok-kw">if</span> (<span class="tok-kw">typeof</span> <span class="tok-kw">this</span> !== <span class="tok-str">"function"</span>) {
+        <span class="tok-kw">throw</span> <span class="tok-kw">new</span> TypeError(<span class="tok-str">"Cannot bind non-callable"</span>);
+    }
+    <span class="tok-kw">const</span> originalFn = <span class="tok-kw">this</span>;
+
+    <span class="tok-kw">function</span> <span class="tok-fn">boundFunction</span>(...callArgs) {
+        <span class="tok-com">// If called with 'new boundFunction()', this points to new instance!</span>
+        <span class="tok-kw">const</span> isConstructor = <span class="tok-kw">this</span> <span class="tok-kw">instanceof</span> boundFunction;
+        <span class="tok-kw">return</span> originalFn.<span class="tok-fn">apply</span>(
+            isConstructor ? <span class="tok-kw">this</span> : context,
+            [...bindArgs, ...callArgs]
+        );
+    }
+
+    <span class="tok-com">// Preserve prototype chain for constructor calls</span>
+    boundFunction.prototype = Object.<span class="tok-fn">create</span>(originalFn.prototype);
+    <span class="tok-kw">return</span> boundFunction;
+};</code></pre>
+        </div>
+
+        <!-- POLYFILL 3 -->
+        <div class="concept-sub-title">3. Polyfill for Array.prototype.reduce()</div>
+        <p><strong>Requirements:</strong> Executes a reducer callback on each element. Handles optional initial value (if omitted, first element is accumulator and iteration starts at index 1). Throws on empty array without initial value.</p>
+        <div class="code-container">
+            <div class="code-top-bar"><span>polyfill_reduce.js</span><span>Machine Coding Masterclass</span></div>
+            <pre><code>Array.prototype.<span class="tok-fn">myReduce</span> = <span class="tok-kw">function</span> (callback, initialValue) {
+    <span class="tok-kw">if</span> (<span class="tok-kw">this</span> == <span class="tok-kw">null</span>) <span class="tok-kw">throw</span> <span class="tok-kw">new</span> TypeError(<span class="tok-str">"Array.prototype.myReduce called on null"</span>);
+    <span class="tok-kw">if</span> (<span class="tok-kw">typeof</span> callback !== <span class="tok-str">"function"</span>) <span class="tok-kw">throw</span> <span class="tok-kw">new</span> TypeError(callback + <span class="tok-str">" is not a function"</span>);
+
+    <span class="tok-kw">const</span> array = Object(<span class="tok-kw">this</span>);
+    <span class="tok-kw">const</span> len = array.length >>> <span class="tok-num">0</span>;
+    <span class="tok-kw">let</span> k = <span class="tok-num">0</span>;
+    <span class="tok-kw">let</span> accumulator;
+
+    <span class="tok-kw">if</span> (arguments.length >= <span class="tok-num">2</span>) {
+        accumulator = initialValue;
+    } <span class="tok-kw">else</span> {
+        <span class="tok-com">// If initialValue is omitted, find first non-empty element</span>
+        <span class="tok-kw">while</span> (k &lt; len && !(k <span class="tok-kw">in</span> array)) k++;
+        <span class="tok-kw">if</span> (k >= len) <span class="tok-kw">throw</span> <span class="tok-kw">new</span> TypeError(<span class="tok-str">"Reduce of empty array with no initial value"</span>);
+        accumulator = array[k++];
+    }
+
+    <span class="tok-kw">while</span> (k &lt; len) {
+        <span class="tok-kw">if</span> (k <span class="tok-kw">in</span> array) {
+            accumulator = <span class="tok-fn">callback</span>(accumulator, array[k], k, array);
+        }
+        k++;
+    }
+    <span class="tok-kw">return</span> accumulator;
+};</code></pre>
+        </div>
+
+        <!-- POLYFILL 4 -->
+        <div class="concept-sub-title">4. Polyfill for Lodash Debounce (with Immediate / Leading Option)</div>
+        <p><strong>Requirements:</strong> Coalesces rapid sequential calls into a single execution after delayMs. Supports <code>immediate: true</code> (fires on leading edge).</p>
+        <div class="code-container">
+            <div class="code-top-bar"><span>polyfill_debounce.js</span><span>Machine Coding Masterclass</span></div>
+            <pre><code><span class="tok-kw">function</span> <span class="tok-fn">debounce</span>(fn, delayMs, immediate = <span class="tok-kw">false</span>) {
+    <span class="tok-kw">let</span> timerId = <span class="tok-kw">null</span>;
+
+    <span class="tok-kw">function</span> <span class="tok-fn">debounced</span>(...args) {
+        <span class="tok-kw">const</span> callNow = immediate && !timerId;
+
+        clearTimeout(timerId);
+
+        timerId = setTimeout(() => {
+            timerId = <span class="tok-kw">null</span>;
+            <span class="tok-kw">if</span> (!immediate) {
+                fn.<span class="tok-fn">apply</span>(<span class="tok-kw">this</span>, args);
+            }
+        }, delayMs);
+
+        <span class="tok-kw">if</span> (callNow) {
+            fn.<span class="tok-fn">apply</span>(<span class="tok-kw">this</span>, args);
+        }
+    }
+
+    <span class="tok-com">// Cancel method to prevent memory leaks on component unmount</span>
+    debounced.<span class="tok-fn">cancel</span> = () => {
+        clearTimeout(timerId);
+        timerId = <span class="tok-kw">null</span>;
+    };
+
+    <span class="tok-kw">return</span> debounced;
+}</code></pre>
+        </div>
+
+        <!-- POLYFILL 5 -->
+        <div class="concept-sub-title">5. Polyfill for Lodash Throttle (Rate Limiting Function Calls)</div>
+        <p><strong>Requirements:</strong> Ensures a function is called at most once per <code>limitMs</code> interval (e.g. for window scroll and resize events).</p>
+        <div class="code-container">
+            <div class="code-top-bar"><span>polyfill_throttle.js</span><span>Machine Coding Masterclass</span></div>
+            <pre><code><span class="tok-kw">function</span> <span class="tok-fn">throttle</span>(fn, limitMs) {
+    <span class="tok-kw">let</span> inThrottle = <span class="tok-kw">false</span>;
+    <span class="tok-kw">let</span> lastArgs = <span class="tok-kw">null</span>;
+    <span class="tok-kw">let</span> lastContext = <span class="tok-kw">null</span>;
+
+    <span class="tok-kw">return</span> <span class="tok-kw">function</span> (...args) {
+        <span class="tok-kw">if</span> (!inThrottle) {
+            fn.<span class="tok-fn">apply</span>(<span class="tok-kw">this</span>, args);
+            inThrottle = <span class="tok-kw">true</span>;
+            setTimeout(() => {
+                inThrottle = <span class="tok-kw">false</span>;
+                <span class="tok-kw">if</span> (lastArgs) {
+                    fn.<span class="tok-fn">apply</span>(lastContext, lastArgs);
+                    lastArgs = lastContext = <span class="tok-kw">null</span>;
+                }
+            }, limitMs);
+        } <span class="tok-kw">else</span> {
+            lastArgs = args;
+            lastContext = <span class="tok-kw">this</span>;
+        }
+    };
+}</code></pre>
+        </div>
+
+        <!-- POLYFILL 6 -->
+        <div class="concept-sub-title">6. Deep Clone Supporting Circular References & Dates</div>
+        <div class="code-container">
+            <div class="code-top-bar"><span>polyfill_deep_clone.js</span><span>Machine Coding Masterclass</span></div>
+            <pre><code><span class="tok-kw">function</span> <span class="tok-fn">deepClone</span>(obj, hash = <span class="tok-kw">new</span> WeakMap()) {
+    <span class="tok-com">// Handle primitives & null</span>
+    <span class="tok-kw">if</span> (obj === <span class="tok-kw">null</span> || <span class="tok-kw">typeof</span> obj !== <span class="tok-str">"object"</span>) <span class="tok-kw">return</span> obj;
+
+    <span class="tok-com">// Handle Date</span>
+    <span class="tok-kw">if</span> (obj <span class="tok-kw">instanceof</span> Date) <span class="tok-kw">return</span> <span class="tok-kw">new</span> Date(obj);
+
+    <span class="tok-com">// Handle RegExp</span>
+    <span class="tok-kw">if</span> (obj <span class="tok-kw">instanceof</span> RegExp) <span class="tok-kw">return</span> <span class="tok-kw">new</span> RegExp(obj);
+
+    <span class="tok-com">// Handle Circular References</span>
+    <span class="tok-kw">if</span> (hash.<span class="tok-fn">has</span>(obj)) <span class="tok-kw">return</span> hash.<span class="tok-fn">get</span>(obj);
+
+    <span class="tok-kw">const</span> copy = Array.<span class="tok-fn">isArray</span>(obj) ? [] : Object.<span class="tok-fn">create</span>(Object.<span class="tok-fn">getPrototypeOf</span>(obj));
+    hash.<span class="tok-fn">set</span>(obj, copy);
+
+    <span class="tok-kw">for</span> (<span class="tok-kw">const</span> key <span class="tok-kw">of</span> Reflect.<span class="tok-fn">ownKeys</span>(obj)) {
+        copy[key] = <span class="tok-fn">deepClone</span>(obj[key], hash);
+    }
+    <span class="tok-kw">return</span> copy;
+}</code></pre>
+        </div>
+    </div>
+
+    <!-- ==================== MACHINE CODING: 5 PRODUCTION REACT CUSTOM HOOKS ==================== -->
+    <div class="concept-block" id="react-custom-hooks">
+        <div class="concept-heading">🪝 5 Essential React Custom Hooks Coded from Scratch</div>
+
+        <!-- HOOK 1 -->
+        <div class="concept-sub-title">1. usePrevious (Capturing Previous Value of Props/State)</div>
+        <div class="code-container">
+            <div class="code-top-bar"><span>hooks/usePrevious.js</span><span>React Custom Hook</span></div>
+            <pre><code><span class="tok-kw">import</span> { useRef, useEffect } <span class="tok-kw">from</span> <span class="tok-str">"react"</span>;
+
+<span class="tok-kw">export</span> <span class="tok-kw">function</span> <span class="tok-fn">usePrevious</span>(value) {
+    <span class="tok-kw">const</span> ref = <span class="tok-fn">useRef</span>();
+    <span class="tok-fn">useEffect</span>(() => {
+        ref.current = value; <span class="tok-com">// Runs AFTER the render commit!</span>
+    }, [value]);
+    <span class="tok-kw">return</span> ref.current; <span class="tok-com">// Returns previous value during the current render!</span>
+}</code></pre>
+        </div>
+
+        <!-- HOOK 2 -->
+        <div class="concept-sub-title">2. useOnClickOutside (Dismissing Modals & Dropdowns)</div>
+        <div class="code-container">
+            <div class="code-top-bar"><span>hooks/useOnClickOutside.js</span><span>React Custom Hook</span></div>
+            <pre><code><span class="tok-kw">import</span> { useEffect } <span class="tok-kw">from</span> <span class="tok-str">"react"</span>;
+
+<span class="tok-kw">export</span> <span class="tok-kw">function</span> <span class="tok-fn">useOnClickOutside</span>(ref, handler) {
+    <span class="tok-fn">useEffect</span>(() => {
+        <span class="tok-kw">const</span> listener = (event) => {
+            <span class="tok-com">// Do nothing if clicking inside element or descendant</span>
+            <span class="tok-kw">if</span> (!ref.current || ref.current.<span class="tok-fn">contains</span>(event.target)) {
+                <span class="tok-kw">return</span>;
+            }
+            <span class="tok-fn">handler</span>(event);
+        };
+
+        document.<span class="tok-fn">addEventListener</span>(<span class="tok-str">"mousedown"</span>, listener);
+        document.<span class="tok-fn">addEventListener</span>(<span class="tok-str">"touchstart"</span>, listener);
+
+        <span class="tok-kw">return</span> () => {
+            document.<span class="tok-fn">removeEventListener</span>(<span class="tok-str">"mousedown"</span>, listener);
+            document.<span class="tok-fn">removeEventListener</span>(<span class="tok-str">"touchstart"</span>, listener);
+        };
+    }, [ref, handler]);
+}</code></pre>
+        </div>
+
+        <!-- HOOK 3 -->
+        <div class="concept-sub-title">3. useLocalStorage with Cross-Tab Synchronization</div>
+        <div class="code-container">
+            <div class="code-top-bar"><span>hooks/useLocalStorage.js</span><span>React Custom Hook</span></div>
+            <pre><code><span class="tok-kw">import</span> { useState, useEffect } <span class="tok-kw">from</span> <span class="tok-str">"react"</span>;
+
+<span class="tok-kw">export</span> <span class="tok-kw">function</span> <span class="tok-fn">useLocalStorage</span>(key, initialValue) {
+    <span class="tok-kw">const</span> [storedValue, setStoredValue] = <span class="tok-fn">useState</span>(() => {
+        <span class="tok-kw">try</span> {
+            <span class="tok-kw">const</span> item = window.localStorage.<span class="tok-fn">getItem</span>(key);
+            <span class="tok-kw">return</span> item ? JSON.<span class="tok-fn">parse</span>(item) : initialValue;
+        } <span class="tok-kw">catch</span> (error) {
+            <span class="tok-kw">return</span> initialValue;
+        }
+    });
+
+    <span class="tok-kw">const</span> setValue = (value) => {
+        <span class="tok-kw">try</span> {
+            <span class="tok-kw">const</span> valueToStore = value <span class="tok-kw">instanceof</span> Function ? <span class="tok-fn">value</span>(storedValue) : value;
+            setStoredValue(valueToStore);
+            window.localStorage.<span class="tok-fn">setItem</span>(key, JSON.<span class="tok-fn">stringify</span>(valueToStore));
+        } <span class="tok-kw">catch</span> (error) {
+            console.<span class="tok-fn">error</span>(error);
+        }
+    };
+
+    <span class="tok-com">// Synchronize across browser tabs automatically</span>
+    <span class="tok-fn">useEffect</span>(() => {
+        <span class="tok-kw">const</span> handleStorageChange = (e) => {
+            <span class="tok-kw">if</span> (e.key === key && e.newValue) {
+                setStoredValue(JSON.<span class="tok-fn">parse</span>(e.newValue));
+            }
+        };
+        window.<span class="tok-fn">addEventListener</span>(<span class="tok-str">"storage"</span>, handleStorageChange);
+        <span class="tok-kw">return</span> () => window.<span class="tok-fn">removeEventListener</span>(<span class="tok-str">"storage"</span>, handleStorageChange);
+    }, [key]);
+
+    <span class="tok-kw">return</span> [storedValue, setValue];
+}</code></pre>
+        </div>
+    </div>
+    
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Patrick+Hand&family=Plus+Jakarta+Sans:wght@500;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #fbfbfd;
+            --card-bg: #ffffff;
+            --ink-main: #0f172a;
+            --ink-body: #1e293b;
+            --primary: #0284c7;
+            --border: #e2e8f0;
+            --font-hand: 'Patrick Hand', cursive, sans-serif;
+            --font-accent: 'Caveat', cursive, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-hand);
+            background-color: var(--bg-page);
+            color: var(--ink-main);
+            font-size: 24px;
+            line-height: 1.65;
+            min-height: 100vh;
+            padding: 24px 32px 80px;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            width: 97%;
+            max-width: 1820px;
+            margin: 0 auto;
+            padding: 0 8px;
+        }
+
+        p { font-size: 25px; margin-bottom: 18px; line-height: 1.7; color: #1e293b; }
+        ol, ul { margin-bottom: 22px; padding-left: 32px; }
+        li { font-size: 25px; margin-bottom: 8px; line-height: 1.65; color: #1e293b; }
+        code { font-family: var(--font-code); font-size: 0.9em; background: #e0f2fe; padding: 2px 6px; border-radius: 6px; color: #0369a1; }
+
+        .genz-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 14px;
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 14px 28px;
+            margin-bottom: 32px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .genz-nav-title {
+            font-family: var(--font-accent);
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--ink-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-pill-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 18px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0px #0f172a;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            color: var(--ink-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0px #0f172a;
+            background: #e0f2fe;
+        }
+
+        .nav-btn.active {
+            background: #0284c7;
+            color: #ffffff;
+        }
+
+        .genz-badge {
+            background: #bae6fd;
+            border: 2px solid #0f172a;
+            font-family: var(--font-hand);
+            font-size: 20px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 2px 2px 0px #0f172a;
+        }
+
+        .brush-banner {
+            background: #0284c7;
+            color: #ffffff;
+            font-family: var(--font-hand);
+            font-size: 34px;
+            font-weight: 700;
+            text-align: center;
+            padding: 14px 44px;
+            margin: 28px auto 36px;
+            display: table;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            box-shadow: 4px 4px 0px #0f172a;
+            transform: rotate(-1deg);
+        }
+
+        .chapter-page-box {
+            background: #ffffff;
+            border: 2.5px solid #0f172a;
+            border-radius: 24px;
+            padding: 44px 52px;
+            box-shadow: 6px 6px 0px #0f172a;
+            margin-bottom: 48px;
+        }
+
+        .chapter-header-area {
+            border-bottom: 2.5px solid #0f172a;
+            padding-bottom: 24px;
+            margin-bottom: 36px;
+        }
+
+        .chapter-header-area h2 {
+            font-family: var(--font-accent);
+            font-size: 52px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 8px;
+        }
+
+        .concept-block {
+            background: transparent;
+            margin-bottom: 64px;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 48px;
+        }
+        .concept-block:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 24px;
+        }
+
+        .concept-heading {
+            font-family: var(--font-accent);
+            font-size: 42px;
+            font-weight: 700;
+            color: #0369a1;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2.5px solid #e2e8f0;
+            padding-bottom: 14px;
+        }
+
+        .concept-sub-title {
+            font-family: var(--font-hand);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 36px 0 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analogy-note {
+            background: #fef9c3;
+            border: 2.5px dashed #ca8a04;
+            border-radius: 20px;
+            padding: 26px 32px;
+            margin: 28px 0 34px;
+            box-shadow: 4px 4px 0px rgba(202, 138, 4, 0.25);
+        }
+
+        .analogy-note-title {
+            font-family: var(--font-accent);
+            font-size: 30px;
+            font-weight: 700;
+            color: #854d0e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .analogy-note p {
+            color: #713f12;
+            font-size: 24px;
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        .bio-anatomy-board {
+            background-color: #ffffff;
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 22px 22px;
+            border: 3px solid #0f172a;
+            border-radius: 22px;
+            padding: 34px 40px;
+            margin: 32px 0 38px;
+            box-shadow: 6px 6px 0px #0f172a;
+            position: relative;
+        }
+
+        .anatomy-board-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed #94a3b8;
+            padding-bottom: 12px;
+        }
+
+        .anatomy-board-title {
+            font-family: var(--font-accent);
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .anatomy-code-center {
+            background: #0f172a;
+            border: 2.5px solid #0f172a;
+            border-radius: 16px;
+            padding: 22px 26px;
+            color: #ffffff;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.85;
+            box-shadow: 4px 4px 0px #38bdf8;
+            overflow-x: auto;
+        }
+
+        .code-container {
+            background: #0b1120;
+            border: 2px solid #0f172a;
+            border-radius: 16px;
+            margin: 28px 0 34px;
+            overflow: hidden;
+            box-shadow: 5px 5px 0px #0f172a;
+        }
+
+        .code-top-bar {
+            background: #1e293b;
+            border-bottom: 1px solid #334155;
+            padding: 10px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-code);
+            font-size: 15px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .code-container pre {
+            padding: 22px 26px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: var(--font-code);
+            font-size: 16px;
+            line-height: 1.8;
+            color: #f1f5f9;
+        }
+
+        .tok-kw { color: #f43f5e; font-weight: 700; }
+        .tok-fn { color: #38bdf8; font-weight: 600; }
+        .tok-str { color: #a5f3fc; }
+        .tok-num { color: #fde047; }
+        .tok-com { color: #64748b; font-style: italic; }
+
+        .mechanics-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 20px 0 28px;
+            border: 2px solid #0f172a;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 3px 3px 0px #0f172a;
+            font-family: var(--font-hand);
+            font-size: 22px;
+        }
+
+        .mechanics-table th {
+            background: #f1f5f9;
+            color: #0f172a;
+            text-align: left;
+            padding: 12px 18px;
+            font-family: var(--font-accent);
+            font-size: 25px;
+            font-weight: 700;
+            border-bottom: 2px solid #0f172a;
+        }
+
+        .mechanics-table td {
+            padding: 12px 18px;
+            border-bottom: 1.5px solid #e2e8f0;
+            vertical-align: top;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .mechanics-table tr:last-child td { border-bottom: none; }
+        .mechanics-table tr:nth-child(even) td { background: #fafaf9; }
+
+        .q-card {
+            background: #ffffff;
+            border: 2px solid #0f172a;
+            border-radius: 18px;
+            padding: 24px 28px;
+            margin-bottom: 22px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .q-tag-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .q-pill {
+            background: #e0f2fe;
+            border: 1.5px solid #0f172a;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .q-card h3 {
+            font-family: var(--font-accent);
+            font-size: 30px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .q-ans {
+            background: #f0f9ff;
+            border-left: 5px solid #0284c7;
+            border-radius: 0 12px 12px 0;
+            padding: 16px 22px;
+            font-size: 22px;
+            color: #1e293b;
+            line-height: 1.65;
+        }
+
+        .practical-box {
+            background: #f0fdf4;
+            border: 2.5px solid #16a34a;
+            border-radius: 20px;
+            padding: 32px 38px;
+            margin: 36px 0;
+            box-shadow: 5px 5px 0px #16a34a;
+        }
+
+        .practical-title {
+            font-family: var(--font-accent);
+            font-size: 36px;
+            font-weight: 700;
+            color: #15803d;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+
+    <title>Module 4: Forms &amp; API Integration — React.js Master Handbook</title>
+</head>
+<body>
+    <div class="app-wrapper">
+        
+        <nav class="genz-nav-bar">
+            <a href="index.html" class="genz-nav-title">
+                <span>⚛️</span> React.js 8-Module Master Handbook
+            </a>
+            <div class="nav-pill-group">
+                <a href="index.html" class="nav-btn">🏠 Home</a><a href="module_1_react_fundamentals.html" class="nav-btn">M1 Fundamentals</a><a href="module_2_props_state_events.html" class="nav-btn">M2 Props & State</a><a href="module_3_react_hooks.html" class="nav-btn">M3 Hooks</a><a href="module_4_forms_api_integration.html" class="nav-btn active">M4 Forms & APIs</a><a href="module_5_routing.html" class="nav-btn">M5 Routing</a><a href="module_6_state_management.html" class="nav-btn">M6 State Mgmt</a><a href="module_7_advanced_react.html" class="nav-btn">M7 Advanced</a><a href="module_8_production_development.html" class="nav-btn">M8 Production</a><a href="book_interview_masterclass_hub.html" class="nav-btn" style="background:#fef08a;">💼 64 Q&A Hub</a>
+            </div>
+        </nav>
+    
+
+        <div class="chapter-page-box">
+            <div class="chapter-header-area">
+                <span class="genz-badge">MODULE 4 • DATA INPUT &amp; FULL-STACK APIS</span>
+                <h2>Module 4 — Forms &amp; API Integration</h2>
+                <p>Forms and Full-Stack Connectivity: Controlled vs Uncontrolled, Form Validation, Handling Multiple Inputs with dynamic keys, Fetch vs Axios, GET/POST/PUT/PATCH/DELETE, Async/Await, Loading &amp; Error UI, Environment Variables (Vite), and connecting React to Node.js/Express backend.</p>
+            </div>
+
+            <div class="brush-banner">Module 4: Forms, Validation aur Backend API Integration (Full-Stack Bridge)!</div>
+
+            <!-- TOPIC 1: CONTROLLED VS UNCONTROLLED -->
+            <div class="concept-block" id="topic-1">
+                <div class="concept-heading">1. Controlled vs Uncontrolled Components</div>
+                <div class="concept-sub-title">📌 1.1 Papa ka Ladla vs Hostel ka Mast-Maula</div>
+
+                <div class="analogy-note">
+                    <div class="analogy-note-title">👨‍👦 Desi Analogy</div>
+                    <p>• <strong>Controlled Component:</strong> Papa ka Ladla! Har kadam pe React state se permission leta hai (<code>value={name} onChange={e => setName(e.target.value)}</code>). React ko har ek keystroke ki khabar hoti hai.<br>
+                    • <strong>Uncontrolled Component:</strong> Hostel ka mast-maula ladka! Apni value HTML DOM ke paas khud sambhalta hai. Form submit hone par <code>useRef</code> ya <code>FormData</code> se ek baar me data nikal liya jata hai.</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>Controlled_vs_Uncontrolled.jsx</span><span>Code Comparison</span></div>
+                    <pre><code>// 1. CONTROLLED COMPONENT (React state is the single source of truth)
+function ControlledInput() {
+    const [email, setEmail] = useState("");
+    return (
+        <input 
+            type="email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+            placeholder="Controlled"
+        />
+    );
+}
+
+// 2. UNCONTROLLED COMPONENT (DOM holds the value, accessed via ref)
+function UncontrolledInput() {
+    const inputRef = useRef();
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        alert("Value: " + inputRef.current.value);
+    };
+    return (
+        <form onSubmit={handleSubmit}>
+            <input ref={inputRef} type="text" placeholder="Uncontrolled" />
+            <button type="submit">Submit</button>
+        </form>
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 2: HANDLING MULTIPLE INPUTS -->
+            <div class="concept-block" id="topic-2">
+                <div class="concept-heading">2. Handling Multiple Inputs with a Single State Object</div>
+                <div class="concept-sub-title">📌 2.1 The Dynamic Computed Property Name Pattern `[name]: value`</div>
+                <p>Agar form me 10 inputs hain, toh kya 10 alag <code>useState</code> banaoge? Bilkul nahi! Ek single object state banao aur input ke <code>name</code> attribute se dynamically key update karo:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>MultiInputForm.jsx</span><span>Pro Pattern</span></div>
+                    <pre><code>import { useState } from 'react';
+
+function RegistrationForm() {
+    const [formData, setFormData] = useState({
+        username: "",
+        email: "",
+        password: "",
+        role: "developer"
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        // Computed Property Syntax: [name] dynamically evaluates to "username", "email", etc.
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    return (
+        <form>
+            <input name="username" value={formData.username} onChange={handleChange} placeholder="Username" />
+            <input name="email" value={formData.email} onChange={handleChange} placeholder="Email" />
+            <input name="password" type="password" value={formData.password} onChange={handleChange} placeholder="Password" />
+            <select name="role" value={formData.role} onChange={handleChange}>
+                <option value="developer">Developer</option>
+                <option value="designer">Designer</option>
+            </select>
+        </form>
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 3: FORM VALIDATION -->
+            <div class="concept-block" id="topic-3">
+                <div class="concept-heading">3. Form Validation &amp; Error Handling</div>
+                <div class="concept-sub-title">📌 3.1 Client-side Validation Logic</div>
+                <p>Form submit hone se pehle checks lagana compulsory hai taaki invalid data backend par na jaye:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>FormValidation.jsx</span><span>Validation Logic</span></div>
+                    <pre><code>function ValidatedLoginForm() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({});
+
+    const validate = () => {
+        const errs = {};
+        if (!email.includes("@") || !email.includes(".")) {
+            errs.email = "Please enter a valid email address.";
+        }
+        if (password.length < 6) {
+            errs.password = "Password must be at least 6 characters long.";
+        }
+        return errs;
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const validationErrors = validate();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+        setErrors({});
+        console.log("Form valid! Submitting to API:", { email, password });
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" />
+            {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
+
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
+            {errors.password && <span style={{ color: 'red' }}>{errors.password}</span>}
+
+            <button type="submit">Sign In</button>
+        </form>
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- TOPIC 4: FETCH API VS AXIOS -->
+            <div class="concept-block" id="topic-4">
+                <div class="concept-heading">4. Fetch API vs Axios</div>
+                <div class="concept-sub-title">📌 4.1 Comparison &amp; Why Production Uses Axios</div>
+
+                <table class="mechanics-table">
+                    <tr>
+                        <th>Feature</th>
+                        <th>Native Fetch API</th>
+                        <th>Axios Library</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Installation</strong></td>
+                        <td>Built-in in browser (No npm install)</td>
+                        <td><code>npm install axios</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>JSON Parsing</strong></td>
+                        <td>Manual: <code>await res.json()</code> karna padta hai</td>
+                        <td><strong>Automatic!</strong> Direct <code>res.data</code> milta hai</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HTTP Error Handling</strong></td>
+                        <td>404 ya 500 par bhi promise reject <em>nahi</em> hoti!</td>
+                        <td><strong>Auto Rejection!</strong> 4xx/5xx seedha <code>catch</code> block me jata hai</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interceptors &amp; Timeout</strong></td>
+                        <td>Nahi hota (manually wrapper likhna padta hai)</td>
+                        <td><strong>Built-in Interceptors</strong> (Auth token refresh ke liye best)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- TOPIC 5: HTTP VERBS -->
+            <div class="concept-block" id="topic-5">
+                <div class="concept-heading">5. HTTP Verbs: GET, POST, PUT, PATCH, DELETE</div>
+                <div class="concept-sub-title">📌 5.1 Restful API Conventions</div>
+                <ul>
+                    <li><strong>GET:</strong> Server se data mangwana (Read operation, no body).</li>
+                    <li><strong>POST:</strong> Server par naya resource create karna (Create operation, sends JSON body).</li>
+                    <li><strong>PUT:</strong> Poore resource ko completely replace karna (Complete update).</li>
+                    <li><strong>PATCH:</strong> Sirf specific fields ko update karna (Partial update, e.g. status: "active").</li>
+                    <li><strong>DELETE:</strong> Resource ko delete karna.</li>
+                </ul>
+            </div>
+
+            <!-- TOPIC 6: ENVIRONMENT VARIABLES IN VITE -->
+            <div class="concept-block" id="topic-6">
+                <div class="concept-heading">6. Environment Variables in Vite</div>
+                <div class="concept-sub-title">📌 6.1 `import.meta.env` Standard</div>
+                <p>Create-React-App me <code>process.env.REACT_APP_...</code> use hota tha. Modern Vite me:</p>
+                <ol>
+                    <li>Root directory me <code>.env</code> file banao.</li>
+                    <li>Har variable ke aage <strong><code>VITE_</code> prefix compulsory hai</strong>! (e.g. <code>VITE_BACKEND_URL=http://localhost:5000/api</code>).</li>
+                    <li>React code ke andar access karo: <code>const API_URL = import.meta.env.VITE_BACKEND_URL;</code>.</li>
+                </ol>
+            </div>
+
+            <!-- PRACTICAL LAB -->
+            <div class="practical-box">
+                <div class="practical-title">🛠️ Module 4 Practical Lab: Full-Stack React + Node.js/Express CRUD Component</div>
+                <p>Neeche complete runnable component hai jo backend API se data fetch karta hai (GET), naya job create karta hai (POST), aur delete karta hai (DELETE), sath me Loading aur Error states bhi handle karta hai:</p>
+
+                <div class="code-container">
+                    <div class="code-top-bar"><span>src/JobManager.jsx</span><span>Full-Stack CRUD Component</span></div>
+                    <pre><code>import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+// Base API configuration
+const API = axios.create({
+    baseURL: import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api'
+});
+
+export default function JobManager() {
+    const [jobs, setJobs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Form State
+    const [title, setTitle] = useState("");
+    const [company, setCompany] = useState("");
+
+    // 1. READ: Fetch all jobs on mount
+    const fetchJobs = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            const res = await API.get('/jobs');
+            setJobs(res.data.data || res.data);
+        } catch (err) {
+            setError(err.response?.data?.message || "Failed to load jobs from backend.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchJobs();
+    }, []);
+
+    // 2. CREATE: POST new job
+    const handleCreateJob = async (e) => {
+        e.preventDefault();
+        if (!title.trim() || !company.trim()) return;
+
+        try {
+            const res = await API.post('/jobs', { title, company });
+            setJobs(prev => [...prev, res.data.data || res.data]);
+            setTitle("");
+            setCompany("");
+        } catch (err) {
+            alert("Error creating job: " + (err.response?.data?.message || err.message));
+        }
+    };
+
+    // 3. DELETE: Delete job by ID
+    const handleDeleteJob = async (id) => {
+        try {
+            await API.delete(`/jobs/${id}`);
+            setJobs(prev => prev.filter(job => job._id !== id && job.id !== id));
+        } catch (err) {
+            alert("Error deleting job: " + (err.response?.data?.message || err.message));
+        }
+    };
+
+    return (
+        <div style={{ maxWidth: '700px', margin: '40px auto', padding: '28px', border: '2.5px solid #0f172a', borderRadius: '16px', background: '#fff' }}>
+            <h2>💼 Job Portal (Connected to Express Backend)</h2>
+
+            {/* CREATE FORM */}
+            <form onSubmit={handleCreateJob} style={{ display: 'flex', gap: '10px', marginBottom: '24px' }}>
+                <input 
+                    placeholder="Job Title (e.g. React Developer)"
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
+                    style={{ flex: 1, padding: '10px', border: '2px solid #0f172a', borderRadius: '8px' }}
+                />
+                <input 
+                    placeholder="Company Name"
+                    value={company}
+                    onChange={e => setCompany(e.target.value)}
+                    style={{ flex: 1, padding: '10px', border: '2px solid #0f172a', borderRadius: '8px' }}
+                />
+                <button type="submit" style={{ padding: '10px 18px', background: '#16a34a', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
+                    + Post Job
+                </button>
+            </form>
+
+            {/* LOADING & ERROR STATES */}
+            {loading && <p style={{ color: '#0284c7', fontSize: '22px' }}>⏳ Loading jobs from Node.js server...</p>}
+            {error && <p style={{ color: '#dc2626', background: '#fee2e2', padding: '12px', borderRadius: '8px' }}>❌ {error}</p>}
+
+            {/* JOB LIST */}
+            {!loading && !error && (
+                <ul style={{ listStyle: 'none', padding: 0 }}>
+                    {jobs.length === 0 ? <p>No jobs posted yet.</p> : jobs.map(job => (
+                        <li key={job._id || job.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px', borderBottom: '1.5px solid #e2e8f0' }}>
+                            <div>
+                                <strong style={{ fontSize: '22px' }}>{job.title}</strong>
+                                <p style={{ margin: '4px 0 0', color: '#64748b' }}>🏢 {job.company}</p>
+                            </div>
+                            <button onClick={() => handleDeleteJob(job._id || job.id)} style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '6px 14px', borderRadius: '6px', cursor: 'pointer' }}>
+                                Delete
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- SUDHEER J INTERVIEW CARDS -->
+            <div class="concept-sub-title">💼 Module 4 Interview Bank (Sudheer J Style)</div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">Forms</span>
+                    <span class="genz-badge">Fresher / 4-6 LPA</span>
+                </div>
+                <h3>Q: What is the exact difference between Controlled and Uncontrolled Components in React forms?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> In a <strong>Controlled Component</strong>, the form input element's value is controlled by React state (`value={state}` + `onChange={setState}`). React state serves as the "single source of truth". In an <strong>Uncontrolled Component</strong>, form data is handled by the browser DOM itself, and values are pulled on demand using `useRef` (e.g. `ref.current.value`). Controlled components are preferred for real-time validation and dynamic inputs.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">HTTP Verbs</span>
+                    <span class="genz-badge">High Frequency</span>
+                </div>
+                <h3>Q: What is the difference between PUT and PATCH HTTP requests?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> <code>PUT</code> replaces the <strong>entire resource</strong>; any fields omitted in the request payload will typically be overwritten or set to null. <code>PATCH</code> performs a <strong>partial update</strong>; it only modifies the specific fields sent in the request payload without touching the rest of the existing resource.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-tag-row">
+                    <span class="q-pill">Axios vs Fetch</span>
+                    <span class="genz-badge">Interview Classic</span>
+                </div>
+                <h3>Q: Why do top engineering teams prefer Axios over the native Fetch API?</h3>
+                <div class="q-ans">
+                    <strong>Answer:</strong> Axios provides: (1) Automatic JSON data transformation (no need for `res.json()`), (2) Automatic error rejection for HTTP status codes outside 2xx (Fetch does not reject 404 or 500), (3) Request and Response <strong>Interceptors</strong> for seamless JWT token refresh handling, (4) Built-in request timeout support, and (5) Built-in XSRF/CSRF protection.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
