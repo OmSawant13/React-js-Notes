@@ -554,7 +554,7 @@ function UncontrolledInput() {
             <!-- TOPIC 2: HANDLING MULTIPLE INPUTS -->
             <div class="concept-block" id="topic-2">
                 <div class="concept-heading">2. Handling Multiple Inputs with a Single State Object</div>
-                <div class="concept-sub-title">📌 2.1 The Dynamic Computed Property Name Pattern `[name]: value`</div>
+                <div class="concept-sub-title">📌 2.1 The Dynamic Computed Property Name Pattern <code>[name]: value</code></div>
                 <p>Agar form me 10 inputs hain, toh kya 10 alag <code>useState</code> banaoge? Bilkul nahi! Ek single object state banao aur input ke <code>name</code> attribute se dynamically key update karo:</p>
 
                 <div class="code-container">
@@ -693,7 +693,7 @@ function RegistrationForm() {
             <!-- TOPIC 6: ENVIRONMENT VARIABLES IN VITE -->
             <div class="concept-block" id="topic-6">
                 <div class="concept-heading">6. Environment Variables in Vite</div>
-                <div class="concept-sub-title">📌 6.1 `import.meta.env` Standard</div>
+                <div class="concept-sub-title">📌 6.1 <code>import.meta.env</code> Standard</div>
                 <p>Create-React-App me <code>process.env.REACT_APP_...</code> use hota tha. Modern Vite me:</p>
                 <ol>
                     <li>Root directory me <code>.env</code> file banao.</li>
@@ -828,7 +828,7 @@ export default function JobManager() {
                 </div>
                 <h3>Q: What is the exact difference between Controlled and Uncontrolled Components in React forms?</h3>
                 <div class="q-ans">
-                    <strong>Answer:</strong> In a <strong>Controlled Component</strong>, the form input element's value is controlled by React state (`value={state}` + `onChange={setState}`). React state serves as the "single source of truth". In an <strong>Uncontrolled Component</strong>, form data is handled by the browser DOM itself, and values are pulled on demand using `useRef` (e.g. `ref.current.value`). Controlled components are preferred for real-time validation and dynamic inputs.
+                    <strong>Answer:</strong> In a <strong>Controlled Component</strong>, the form input element's value is controlled by React state (<code>value={state}</code> + <code>onChange={setState}</code>). React state serves as the "single source of truth". In an <strong>Uncontrolled Component</strong>, form data is handled by the browser DOM itself, and values are pulled on demand using <code>useRef</code> (e.g. <code>ref.current.value</code>). Controlled components are preferred for real-time validation and dynamic inputs.
                 </div>
             </div>
 
@@ -850,8 +850,15 @@ export default function JobManager() {
                 </div>
                 <h3>Q: Why do top engineering teams prefer Axios over the native Fetch API?</h3>
                 <div class="q-ans">
-                    <strong>Answer:</strong> Axios provides: (1) Automatic JSON data transformation (no need for `res.json()`), (2) Automatic error rejection for HTTP status codes outside 2xx (Fetch does not reject 404 or 500), (3) Request and Response <strong>Interceptors</strong> for seamless JWT token refresh handling, (4) Built-in request timeout support, and (5) Built-in XSRF/CSRF protection.
+                    <strong>Answer:</strong> Axios provides: (1) Automatic JSON data transformation (no need for <code>res.json()</code>), (2) Automatic error rejection for HTTP status codes outside 2xx (Fetch does not reject 404 or 500), (3) Request and Response <strong>Interceptors</strong> for seamless JWT token refresh handling, (4) Built-in request timeout support, and (5) Built-in XSRF/CSRF protection.
                 </div>
+            </div>
+
+            <!-- MODULE FOOTER NAV -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-top:48px; padding-top:28px; border-top:2.5px dashed #cbd5e1;">
+                <a href="module_3_react_hooks.html" class="nav-btn">⬅️ Module 3: Hooks Mastery</a>
+                <a href="#toc" class="nav-btn" style="background:#fef08a;">📑 Topics of Content (Top)</a>
+                <a href="module_5_routing.html" class="nav-btn active">Module 5: Routing ➡️</a>
             </div>
         </div>
     </div>

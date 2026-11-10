@@ -499,7 +499,7 @@
                     <a href="#topic-2" class="toc-link">2. Context API &amp; The Provider Pattern</a>
                     <a href="#topic-3" class="toc-link">3. Redux Fundamentals &amp; Redux Toolkit (RTK)</a>
                     <a href="#topic-4" class="toc-link">4. useSelector &amp; useDispatch</a>
-                    <a href="#topic-5" class="toc-link">5. Async State Management with `createAsyncThunk`</a>
+                    <a href="#topic-5" class="toc-link">5. Async State Management with <code>createAsyncThunk</code></a>
                     <a href="#topic-6" class="toc-link">6. When to use Context vs Redux vs Zustand</a>
                     <a href="#practical-lab" class="toc-link lab-link">🛠️ Practical Lab (Complete Runnable Project)</a>
                     <a href="#interview-bank" class="toc-link interview-link">💼 Interview Bank (Sudheer J Style)</a>
@@ -561,7 +561,7 @@ export function useAuth() {
                 <ol>
                     <li><strong>Single Source of Truth:</strong> Poori app ka global state ek single JavaScript object store ke andar rehta hai.</li>
                     <li><strong>State is Read-Only:</strong> State ko badalne ka sirf ek hi tareeqa hai: Ek <code>Action</code> dispatch karo (a plain object describing what happened).</li>
-                    <li><strong>Changes are made with Pure Reducer Functions:</strong> Reducer ek pure function hoti hai jo `(previousState, action) => newState` calculate karti hai bina side-effects ke.</li>
+                    <li><strong>Changes are made with Pure Reducer Functions:</strong> Reducer ek pure function hoti hai jo <code>(previousState, action) => newState</code> calculate karti hai bina side-effects ke.</li>
                 </ol>
 
                 <div class="concept-sub-title">📌 3.2 Why Redux Toolkit (RTK) is Modern Standard</div>
@@ -585,7 +585,7 @@ export function useAuth() {
 
             <!-- TOPIC 5: CREATEASYNCTHUNK -->
             <div class="concept-block" id="topic-5">
-                <div class="concept-heading">5. Async State Management with `createAsyncThunk`</div>
+                <div class="concept-heading">5. Async State Management with <code>createAsyncThunk</code></div>
                 <div class="concept-sub-title">📌 5.1 Pending, Fulfilled, Rejected Lifecycles</div>
                 <p>Backend API se data laane ke liye RTK <code>createAsyncThunk</code> deta hai jo automatically 3 action types generate karta hai:</p>
 
@@ -755,9 +755,9 @@ export function CartView() {
                     <span class="q-pill">Redux Core</span>
                     <span class="genz-badge">Senior / 8-10 LPA</span>
                 </div>
-                <h3>Q: Why does Redux Toolkit allow writing mutable code like `state.items.push()` inside reducers?</h3>
+                <h3>Q: Why does Redux Toolkit allow writing mutable code like <code>state.items.push()</code> inside reducers?</h3>
                 <div class="q-ans">
-                    <strong>Answer:</strong> Redux Toolkit uses <strong>Immer.js</strong> under the hood. Immer wraps the state in a Proxy. When you write "mutative" code like `state.count++` or `state.items.push(item)`, Immer records all operations on a "draft state" and produces a brand new, pristine, deeply-immutable state object behind the scenes, preventing manual spreading bugs.
+                    <strong>Answer:</strong> Redux Toolkit uses <strong>Immer.js</strong> under the hood. Immer wraps the state in a Proxy. When you write "mutative" code like <code>state.count++</code> or <code>state.items.push(item)</code>, Immer records all operations on a "draft state" and produces a brand new, pristine, deeply-immutable state object behind the scenes, preventing manual spreading bugs.
                 </div>
             </div>
 
@@ -779,8 +779,15 @@ export function CartView() {
                 </div>
                 <h3>Q: Why is Context API not a complete replacement for Redux or Zustand in large applications?</h3>
                 <div class="q-ans">
-                    <strong>Answer:</strong> Context API lacks fine-grained selector subscriptions. Whenever any property in a Context Provider's value object changes, <em>every single component</em> subscribed to that context re-renders, causing massive performance bottlenecks in high-frequency state updates. Redux and Zustand use selective subscriptions (`useSelector(state => state.foo)`), re-rendering only the components whose specific slice changed.
+                    <strong>Answer:</strong> Context API lacks fine-grained selector subscriptions. Whenever any property in a Context Provider's value object changes, <em>every single component</em> subscribed to that context re-renders, causing massive performance bottlenecks in high-frequency state updates. Redux and Zustand use selective subscriptions (<code>useSelector(state => state.foo)</code>), re-rendering only the components whose specific slice changed.
                 </div>
+            </div>
+
+            <!-- MODULE FOOTER NAV -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-top:48px; padding-top:28px; border-top:2.5px dashed #cbd5e1;">
+                <a href="module_5_routing.html" class="nav-btn">⬅️ Module 5: Routing</a>
+                <a href="#toc" class="nav-btn" style="background:#fef08a;">📑 Topics of Content (Top)</a>
+                <a href="module_7_advanced_react.html" class="nav-btn active">Module 7: Advanced React ➡️</a>
             </div>
         </div>
     </div>

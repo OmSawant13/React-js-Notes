@@ -549,9 +549,9 @@
                     </div>
                     <div class="anatomy-code-center">
 <div>1. Access Token: Short-lived (15 minutes). Stored in memory or Authorization Bearer header.</div>
-<div>2. Refresh Token: Long-lived (7-30 days). Stored in secure `httpOnly` cookie (XSS immune).</div>
-<div>3. User triggers API ──▶ Server responds `401 Unauthorized` (Access Token expired).</div>
-<div>4. Axios Response Interceptor catches 401 ──▶ Calls `/api/auth/refresh` endpoint silently.</div>
+<div>2. Refresh Token: Long-lived (7-30 days). Stored in secure <code>httpOnly</code> cookie (XSS immune).</div>
+<div>3. User triggers API ──▶ Server responds <code>401 Unauthorized</code> (Access Token expired).</div>
+<div>4. Axios Response Interceptor catches 401 ──▶ Calls <code>/api/auth/refresh</code> endpoint silently.</div>
 <div>5. Server verifies refresh cookie ──▶ Returns fresh Access Token.</div>
 <div>6. Interceptor updates Authorization header ──▶ Replays original failed API request!</div>
 <div>Result: Zero user interruption! User never gets logged out while active!</div>
@@ -778,7 +778,7 @@ export function useJobs(searchTerm, selectedCategory, page = 1) {
                 </div>
                 <h3>Q: Where should you store JWT access tokens in a React frontend? LocalStorage or Memory?</h3>
                 <div class="q-ans">
-                    <strong>Answer:</strong> Never store sensitive JWT access tokens in `localStorage` or `sessionStorage` in high-security applications because any third-party script or Cross-Site Scripting (XSS) vulnerability can access them via JavaScript. The enterprise standard is to keep the short-lived access token in <strong>JavaScript in-memory state</strong> (or closure/context) and store the long-lived refresh token in an <strong><code>httpOnly</code>, <code>secure</code>, <code>sameSite=strict</code> cookie</strong> which JavaScript cannot read, eliminating token theft via XSS.
+                    <strong>Answer:</strong> Never store sensitive JWT access tokens in <code>localStorage</code> or <code>sessionStorage</code> in high-security applications because any third-party script or Cross-Site Scripting (XSS) vulnerability can access them via JavaScript. The enterprise standard is to keep the short-lived access token in <strong>JavaScript in-memory state</strong> (or closure/context) and store the long-lived refresh token in an <strong><code>httpOnly</code>, <code>secure</code>, <code>sameSite=strict</code> cookie</strong> which JavaScript cannot read, eliminating token theft via XSS.
                 </div>
             </div>
 
@@ -791,6 +791,13 @@ export function useJobs(searchTerm, selectedCategory, page = 1) {
                 <div class="q-ans">
                     <strong>Answer:</strong> <em>"The more your tests resemble the way your software is used, the more confidence they can give you."</em> Enzyme focused on testing internal implementation details (component state, internal method calls, shallow rendering). React Testing Library focuses on testing user behavior from the user's perspective (finding elements by accessible text/role, firing clicks, and asserting visible screen output), ensuring tests don't break during refactoring if behavior remains unchanged.
                 </div>
+            </div>
+
+            <!-- MODULE FOOTER NAV -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-top:48px; padding-top:28px; border-top:2.5px dashed #cbd5e1;">
+                <a href="module_7_advanced_react.html" class="nav-btn">⬅️ Module 7: Advanced React</a>
+                <a href="#toc" class="nav-btn" style="background:#fef08a;">📑 Topics of Content (Top)</a>
+                <a href="book_interview_masterclass_hub.html" class="nav-btn active">💼 64 Q&A Masterclass ➡️</a>
             </div>
         </div>
     </div>

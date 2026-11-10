@@ -570,7 +570,7 @@ const [data, setData] = useState(() => {
                 </ul>
 
                 <div class="concept-sub-title">📌 3.2 Cleanup Function: Hotel Check-out Analogy</div>
-                <p>Jab tu hotel room chhod ke jaata hai, toh AC aur lights band karke jaata hai. Varna bill aayega! Isi tarah agar tune `setInterval` ya event listener lagaya, toh component unmount hone par unhe destroy karna compulsory hai:</p>
+                <p>Jab tu hotel room chhod ke jaata hai, toh AC aur lights band karke jaata hai. Varna bill aayega! Isi tarah agar tune <code>setInterval</code> ya event listener lagaya, toh component unmount hone par unhe destroy karna compulsory hai:</p>
 
                 <div class="code-container">
                     <div class="code-top-bar"><span>TimerWithCleanup.jsx</span><span>Cleanup Example</span></div>
@@ -857,7 +857,7 @@ export default function DebouncedSearch() {
                 </div>
                 <h3>Q: What are the two Rules of Hooks and what happens under the hood if you violate them?</h3>
                 <div class="q-ans">
-                    <strong>Answer:</strong> The two rules are: (1) Only call hooks at the top level (never in loops, conditions, or nested functions), and (2) Only call hooks from React function components or custom hooks. <strong>Under the hood:</strong> React Fiber stores hooks in a <em>singly-linked list</em> attached to `fiber.memoizedState`. It relies entirely on the fixed, stable call order across every render. If an `if` condition skips a hook, the linked-list pointer gets misaligned, assigning the wrong state to the wrong variables and causing a fatal crash.
+                    <strong>Answer:</strong> The two rules are: (1) Only call hooks at the top level (never in loops, conditions, or nested functions), and (2) Only call hooks from React function components or custom hooks. <strong>Under the hood:</strong> React Fiber stores hooks in a <em>singly-linked list</em> attached to <code>fiber.memoizedState</code>. It relies entirely on the fixed, stable call order across every render. If an <code>if</code> condition skips a hook, the linked-list pointer gets misaligned, assigning the wrong state to the wrong variables and causing a fatal crash.
                 </div>
             </div>
 
@@ -868,7 +868,7 @@ export default function DebouncedSearch() {
                 </div>
                 <h3>Q: What is the exact difference between useMemo and useCallback?</h3>
                 <div class="q-ans">
-                    <strong>Answer:</strong> <code>useMemo(() => fn(), deps)</code> executes the function and memoizes the <strong>computed result</strong> (value); it only re-computes when dependencies change (ideal for heavy computations). <code>useCallback(fn, deps)</code> returns and memoizes the <strong>function definition itself</strong>, ensuring referential equality when passing callbacks to child components wrapped in `React.memo`.
+                    <strong>Answer:</strong> <code>useMemo(() => fn(), deps)</code> executes the function and memoizes the <strong>computed result</strong> (value); it only re-computes when dependencies change (ideal for heavy computations). <code>useCallback(fn, deps)</code> returns and memoizes the <strong>function definition itself</strong>, ensuring referential equality when passing callbacks to child components wrapped in <code>React.memo</code>.
                 </div>
             </div>
 
@@ -881,6 +881,13 @@ export default function DebouncedSearch() {
                 <div class="q-ans">
                     <strong>Answer:</strong> <strong>No, it does not only run on unmount!</strong> The cleanup function runs: (1) When the component unmounts from the DOM, AND (2) <em>Before the effect re-runs</em> on every subsequent render when dependencies have changed. It cleans up the previous render's side effect before running the new one.
                 </div>
+            </div>
+
+            <!-- MODULE FOOTER NAV -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-top:48px; padding-top:28px; border-top:2.5px dashed #cbd5e1;">
+                <a href="module_2_props_state_events.html" class="nav-btn">⬅️ Module 2: Props & State</a>
+                <a href="#toc" class="nav-btn" style="background:#fef08a;">📑 Topics of Content (Top)</a>
+                <a href="module_4_forms_api_integration.html" class="nav-btn active">Module 4: Forms & APIs ➡️</a>
             </div>
         </div>
     </div>

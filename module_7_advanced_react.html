@@ -730,7 +730,7 @@ export default function OptimizedDashboard() {
                 </div>
                 <h3>Q: What are the 4 main triggers that cause a React component to re-render?</h3>
                 <div class="q-ans">
-                    <strong>Answer:</strong> (1) <strong>Internal State Change:</strong> Calling `useState` or `useReducer` setter functions. (2) <strong>Props Change:</strong> New prop values passed from parent. (3) <strong>Parent Component Re-render:</strong> By default, when a parent re-renders, its entire child subtree re-renders unless memoized with `React.memo`. (4) <strong>Context Provider Value Change:</strong> Changes to the value prop of an active Context.
+                    <strong>Answer:</strong> (1) <strong>Internal State Change:</strong> Calling <code>useState</code> or <code>useReducer</code> setter functions. (2) <strong>Props Change:</strong> New prop values passed from parent. (3) <strong>Parent Component Re-render:</strong> By default, when a parent re-renders, its entire child subtree re-renders unless memoized with <code>React.memo</code>. (4) <strong>Context Provider Value Change:</strong> Changes to the value prop of an active Context.
                 </div>
             </div>
 
@@ -741,7 +741,7 @@ export default function OptimizedDashboard() {
                 </div>
                 <h3>Q: What are Error Boundaries and why can't they be written as Functional Components?</h3>
                 <div class="q-ans">
-                    <strong>Answer:</strong> Error Boundaries catch JavaScript errors anywhere in their child component tree during rendering, lifecycle methods, and constructors, displaying a fallback UI instead of crashing the app into a white blank screen. They must be Class Components because there are currently no functional Hook equivalents for `static getDerivedStateFromError()` and `componentDidCatch()`. Note: Error boundaries do not catch errors in event handlers, async code (e.g. `setTimeout` or `fetch`), or server-side rendering.
+                    <strong>Answer:</strong> Error Boundaries catch JavaScript errors anywhere in their child component tree during rendering, lifecycle methods, and constructors, displaying a fallback UI instead of crashing the app into a white blank screen. They must be Class Components because there are currently no functional Hook equivalents for <code>static getDerivedStateFromError()</code> and <code>componentDidCatch()</code>. Note: Error boundaries do not catch errors in event handlers, async code (e.g. <code>setTimeout</code> or <code>fetch</code>), or server-side rendering.
                 </div>
             </div>
 
@@ -752,8 +752,15 @@ export default function OptimizedDashboard() {
                 </div>
                 <h3>Q: What is Automatic Batching in React 18, and how does flushSync alter it?</h3>
                 <div class="q-ans">
-                    <strong>Answer:</strong> In React 18, automatic batching groups all state updates into a single re-render, whether triggered inside event handlers, promises (`fetch().then()`), `setTimeout`, or native events. If a developer requires an immediate, synchronous DOM update (e.g. to measure an element's dimensions right after a state update), React provides <code>ReactDOM.flushSync(() => { setState(val); })</code> to opt out of batching and force a synchronous DOM paint.
+                    <strong>Answer:</strong> In React 18, automatic batching groups all state updates into a single re-render, whether triggered inside event handlers, promises (<code>fetch().then()</code>), <code>setTimeout</code>, or native events. If a developer requires an immediate, synchronous DOM update (e.g. to measure an element's dimensions right after a state update), React provides <code>ReactDOM.flushSync(() => { setState(val); })</code> to opt out of batching and force a synchronous DOM paint.
                 </div>
+            </div>
+
+            <!-- MODULE FOOTER NAV -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-top:48px; padding-top:28px; border-top:2.5px dashed #cbd5e1;">
+                <a href="module_6_state_management.html" class="nav-btn">⬅️ Module 6: State Mgmt</a>
+                <a href="#toc" class="nav-btn" style="background:#fef08a;">📑 Topics of Content (Top)</a>
+                <a href="module_8_production_development.html" class="nav-btn active">Module 8: Production Dev ➡️</a>
             </div>
         </div>
     </div>

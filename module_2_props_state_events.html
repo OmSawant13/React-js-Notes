@@ -573,7 +573,7 @@ function Avatar({ imageUrl = "/default-avatar.png", size = 50, isOnline = false 
                 <div class="analogy-note">
                     <div class="analogy-note-title">💰 Desi Analogy: Props vs State</div>
                     <p>• <strong>Props:</strong> Baap ki di hui Pocket Money! Parent deta hai, Child isko badal nahi sakta (Read-Only).<br>
-                    • <strong>State:</strong> Tera khud ka Bank Account! Tu jab chahe kama sakta hai, uda sakta hai (`setBalance()`), aur tere balance badalne par teri lifestyle (UI) re-render ho jaati hai!</p>
+                    • <strong>State:</strong> Tera khud ka Bank Account! Tu jab chahe kama sakta hai, uda sakta hai (<code>setBalance()</code>), aur tere balance badalne par teri lifestyle (UI) re-render ho jaati hai!</p>
                 </div>
 
                 <table class="mechanics-table">
@@ -590,7 +590,7 @@ function Avatar({ imageUrl = "/default-avatar.png", size = 50, isOnline = false 
                     <tr>
                         <td><strong>Mutability</strong></td>
                         <td><strong>Immutable!</strong> Child ise change nahi kar sakta</td>
-                        <td><strong>Mutable via Setter!</strong> (`setCount()`)</td>
+                        <td><strong>Mutable via Setter!</strong> (<code>setCount()</code>)</td>
                     </tr>
                     <tr>
                         <td><strong>Passing</strong></td>
@@ -683,7 +683,7 @@ const goodAddThree = () => {
                 <p>HTML me hum <code>onclick="handleClick()"</code> likhte the (all lowercase, string me call). React me:</p>
                 <ul>
                     <li>Events <strong>camelCase</strong> me likhe jaate hain: <code>onClick</code>, <code>onChange</code>, <code>onSubmit</code>.</li>
-                    <li>Tu function call nahi pass karta, <strong>Function Reference</strong> pass karta hai: <code>onClick={handleClick}</code> (paranthesis `()` mat lagana, varna render hote hi chal jayega!).</li>
+                    <li>Tu function call nahi pass karta, <strong>Function Reference</strong> pass karta hai: <code>onClick={handleClick}</code> (paranthesis <code>()</code> mat lagana, varna render hote hi chal jayega!).</li>
                     <li>Agar parameter bhejna hai, toh arrow function use karo: <code>onClick={() => handleDelete(item.id)}</code>.</li>
                 </ul>
 
@@ -891,7 +891,7 @@ export default function TodoApp() {
                 </div>
                 <h3>Q: What is the difference between State and Props in React? Can a Child component modify Props?</h3>
                 <div class="q-ans">
-                    <strong>Answer:</strong> <strong>Props</strong> are inputs passed from a parent component down to a child component; they are strictly <em>immutable</em> (read-only) and the child cannot modify them. <strong>State</strong> is a component's private, internal data managed by `useState`; it is mutable using its setter function. When state changes, the component and its children re-render.
+                    <strong>Answer:</strong> <strong>Props</strong> are inputs passed from a parent component down to a child component; they are strictly <em>immutable</em> (read-only) and the child cannot modify them. <strong>State</strong> is a component's private, internal data managed by <code>useState</code>; it is mutable using its setter function. When state changes, the component and its children re-render.
                 </div>
             </div>
 
@@ -902,7 +902,7 @@ export default function TodoApp() {
                 </div>
                 <h3>Q: Why does calling setCount(count + 1) three times inside an event handler only increase count by 1?</h3>
                 <div class="q-ans">
-                    <strong>Answer:</strong> Due to <em>closures and batching</em>. In that render's scope, the `count` variable is captured with its current value (e.g. `0`). All three calls execute `setCount(0 + 1)`. The last call overwrites previous ones, setting count to 1. To fix this, use the <strong>functional update form</strong>: `setCount(prev => prev + 1)`, which queues updates against the latest pending state.
+                    <strong>Answer:</strong> Due to <em>closures and batching</em>. In that render's scope, the <code>count</code> variable is captured with its current value (e.g. <code>0</code>). All three calls execute <code>setCount(0 + 1)</code>. The last call overwrites previous ones, setting count to 1. To fix this, use the <strong>functional update form</strong>: <code>setCount(prev => prev + 1)</code>, which queues updates against the latest pending state.
                 </div>
             </div>
 
@@ -913,8 +913,15 @@ export default function TodoApp() {
                 </div>
                 <h3>Q: Why should you never use the array index as a 'key' prop when rendering dynamic lists?</h3>
                 <div class="q-ans">
-                    <strong>Answer:</strong> React uses `key` to identify which items have changed, been added, or been removed. If items are reordered, inserted at the beginning, or deleted, their array indices change. React assumes the item at that index is the same component as before, reusing its existing DOM node and uncontrolled input state, leading to silent bugs, misplaced text inputs, and performance degradation.
+                    <strong>Answer:</strong> React uses <code>key</code> to identify which items have changed, been added, or been removed. If items are reordered, inserted at the beginning, or deleted, their array indices change. React assumes the item at that index is the same component as before, reusing its existing DOM node and uncontrolled input state, leading to silent bugs, misplaced text inputs, and performance degradation.
                 </div>
+            </div>
+
+            <!-- MODULE FOOTER NAV -->
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-top:48px; padding-top:28px; border-top:2.5px dashed #cbd5e1;">
+                <a href="module_1_react_fundamentals.html" class="nav-btn">⬅️ Module 1: Fundamentals</a>
+                <a href="#toc" class="nav-btn" style="background:#fef08a;">📑 Topics of Content (Top)</a>
+                <a href="module_3_react_hooks.html" class="nav-btn active">Module 3: Hooks Mastery ➡️</a>
             </div>
         </div>
     </div>
