@@ -404,6 +404,69 @@
             align-items: center;
             gap: 10px;
         }
+
+        .toc-box {
+            background: #f8fafc;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 28px 36px;
+            margin-bottom: 36px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .toc-box h3 {
+            font-family: var(--font-accent);
+            font-size: 36px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 18px;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 12px;
+        }
+
+        .toc-link {
+            font-size: 22px;
+            color: #0284c7;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1.5px dashed #cbd5e1;
+            background: #ffffff;
+            transition: all 0.15s ease;
+            display: block;
+        }
+
+        .toc-link:hover {
+            background: #e0f2fe;
+            border-color: #0284c7;
+            transform: translateX(4px);
+        }
+
+        .toc-link.lab-link {
+            background: #f0fdf4;
+            border-color: #16a34a;
+            color: #15803d;
+        }
+
+        .toc-link.lab-link:hover {
+            background: #dcfce7;
+        }
+
+        .toc-link.interview-link {
+            background: #fef9c3;
+            border-color: #ca8a04;
+            color: #854d0e;
+        }
+
+        .toc-link.interview-link:hover {
+            background: #fef08a;
+        }
+
     </style>
 
     <title>Module 7: Advanced React &amp; Performance — React.js Master Handbook</title>
@@ -426,6 +489,21 @@
                 <span class="genz-badge">MODULE 7 • SENIOR ARCHITECTURE &amp; PERFORMANCE</span>
                 <h2>Module 7 — Advanced React Concepts &amp; Optimization</h2>
                 <p>Component Lifecycle vs Hooks, The 4 Re-render Triggers, Fiber Reconciliation, React.memo, Memoization traps, React.lazy &amp; Suspense, Class Error Boundaries, Code Splitting, Stale Closures, React 18 Auto-Batching, and Lifting State Up.</p>
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box" id="toc">
+                <h3>📑 Topics of Content — Module 7 — Advanced React Concepts &amp; Optimization (6 Topics + Practical)</h3>
+                <div class="toc-grid">
+                    <a href="#topic-1" class="toc-link">1. Component Lifecycle vs Hooks</a>
+                    <a href="#topic-2" class="toc-link">2. The 4 Triggers That Cause a Component to Re-render</a>
+                    <a href="#topic-3" class="toc-link">3. React.memo &amp; The Referential Equality Trap</a>
+                    <a href="#topic-4" class="toc-link">4. Lazy Loading, Suspense &amp; Code Splitting</a>
+                    <a href="#topic-5" class="toc-link">5. Error Boundaries: The Crash Airbag</a>
+                    <a href="#topic-6" class="toc-link">6. Automatic State Batching (React 18 vs React 17)</a>
+                    <a href="#practical-lab" class="toc-link lab-link">🛠️ Practical Lab (Complete Runnable Project)</a>
+                    <a href="#interview-bank" class="toc-link interview-link">💼 Interview Bank (Sudheer J Style)</a>
+                </div>
             </div>
 
             <div class="brush-banner">Module 7: Advanced React &amp; 60 FPS Performance Tuning!</div>
@@ -587,7 +665,7 @@ export class ErrorBoundary extends React.Component {
             </div>
 
             <!-- PRACTICAL LAB -->
-            <div class="practical-box">
+            <div class="practical-box" id="practical-lab">
                 <div class="practical-title">🛠️ Module 7 Practical Lab: Performance-Optimized Dashboard</div>
                 <p>Neeche complete runnable example hai jisme Error Boundary, React.memo, useMemo, aur lazy-loaded heavy component integrate kiye gaye hain:</p>
 
@@ -643,7 +721,7 @@ export default function OptimizedDashboard() {
             </div>
 
             <!-- SUDHEER J INTERVIEW CARDS -->
-            <div class="concept-sub-title">💼 Module 7 Interview Bank (Sudheer J Style)</div>
+            <div class="concept-sub-title" id="interview-bank">💼 Module 7 Interview Bank (Sudheer J Style)</div>
 
             <div class="q-card">
                 <div class="q-tag-row">

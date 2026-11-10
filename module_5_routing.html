@@ -404,6 +404,69 @@
             align-items: center;
             gap: 10px;
         }
+
+        .toc-box {
+            background: #f8fafc;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 28px 36px;
+            margin-bottom: 36px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .toc-box h3 {
+            font-family: var(--font-accent);
+            font-size: 36px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 18px;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 12px;
+        }
+
+        .toc-link {
+            font-size: 22px;
+            color: #0284c7;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1.5px dashed #cbd5e1;
+            background: #ffffff;
+            transition: all 0.15s ease;
+            display: block;
+        }
+
+        .toc-link:hover {
+            background: #e0f2fe;
+            border-color: #0284c7;
+            transform: translateX(4px);
+        }
+
+        .toc-link.lab-link {
+            background: #f0fdf4;
+            border-color: #16a34a;
+            color: #15803d;
+        }
+
+        .toc-link.lab-link:hover {
+            background: #dcfce7;
+        }
+
+        .toc-link.interview-link {
+            background: #fef9c3;
+            border-color: #ca8a04;
+            color: #854d0e;
+        }
+
+        .toc-link.interview-link:hover {
+            background: #fef08a;
+        }
+
     </style>
 
     <title>Module 5: React Router v6+ Routing — React.js Master Handbook</title>
@@ -426,6 +489,21 @@
                 <span class="genz-badge">MODULE 5 • CLIENT-SIDE NAVIGATION &amp; GUARDS</span>
                 <h2>Module 5 — Routing with React Router v6+</h2>
                 <p>Modern Client-Side Routing: BrowserRouter, Routes &amp; Route, Link vs NavLink vs &lt;a&gt;, useNavigate, useParams, useSearchParams, Nested Layouts with &lt;Outlet /&gt;, Protected Route Auth Guards, and 404 Not Found handling.</p>
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box" id="toc">
+                <h3>📑 Topics of Content — Module 5 — Routing with React Router v6+ (6 Topics + Practical)</h3>
+                <div class="toc-grid">
+                    <a href="#topic-1" class="toc-link">1. React Router DOM Basics: BrowserRouter, Routes &amp; Route</a>
+                    <a href="#topic-2" class="toc-link">2. Link vs NavLink vs Anchor Tag &lt;a&gt;</a>
+                    <a href="#topic-3" class="toc-link">3. Programmatic Navigation: `useNavigate`</a>
+                    <a href="#topic-4" class="toc-link">4. Dynamic Routes (`useParams`) vs Query Strings (`useSearchParams`)</a>
+                    <a href="#topic-5" class="toc-link">5. Nested Routes &amp; Layout Routes with `&lt;Outlet /&gt;`</a>
+                    <a href="#topic-6" class="toc-link">6. Protected Routes &amp; Auth Guards</a>
+                    <a href="#practical-lab" class="toc-link lab-link">🛠️ Practical Lab (Complete Runnable Project)</a>
+                    <a href="#interview-bank" class="toc-link interview-link">💼 Interview Bank (Sudheer J Style)</a>
+                </div>
             </div>
 
             <div class="brush-banner">Module 5: React Router v6 — Zero Page Reloads, Nested Outlets aur Auth Guards!</div>
@@ -460,7 +538,7 @@ function App() {
 
             <!-- TOPIC 2: LINK VS NAVLINK -->
             <div class="concept-block" id="topic-2">
-                <div class="concept-heading">2. Link vs NavLink vs Anchor Tag `<a>`</div>
+                <div class="concept-heading">2. Link vs NavLink vs Anchor Tag &lt;a&gt;</div>
                 <div class="concept-sub-title">📌 2.1 Kab kya use karein?</div>
 
                 <div class="analogy-note">
@@ -645,7 +723,7 @@ export default function ProtectedRoute({ isAuthenticated }) {
             </div>
 
             <!-- PRACTICAL LAB -->
-            <div class="practical-box">
+            <div class="practical-box" id="practical-lab">
                 <div class="practical-title">🛠️ Module 5 Practical Lab: Complete Multi-Page Dashboard with Auth Guard</div>
                 <p>Neeche complete runnable single-file architecture hai jo real-world authentication-based navigation aur 404 pages dikhata hai:</p>
 
@@ -718,7 +796,7 @@ export default function FullRouterApp() {
             </div>
 
             <!-- SUDHEER J INTERVIEW CARDS -->
-            <div class="concept-sub-title">💼 Module 5 Interview Bank (Sudheer J Style)</div>
+            <div class="concept-sub-title" id="interview-bank">💼 Module 5 Interview Bank (Sudheer J Style)</div>
 
             <div class="q-card">
                 <div class="q-tag-row">

@@ -404,6 +404,69 @@
             align-items: center;
             gap: 10px;
         }
+
+        .toc-box {
+            background: #f8fafc;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 28px 36px;
+            margin-bottom: 36px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .toc-box h3 {
+            font-family: var(--font-accent);
+            font-size: 36px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 18px;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 12px;
+        }
+
+        .toc-link {
+            font-size: 22px;
+            color: #0284c7;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1.5px dashed #cbd5e1;
+            background: #ffffff;
+            transition: all 0.15s ease;
+            display: block;
+        }
+
+        .toc-link:hover {
+            background: #e0f2fe;
+            border-color: #0284c7;
+            transform: translateX(4px);
+        }
+
+        .toc-link.lab-link {
+            background: #f0fdf4;
+            border-color: #16a34a;
+            color: #15803d;
+        }
+
+        .toc-link.lab-link:hover {
+            background: #dcfce7;
+        }
+
+        .toc-link.interview-link {
+            background: #fef9c3;
+            border-color: #ca8a04;
+            color: #854d0e;
+        }
+
+        .toc-link.interview-link:hover {
+            background: #fef08a;
+        }
+
     </style>
 
     <title>Module 2: Props, State &amp; Events — React.js Master Handbook</title>
@@ -426,6 +489,26 @@
                 <span class="genz-badge">MODULE 2 • DATA &amp; USER INTERACTION</span>
                 <h2>Module 2 — Props, State &amp; Events</h2>
                 <p>Learn how data moves and how apps react to user clicks: Props destructuring, Default values, Props vs State, One-way data flow, useState, Functional updates, Event handling, Conditional rendering, map() lists &amp; Keys.</p>
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box" id="toc">
+                <h3>📑 Topics of Content — Module 2 — Props, State &amp; Events (11 Topics + Practical)</h3>
+                <div class="toc-grid">
+                    <a href="#topic-1" class="toc-link">1. Props and Prop Destructuring</a>
+                    <a href="#topic-2" class="toc-link">2. Default Values for Props</a>
+                    <a href="#topic-3" class="toc-link">3. Props vs State: The Ultimate Breakdown</a>
+                    <a href="#topic-4" class="toc-link">4. One-Way Data Flow (Unidirectional)</a>
+                    <a href="#topic-5" class="toc-link">5. useState Hook: Component ki Yaaddasht (Memory)</a>
+                    <a href="#topic-6" class="toc-link">6. State Updates and Re-rendering Cycle</a>
+                    <a href="#topic-7" class="toc-link">7. Previous State Updates (Functional Updates)</a>
+                    <a href="#topic-8" class="toc-link">8. Event Handling in React</a>
+                    <a href="#topic-9" class="toc-link">9. Conditional Rendering: 4 Real-World Tarike</a>
+                    <a href="#topic-10" class="toc-link">10. Rendering Lists Using map()</a>
+                    <a href="#topic-11" class="toc-link">11. Keys and Why They Matter (The Index Trap)</a>
+                    <a href="#practical-lab" class="toc-link lab-link">🛠️ Practical Lab (Complete Runnable Project)</a>
+                    <a href="#interview-bank" class="toc-link interview-link">💼 Interview Bank (Sudheer J Style)</a>
+                </div>
             </div>
 
             <div class="brush-banner">Module 2: Props, State, Events — Dukan ka Bill, Galla aur Button Clicks!</div>
@@ -714,7 +797,7 @@ function ProductCatalog() {
             </div>
 
             <!-- PRACTICAL LAB -->
-            <div class="practical-box">
+            <div class="practical-box" id="practical-lab">
                 <div class="practical-title">🛠️ Module 2 Practical Lab: Interactive Todo App with State, Events &amp; Filtering</div>
                 <p>Neeche complete runnable interactive Todo application hai jisme addition, deletion, toggle status, aur filter counts sab shamil hai:</p>
 
@@ -799,7 +882,7 @@ export default function TodoApp() {
             </div>
 
             <!-- SUDHEER J INTERVIEW CARDS -->
-            <div class="concept-sub-title">💼 Module 2 Interview Bank (Sudheer J Style)</div>
+            <div class="concept-sub-title" id="interview-bank">💼 Module 2 Interview Bank (Sudheer J Style)</div>
 
             <div class="q-card">
                 <div class="q-tag-row">

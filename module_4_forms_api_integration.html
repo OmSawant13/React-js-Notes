@@ -404,6 +404,69 @@
             align-items: center;
             gap: 10px;
         }
+
+        .toc-box {
+            background: #f8fafc;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 28px 36px;
+            margin-bottom: 36px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .toc-box h3 {
+            font-family: var(--font-accent);
+            font-size: 36px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 18px;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 12px;
+        }
+
+        .toc-link {
+            font-size: 22px;
+            color: #0284c7;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1.5px dashed #cbd5e1;
+            background: #ffffff;
+            transition: all 0.15s ease;
+            display: block;
+        }
+
+        .toc-link:hover {
+            background: #e0f2fe;
+            border-color: #0284c7;
+            transform: translateX(4px);
+        }
+
+        .toc-link.lab-link {
+            background: #f0fdf4;
+            border-color: #16a34a;
+            color: #15803d;
+        }
+
+        .toc-link.lab-link:hover {
+            background: #dcfce7;
+        }
+
+        .toc-link.interview-link {
+            background: #fef9c3;
+            border-color: #ca8a04;
+            color: #854d0e;
+        }
+
+        .toc-link.interview-link:hover {
+            background: #fef08a;
+        }
+
     </style>
 
     <title>Module 4: Forms &amp; API Integration — React.js Master Handbook</title>
@@ -426,6 +489,21 @@
                 <span class="genz-badge">MODULE 4 • DATA INPUT &amp; FULL-STACK APIS</span>
                 <h2>Module 4 — Forms &amp; API Integration</h2>
                 <p>Forms and Full-Stack Connectivity: Controlled vs Uncontrolled, Form Validation, Handling Multiple Inputs with dynamic keys, Fetch vs Axios, GET/POST/PUT/PATCH/DELETE, Async/Await, Loading &amp; Error UI, Environment Variables (Vite), and connecting React to Node.js/Express backend.</p>
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box" id="toc">
+                <h3>📑 Topics of Content — Module 4 — Forms &amp; API Integration (6 Topics + Practical)</h3>
+                <div class="toc-grid">
+                    <a href="#topic-1" class="toc-link">1. Controlled vs Uncontrolled Components</a>
+                    <a href="#topic-2" class="toc-link">2. Handling Multiple Inputs with a Single State Object</a>
+                    <a href="#topic-3" class="toc-link">3. Form Validation &amp; Error Handling</a>
+                    <a href="#topic-4" class="toc-link">4. Fetch API vs Axios</a>
+                    <a href="#topic-5" class="toc-link">5. HTTP Verbs: GET, POST, PUT, PATCH, DELETE</a>
+                    <a href="#topic-6" class="toc-link">6. Environment Variables in Vite</a>
+                    <a href="#practical-lab" class="toc-link lab-link">🛠️ Practical Lab (Complete Runnable Project)</a>
+                    <a href="#interview-bank" class="toc-link interview-link">💼 Interview Bank (Sudheer J Style)</a>
+                </div>
             </div>
 
             <div class="brush-banner">Module 4: Forms, Validation aur Backend API Integration (Full-Stack Bridge)!</div>
@@ -625,7 +703,7 @@ function RegistrationForm() {
             </div>
 
             <!-- PRACTICAL LAB -->
-            <div class="practical-box">
+            <div class="practical-box" id="practical-lab">
                 <div class="practical-title">🛠️ Module 4 Practical Lab: Full-Stack React + Node.js/Express CRUD Component</div>
                 <p>Neeche complete runnable component hai jo backend API se data fetch karta hai (GET), naya job create karta hai (POST), aur delete karta hai (DELETE), sath me Loading aur Error states bhi handle karta hai:</p>
 
@@ -741,7 +819,7 @@ export default function JobManager() {
             </div>
 
             <!-- SUDHEER J INTERVIEW CARDS -->
-            <div class="concept-sub-title">💼 Module 4 Interview Bank (Sudheer J Style)</div>
+            <div class="concept-sub-title" id="interview-bank">💼 Module 4 Interview Bank (Sudheer J Style)</div>
 
             <div class="q-card">
                 <div class="q-tag-row">

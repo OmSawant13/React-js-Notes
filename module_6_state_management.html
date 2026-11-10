@@ -404,6 +404,69 @@
             align-items: center;
             gap: 10px;
         }
+
+        .toc-box {
+            background: #f8fafc;
+            border: 2.5px solid #0f172a;
+            border-radius: 20px;
+            padding: 28px 36px;
+            margin-bottom: 36px;
+            box-shadow: 4px 4px 0px #0f172a;
+        }
+
+        .toc-box h3 {
+            font-family: var(--font-accent);
+            font-size: 36px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 18px;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 12px;
+        }
+
+        .toc-link {
+            font-size: 22px;
+            color: #0284c7;
+            text-decoration: none;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1.5px dashed #cbd5e1;
+            background: #ffffff;
+            transition: all 0.15s ease;
+            display: block;
+        }
+
+        .toc-link:hover {
+            background: #e0f2fe;
+            border-color: #0284c7;
+            transform: translateX(4px);
+        }
+
+        .toc-link.lab-link {
+            background: #f0fdf4;
+            border-color: #16a34a;
+            color: #15803d;
+        }
+
+        .toc-link.lab-link:hover {
+            background: #dcfce7;
+        }
+
+        .toc-link.interview-link {
+            background: #fef9c3;
+            border-color: #ca8a04;
+            color: #854d0e;
+        }
+
+        .toc-link.interview-link:hover {
+            background: #fef08a;
+        }
+
     </style>
 
     <title>Module 6: Global State Management (Redux Toolkit &amp; Context) — React.js Master Handbook</title>
@@ -426,6 +489,21 @@
                 <span class="genz-badge">MODULE 6 • ENTERPRISE STATE MANAGEMENT</span>
                 <h2>Module 6 — State Management (Context API &amp; Redux Toolkit)</h2>
                 <p>Scaling React applications: Prop Drilling, Context API, Provider Pattern, Redux 3 Principles, Redux Toolkit (RTK), Slices, Reducers, useSelector, useDispatch, createAsyncThunk, and Context vs Redux vs Zustand comparison.</p>
+            </div>
+
+            <!-- TABLE OF CONTENTS -->
+            <div class="toc-box" id="toc">
+                <h3>📑 Topics of Content — Module 6 — State Management (Context API &amp; Redux Toolkit) (6 Topics + Practical)</h3>
+                <div class="toc-grid">
+                    <a href="#topic-1" class="toc-link">1. Prop Drilling: Pain Points &amp; Architectural Debt</a>
+                    <a href="#topic-2" class="toc-link">2. Context API &amp; The Provider Pattern</a>
+                    <a href="#topic-3" class="toc-link">3. Redux Fundamentals &amp; Redux Toolkit (RTK)</a>
+                    <a href="#topic-4" class="toc-link">4. useSelector &amp; useDispatch</a>
+                    <a href="#topic-5" class="toc-link">5. Async State Management with `createAsyncThunk`</a>
+                    <a href="#topic-6" class="toc-link">6. When to use Context vs Redux vs Zustand</a>
+                    <a href="#practical-lab" class="toc-link lab-link">🛠️ Practical Lab (Complete Runnable Project)</a>
+                    <a href="#interview-bank" class="toc-link interview-link">💼 Interview Bank (Sudheer J Style)</a>
+                </div>
             </div>
 
             <div class="brush-banner">Module 6: Global State Management — Prop Drilling ka The End aur Redux Toolkit Mastery!</div>
@@ -587,7 +665,7 @@ export default productSlice.reducer;</code></pre>
             </div>
 
             <!-- PRACTICAL LAB -->
-            <div class="practical-box">
+            <div class="practical-box" id="practical-lab">
                 <div class="practical-title">🛠️ Module 6 Practical Lab: Shopping Cart State Management with Redux Toolkit</div>
                 <p>Neeche complete runnable shopping cart implementation hai: Store configuration, Cart Slice with Immer mutations, Add to Cart, Remove, Quantity increment, and Total calculation:</p>
 
@@ -670,7 +748,7 @@ export function CartView() {
             </div>
 
             <!-- SUDHEER J INTERVIEW CARDS -->
-            <div class="concept-sub-title">💼 Module 6 Interview Bank (Sudheer J Style)</div>
+            <div class="concept-sub-title" id="interview-bank">💼 Module 6 Interview Bank (Sudheer J Style)</div>
 
             <div class="q-card">
                 <div class="q-tag-row">
